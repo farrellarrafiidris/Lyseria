@@ -59,7 +59,7 @@ async function loadProduct() {
 
                     <p class="text-2xl mt-6">
 
-                       <span class="decoration-dashed line-through text-rosegold">Rp ${product.price.toLocaleString("id-ID")}</span> <span class="text-red-500">Coming Soon</span>
+                       <span class=" line-through text-rosegold">Rp ${product.price.toLocaleString("id-ID")}</span> <span class="text-red-500">Coming Soon</span>
 
                     </p>
 
