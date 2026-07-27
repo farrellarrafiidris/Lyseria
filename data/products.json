@@ -1,0 +1,83 @@
+[
+    {
+        "id": 1,
+        "slug": "lys-de-chei",
+
+        "name": "Lys de chéi",
+
+        "price": 329000,
+
+        "category": "Pashmina",
+
+        "material": "Viscose",
+
+        "size": "175 x 75 cm",
+
+        "description": "A timeless pashmina crafted from premium voal fabric.",
+
+        "images": [
+            "assets/products/lys_de_chei.png"
+        ]
+    },
+
+    {
+        "id": 2,
+        "slug": "brise_fleurie",
+
+        "name": "Brise fleurie",
+
+        "price": 329000,
+
+        "category": "Pashmina",
+
+        "material": "Viscose",
+
+        "size": "175 x 75 cm",
+
+        "description": "A timeless pashmina crafted from premium voal fabric.",
+
+        "images": [
+            "assets/products/brise_fleurie.png"
+        ]
+    },
+    {
+        "id": 3,
+        "slug": "aurore",
+
+        "name": "Aurore",
+
+        "price": 329000,
+
+        "category": "Pashmina",
+
+        "material": "Viscose",
+
+        "size": "175 x 75 cm",
+
+        "description": "A timeless pashmina crafted from premium voal fabric.",
+
+        "images": [
+            "assets/products/aurore.png"
+        ]
+    },
+    {
+        "id": 4,
+        "slug": "velours",
+
+        "name": "Velours",
+
+        "price": 329000,
+
+        "category": "Pashmina",
+
+        "material": "Viscose",
+
+        "size": "175 x 75 cm",
+
+        "description": "A timeless pashmina crafted from premium voal fabric.",
+
+        "images": [
+            "assets/products/velours.png"
+        ]
+    }
+]

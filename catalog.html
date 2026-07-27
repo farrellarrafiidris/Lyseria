@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="./src/output.css" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <title>Collection | Lyséria</title>
+</head>
+
+<body class="bg-white">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 left-0 w-full z-50 bg-white shadow-sm">
+        <div class="navbar max-w-7xl mx-auto px-6">
+
+            <div class="navbar-start">
+                <a href="index.html" class="text-3xl font-serif">
+                    Lyséria
+                </a>
+            </div>
+
+            <div class="navbar-end gap-8 hidden lg:flex">
+
+                <a href="index.html">Home</a>
+
+                <a href="catalog.html" class="font-semibold">
+                    Catalog
+                </a>
+
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="pt-40 pb-20">
+
+        <div class="max-w-7xl mx-auto px-6 text-center">
+
+            <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
+                Our Collection
+            </p>
+
+            <h1 class="text-6xl font-serif mt-4">
+                Timeless Pieces
+            </h1>
+
+            <p class="max-w-xl mx-auto mt-6 text-gray-500">
+                Discover every piece crafted with elegance and modesty.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Product -->
+    <section class="pb-24">
+
+        <div class="max-w-7xl mx-auto px-6">
+
+            <div
+                id="product-list"
+                class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="./src/js/catalog.js"></script>
+
+</body>
+
+</html>

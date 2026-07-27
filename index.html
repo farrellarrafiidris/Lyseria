@@ -1,0 +1,127 @@
+<!doctype html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Lyséria</title>
+        <link href="./src/output.css" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    </head>
+<body class="bg-navy text-pearl overflow-x-hidden">
+
+<nav class="fixed top-0 inset-x-0 z-50 bg-navy">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
+    <a class="font-display text-4xl tracking-[.15em]">Lyséria</a>
+    <ul class="hidden lg:flex gap-10 uppercase tracking-[.25em] text-xs font-sans">
+      <li><a href="#about">About</a></li>
+      <li><a href="#studio">Style Studio</a></li>
+      <li><a href="#catalog">Catalog</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="flex gap-5 text-xl">
+      <span>⌕</span><span>👜</span>
+    </div>
+  </div>
+</nav>
+
+<section class="relative min-h-screen overflow-hidden">
+<div class="absolute -left-40 bottom-0 w-125 h-125 rounded-full bg-navylight/40 blur-3xl"></div>
+<div class="absolute -right-40 top-0 w-125 h-125 rounded-full bg-rosegold/10 blur-3xl"></div>
+
+<div class="max-w-7xl mx-auto min-h-screen grid lg:grid-cols-2 gap-20 items-center px-8 pt-28">
+    <div>
+        <p class="uppercase tracking-[.35em] text-xs text-rosegold font-semibold mb-6">Modest Fashion — Reimagined</p>
+        <h1 class="font-display text-6xl lg:text-8xl leading-none">Dressed in<br><span class="italic text-rosegold">Quiet</span> Grace.</h1>
+        <p class="mt-8 text-lg leading-9 max-w-lg text-pearl/70">Timeless silhouettes, considered fabrics, and a wardrobe built for stillness — Lyséria is modest dressing without compromise.</p>
+        <div class="mt-10 flex flex-wrap gap-8 items-center">
+            <a class="px-8 py-4 bg-rosegold text-white uppercase tracking-[.2em] text-xs">Discover the Collection</a>
+            <a class="uppercase tracking-[.2em] text-xs">Try the Style Studio →</a>
+        </div>
+    </div>
+
+    <div class="flex justify-center">
+        <div class="w-90 h-130 rounded-[80px] bg-navylight flex items-center justify-center shadow-2xl">
+            <div class="text-center">
+                <div class="w-40 h-80 mx-auto rounded-t-full rounded-b-[70px] bg-sand border-8 border-pearl/20"></div>
+                <p class="mt-6 uppercase tracking-[.3em] text-xs text-pearl/60">— The Nocturne Wrap —</p>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<section id="about" class="bg-pearl py-24">
+
+    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center px-8">
+
+        <!-- Image -->
+        <div>
+            <div class="aspect-4/5 rounded-3xl bg-sand"></div>
+        </div>
+
+        <!-- Content -->
+        <div>
+            <p class="uppercase tracking-[.3em] text-xs text-rosegold mb-4">
+                About Lyséria
+            </p>
+
+            <h2 class="font-display text-5xl text-navy leading-tight">
+                Designed for women who embrace elegance with simplicity.
+            </h2>
+
+            <p class="mt-6 leading-8 text-espresso/80">
+                Every collection is thoughtfully crafted to blend timeless
+                silhouettes, premium fabrics, and effortless modesty. We believe
+                true elegance lies in comfort, confidence, and quiet beauty.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+<!-- <section id="studio" class="min-h-screen flex items-center justify-center bg-navylight"><h2 class="font-display text-6xl">Style Studio</h2></section> -->
+<section id="catalog" class="bg-white py-24">
+
+    <div class="max-w-7xl mx-auto px-8">
+
+        <div class="text-center mb-16">
+
+            <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                Our Collection
+            </p>
+
+            <h2 class="font-display text-5xl text-navy mt-4">
+                Timeless Pieces
+            </h2>
+
+            <p class="mt-6 text-espresso/70 max-w-xl mx-auto">
+                Discover our signature pieces designed to accompany every moment with elegance and comfort.
+            </p>
+
+        </div>
+
+        <!-- Semua card akan dibuat oleh JavaScript -->
+        <div
+            id="product-list"
+            class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        </div>
+
+        <div class="text-center mt-12">
+            <a href="catalog.html" class="btn btn-neutral">
+                View All Collection
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<script src="./src/js/home.js"></script>
+<section id="journal" class="min-h-screen flex items-center justify-center bg-navylight"><h2 class="font-display text-6xl">Journal</h2></section>
+<section id="contact" class="min-h-screen flex items-center justify-center"><h2 class="font-display text-6xl">Contact</h2></section>
+
+</body>
+</html>

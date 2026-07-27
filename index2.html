@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELAIRE — Quiet Luxury, Modestly Worn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          navy: '#1F2A44',
+          navylight: '#2C3B5C',
+          rosegold: '#C79A8B',
+          pearl: '#F7F3EE',
+          taupe: '#B7A89B',
+          dusty: '#D8B7B2',
+          sand: '#E7DDD4',
+          espresso: '#3B312E',
+          burgundy: '#6E2439',
+          cream: '#F3E7D8',
+          pearlwhite: '#FBF8F5',
+          pink: '#F0D8D3'
+        },
+        fontFamily: {
+          serif: ['"Cormorant Garamond"', 'serif'],
+          sans: ['Inter', 'sans-serif']
+        },
+        keyframes: {
+          floaty: {
+            '0%,100%': { transform: 'translateY(0) rotate(0deg)' },
+            '50%': { transform: 'translateY(-20px) rotate(4deg)' }
+          }
+        },
+        animation: {
+          floaty: 'floaty 9s ease-in-out infinite',
+          'floaty-slow': 'floaty 13s ease-in-out infinite'
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="font-sans bg-pearl text-espresso antialiased selection:bg-dusty selection:text-espresso overflow-x-hidden">
+
+<!-- Semua efek (glass, hover, reveal, animasi) di bawah ini pakai class Tailwind langsung -->
+<!-- di elemen-nya, jadi tinggal edit class="..." untuk ubah tampilan, tanpa CSS terpisah. -->
+
+<!-- ============ SHARED SVG PATTERN DEFINITIONS ============ -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <pattern id="pat-floral" width="60" height="60" patternUnits="userSpaceOnUse">
+      <rect width="60" height="60" fill="#F7F3EE"/>
+      <g fill="#D8B7B2">
+        <circle cx="15" cy="15" r="6"/><circle cx="25" cy="10" r="6"/><circle cx="25" cy="22" r="6"/><circle cx="8" cy="24" r="6"/>
+      </g>
+      <circle cx="18" cy="17" r="3.4" fill="#C79A8B"/>
+      <g fill="#D8B7B2" transform="translate(30,35)">
+        <circle cx="15" cy="15" r="5"/><circle cx="24" cy="11" r="5"/><circle cx="24" cy="21" r="5"/><circle cx="8" cy="23" r="5"/>
+      </g>
+      <circle cx="33" cy="42" r="2.8" fill="#C79A8B"/>
+    </pattern>
+
+    <pattern id="pat-batik" width="46" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(20)">
+      <rect width="46" height="46" fill="#E7DDD4"/>
+      <path d="M0,10 Q11.5,0 23,10 T46,10" stroke="#3B312E" stroke-width="1.4" fill="none"/>
+      <path d="M0,28 Q11.5,18 23,28 T46,28" stroke="#C79A8B" stroke-width="1.4" fill="none"/>
+      <circle cx="11.5" cy="10" r="1.6" fill="#3B312E"/>
+      <circle cx="34.5" cy="10" r="1.6" fill="#3B312E"/>
+      <circle cx="11.5" cy="28" r="1.6" fill="#C79A8B"/>
+      <circle cx="34.5" cy="28" r="1.6" fill="#C79A8B"/>
+    </pattern>
+
+    <pattern id="pat-abstract" width="72" height="72" patternUnits="userSpaceOnUse">
+      <rect width="72" height="72" fill="#F7F3EE"/>
+      <path d="M6,50 C18,20 40,15 60,30 C48,40 44,55 30,58 C18,60 10,58 6,50Z" fill="#6E2439" opacity=".85"/>
+      <path d="M40,10 C55,8 66,20 62,32 C52,28 44,22 40,10Z" fill="#C79A8B"/>
+      <circle cx="58" cy="55" r="6" fill="#D8B7B2"/>
+    </pattern>
+
+    <pattern id="pat-marble" width="90" height="90" patternUnits="userSpaceOnUse">
+      <rect width="90" height="90" fill="#FBF8F5"/>
+      <path d="M-5,20 C20,10 30,35 55,25 C75,17 85,30 95,22" stroke="#B7A89B" stroke-width="1.1" fill="none" opacity=".8"/>
+      <path d="M-5,50 C25,60 40,40 60,55 C78,66 88,50 96,58" stroke="#3B312E" stroke-width="1" fill="none" opacity=".55"/>
+      <path d="M-5,75 C22,68 35,85 58,74 C74,66 85,80 96,72" stroke="#C79A8B" stroke-width="1.1" fill="none" opacity=".7"/>
+    </pattern>
+
+    <pattern id="pat-minimal" width="26" height="26" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="26" height="26" fill="#F7F3EE"/>
+      <line x1="0" y1="13" x2="26" y2="13" stroke="#3B312E" stroke-width="1"/>
+    </pattern>
+
+    <pattern id="pat-botanical" width="64" height="64" patternUnits="userSpaceOnUse">
+      <rect width="64" height="64" fill="#E7DDD4"/>
+      <path d="M8,56 C10,36 14,20 26,8" stroke="#3B312E" stroke-width="1.2" fill="none"/>
+      <path d="M12,46 C18,44 22,38 20,32" stroke="#B7A89B" stroke-width="1.2" fill="none"/>
+      <path d="M15,32 C21,31 25,26 22,20" stroke="#B7A89B" stroke-width="1.2" fill="none"/>
+      <path d="M18,18 C24,16 27,12 26,8" stroke="#B7A89B" stroke-width="1.2" fill="none"/>
+      <path d="M46,56 C48,40 50,26 40,14" stroke="#3B312E" stroke-width="1.2" fill="none"/>
+      <path d="M43,44 C37,42 34,36 37,30" stroke="#C79A8B" stroke-width="1.2" fill="none"/>
+    </pattern>
+
+    <pattern id="pat-watercolor" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect width="80" height="80" fill="#F3E7D8"/>
+      <circle cx="24" cy="24" r="22" fill="#D8B7B2" opacity=".45"/>
+      <circle cx="52" cy="46" r="26" fill="#C79A8B" opacity=".35"/>
+      <circle cx="18" cy="60" r="16" fill="#6E2439" opacity=".2"/>
+    </pattern>
+
+    <pattern id="pat-geometric" width="42" height="42" patternUnits="userSpaceOnUse">
+      <rect width="42" height="42" fill="#F7F3EE"/>
+      <polygon points="21,3 39,21 21,39 3,21" fill="none" stroke="#1F2A44" stroke-width="1.2"/>
+      <polygon points="21,13 31,21 21,31 11,21" fill="#C79A8B"/>
+    </pattern>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav id="site-nav" class="fixed top-0 left-0 w-full z-50 text-pearl transition-all duration-500">
+  <div class="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-5">
+    <a href="#home" class="font-serif text-2xl tracking-[0.18em]">Lyséria</a>
+    <div class="hidden md:flex items-center gap-10 text-xs uppercase tracking-[0.28em] font-semibold">
+      <a href="#about" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">About</a>
+      <a href="#configurator" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Style Studio</a>
+      <a href="#catalog" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Catalog</a>
+      <a href="#testimonials" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Journal</a>
+      <a href="#contact" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Contact</a>
+    </div>
+    <div class="flex items-center gap-5">
+      <button aria-label="Search" class="hidden sm:inline-flex opacity-90 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <button aria-label="Bag" class="opacity-90 hover:opacity-100 transition-opacity">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+      </button>
+      <button id="menuBtn" class="md:hidden" aria-label="Menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden bg-navy/95 backdrop-blur-md px-6 pb-6 flex flex-col gap-4 text-sm uppercase tracking-[0.28em] font-semibold">
+    <a href="#about">About</a><a href="#configurator">Style Studio</a><a href="#catalog">Catalog</a><a href="#testimonials">Journal</a><a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- ============ HERO / HOME ============ -->
+<section id="home" class="relative min-h-screen bg-navy text-pearl flex items-center overflow-hidden">
+  <div id="hero-blob" class="absolute -top-40 -right-40 w-[560px] h-[560px] rounded-full opacity-40 blur-3xl transition-transform duration-100 ease-linear" style="background:radial-gradient(circle,#C79A8B,transparent 70%)"></div>
+  <div class="absolute bottom-0 left-0 w-[420px] h-[420px] rounded-full opacity-20 blur-3xl" style="background:radial-gradient(circle,#D8B7B2,transparent 70%)"></div>
+
+  <svg class="absolute top-24 left-8 w-24 h-24 opacity-30 animate-floaty-slow motion-reduce:animate-none hidden md:block" viewBox="0 0 100 100" fill="none" stroke="#C79A8B" stroke-width="1">
+    <path d="M50,10 C20,25 20,55 50,90 C80,55 80,25 50,10Z"/><path d="M50,25 L50,80"/>
+  </svg>
+  <svg class="absolute bottom-16 right-16 w-20 h-20 opacity-25 animate-floaty motion-reduce:animate-none hidden md:block" viewBox="0 0 100 100" fill="none" stroke="#D8B7B2" stroke-width="1">
+    <circle cx="50" cy="50" r="38"/><circle cx="50" cy="50" r="20"/>
+  </svg>
+
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-14 items-center pt-24">
+    <div data-reveal class="opacity-100 translate-y-0 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-6">Modest Fashion — Reimagined</p>
+      <h1 class="font-serif text-6xl md:text-7xl leading-[1.02] font-medium mb-8">Dressed in<br><span class="italic text-rosegold">Quiet</span> Grace.</h1>
+      <p class="text-base md:text-lg text-pearl/75 max-w-md mb-10 leading-relaxed">Timeless silhouettes, considered fabrics, and a wardrobe built for stillness — VELAIRE is modest dressing without compromise.</p>
+      <div class="flex items-center gap-8">
+        <a href="#catalog" class="relative overflow-hidden bg-rosegold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(199,154,139,0.4)] px-9 py-4 text-xs uppercase tracking-[0.2em] font-semibold inline-block">Discover the Collection</a>
+        <a href="#configurator" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full text-xs uppercase tracking-[0.2em] font-semibold">Try the Style Studio →</a>
+      </div>
+    </div>
+    <div class="relative flex justify-center">
+      <div class="w-[300px] md:w-[380px] aspect-[2/3] rounded-t-[160px] rounded-b-3xl relative overflow-hidden" style="background:linear-gradient(160deg,#2C3B5C,#1F2A44)">
+        <svg viewBox="0 0 400 680" class="absolute inset-0 w-full h-full">
+          <path d="M200,255 C165,255 140,255 128,270 C105,310 90,400 85,500 C82,555 95,605 130,625 L270,625 C305,605 318,555 315,500 C310,400 295,310 272,270 C260,255 235,255 200,255 Z" fill="#F3E7D8" opacity=".9"/>
+          <path d="M178,196 L222,196 L222,228 C222,238 178,238 178,228 Z" fill="#D8B7B2"/>
+          <ellipse cx="200" cy="150" rx="48" ry="56" fill="#D8B7B2"/>
+          <path d="M200,78 C170,78 140,95 128,130 C118,158 118,195 132,225 C110,260 92,320 84,400 C80,440 85,480 100,505 C112,524 138,528 155,512 C168,500 172,480 173,455 C176,395 182,330 190,270 L210,270 C218,330 224,395 227,455 C228,480 232,500 245,512 C262,528 288,524 300,505 C315,480 320,440 316,400 C308,320 290,260 268,225 C282,195 282,158 272,130 C260,95 230,78 200,78 Z" fill="url(#pat-watercolor)"/>
+        </svg>
+      </div>
+      <p class="absolute -bottom-4 left-1/2 -translate-x-1/2 text-xs uppercase tracking-[0.28em] font-semibold text-pearl/60 whitespace-nowrap">— The Nocturne Wrap —</p>
+    </div>
+  </div>
+  <a href="#about" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-pearl/50 hover:text-pearl transition-colors">
+    <svg width="20" height="30" viewBox="0 0 20 30"><rect x="1" y="1" width="18" height="28" rx="9" fill="none" stroke="currentColor" stroke-width="1"/><circle cx="10" cy="9" r="2" fill="currentColor"/></svg>
+  </a>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="relative bg-pearl py-28 md:py-36 overflow-hidden">
+  <svg class="absolute -left-10 top-10 w-40 h-40 opacity-[.15] animate-floaty-slow motion-reduce:animate-none" viewBox="0 0 100 100" fill="none" stroke="#3B312E"><path d="M50,5 C25,20 20,50 50,95 C80,50 75,20 50,5Z"/></svg>
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-12 gap-12 items-center">
+    <div data-reveal class="md:col-span-5 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <div class="aspect-[3/4] rounded-tl-[120px] rounded-br-[120px]" style="background:linear-gradient(155deg,#E7DDD4,#D8B7B2)"></div>
+    </div>
+    <div data-reveal class="md:col-span-7 opacity-0 translate-y-9 transition-all duration-700 ease-out delay-150">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-5">Our Story</p>
+      <h2 class="font-serif text-4xl md:text-5xl mb-8 leading-tight">A House Built on<br>Considered Dressing</h2>
+      <p class="text-espresso/80 leading-relaxed mb-6 max-w-xl">VELAIRE began with a simple belief: that modesty and modernity are not opposites. Each piece is designed in small batches, cut from breathable natural fibres, and finished by hand — so that covering more never means expressing less.</p>
+      <p class="text-espresso/80 leading-relaxed mb-10 max-w-xl">Our ateliers work season after season on a single idea — quiet luxury that moves with you, from the first prayer of the morning to the last light of evening.</p>
+      <div class="grid grid-cols-3 gap-8 max-w-md">
+        <div><p class="font-serif text-4xl text-rosegold">12</p><p class="text-[.6rem] uppercase tracking-[0.28em] font-semibold mt-1 text-espresso/60">Years Crafting</p></div>
+        <div><p class="font-serif text-4xl text-rosegold">48</p><p class="text-[.6rem] uppercase tracking-[0.28em] font-semibold mt-1 text-espresso/60">Fabric Origins</p></div>
+        <div><p class="font-serif text-4xl text-rosegold">100%</p><p class="text-[.6rem] uppercase tracking-[0.28em] font-semibold mt-1 text-espresso/60">Hand Finished</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLLECTIONS ============ -->
+<section id="collection" class="bg-sand py-28 md:py-32">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">Curated Seasons</p>
+      <h2 class="font-serif text-4xl md:text-5xl">Three Ways to Wear Stillness</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out relative rounded-3xl overflow-hidden h-[420px] flex items-end p-8 text-pearlwhite" style="background:linear-gradient(180deg,rgba(31,42,68,.15),rgba(31,42,68,.85)),linear-gradient(160deg,#B7A89B,#8f7f70)">
+        <div>
+          <p class="text-xs uppercase tracking-[0.28em] font-semibold text-dusty mb-2">Ivory Season</p>
+          <h3 class="font-serif text-3xl mb-3">Soft Neutrals</h3>
+          <a href="#catalog" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full text-xs uppercase tracking-[0.28em] font-semibold">Explore →</a>
+        </div>
+      </div>
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-150 relative rounded-3xl overflow-hidden h-[420px] flex items-end p-8 text-pearlwhite" style="background:linear-gradient(180deg,rgba(31,42,68,.1),rgba(31,42,68,.85)),linear-gradient(160deg,#1F2A44,#2C3B5C)">
+        <div>
+          <p class="text-xs uppercase tracking-[0.28em] font-semibold text-dusty mb-2">Nocturne</p>
+          <h3 class="font-serif text-3xl mb-3">Evening Drapes</h3>
+          <a href="#catalog" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full text-xs uppercase tracking-[0.28em] font-semibold">Explore →</a>
+        </div>
+      </div>
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-300 relative rounded-3xl overflow-hidden h-[420px] flex items-end p-8 text-pearlwhite" style="background:linear-gradient(180deg,rgba(31,42,68,.12),rgba(31,42,68,.85)),linear-gradient(160deg,#6E2439,#a15169)">
+        <div>
+          <p class="text-xs uppercase tracking-[0.28em] font-semibold text-dusty mb-2">Linen Letters</p>
+          <h3 class="font-serif text-3xl mb-3">Everyday Ease</h3>
+          <a href="#catalog" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full text-xs uppercase tracking-[0.28em] font-semibold">Explore →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HIJAB STYLE CONFIGURATOR (CENTERPIECE) ============ -->
+<section id="configurator" class="relative bg-navy text-pearl py-28 md:py-36 overflow-hidden">
+  <div class="absolute top-1/3 -left-32 w-[420px] h-[420px] rounded-full opacity-30 blur-3xl" style="background:radial-gradient(circle,#C79A8B,transparent 70%)"></div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">Signature Experience</p>
+      <h2 class="font-serif text-4xl md:text-6xl mb-5">The Style Studio</h2>
+      <p class="text-pearl/70 max-w-xl mx-auto">Choose a fabric motif below and watch it drape instantly — a quiet preview of how each print moves in real light.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-16 items-center">
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-150 flex justify-center order-2 md:order-1">
+        <div id="model-stage" class="relative w-[300px] md:w-[380px] transition-transform duration-700">
+          <div class="absolute -inset-10 rounded-full opacity-25 blur-2xl" style="background:radial-gradient(circle,#D8B7B2,transparent 70%)"></div>
+          <svg viewBox="0 0 400 680" class="relative w-full">
+            <path d="M200,255 C165,255 140,255 128,270 C105,310 90,400 85,500 C82,555 95,605 130,625 L270,625 C305,605 318,555 315,500 C310,400 295,310 272,270 C260,255 235,255 200,255 Z" fill="#F3E7D8"/>
+            <path d="M178,196 L222,196 L222,228 C222,238 178,238 178,228 Z" fill="#D8B7B2"/>
+            <ellipse cx="200" cy="150" rx="48" ry="56" fill="#D8B7B2"/>
+            <path id="hijabShape" class="opacity-100 transition-opacity duration-300 ease-in-out" d="M200,78 C170,78 140,95 128,130 C118,158 118,195 132,225 C110,260 92,320 84,400 C80,440 85,480 100,505 C112,524 138,528 155,512 C168,500 172,480 173,455 C176,395 182,330 190,270 L210,270 C218,330 224,395 227,455 C228,480 232,500 245,512 C262,528 288,524 300,505 C315,480 320,440 316,400 C308,320 290,260 268,225 C282,195 282,158 272,130 C260,95 230,78 200,78 Z" fill="url(#pat-floral)" stroke="#1F2A44" stroke-width="1"/>
+          </svg>
+          <p id="patternLabel" class="text-center text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mt-6">Floral</p>
+        </div>
+      </div>
+
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-300 order-1 md:order-2">
+        <p class="text-xs uppercase tracking-[0.28em] font-semibold text-pearl/50 mb-6">8 Signature Motifs</p>
+        <div id="swatchRow" class="grid grid-cols-4 gap-4 md:gap-5">
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/40 backdrop-blur-md border border-rosegold shadow-[0_16px_30px_rgba(199,154,139,0.35)] transition-all duration-300 hover:-translate-y-1" data-pattern="pat-floral" data-label="Floral">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-floral)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Floral</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-batik" data-label="Batik Modern">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-batik)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Batik</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-abstract" data-label="Abstract">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-abstract)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Abstract</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-marble" data-label="Marble">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-marble)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Marble</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-minimal" data-label="Minimal Line">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-minimal)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Minimal</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-botanical" data-label="Soft Botanical">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-botanical)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Botanical</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-watercolor" data-label="Watercolor">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-watercolor)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Watercolor</span>
+          </button>
+          <button class="hijab-swatch flex flex-col items-center gap-2 p-3 rounded-2xl bg-white/20 backdrop-blur-md border border-white/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(31,42,68,0.18)]" data-pattern="pat-geometric" data-label="Geometric">
+            <svg width="48" height="48" class="rounded-xl"><rect width="48" height="48" rx="10" fill="url(#pat-geometric)"/></svg>
+            <span class="text-[.62rem] uppercase tracking-[0.2em] font-semibold">Geometric</span>
+          </button>
+        </div>
+        <a href="#catalog" class="relative overflow-hidden bg-rosegold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(199,154,139,0.4)] inline-block mt-10 px-9 py-4 text-xs uppercase tracking-[0.2em] font-semibold">Shop This Look</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CATALOG ============ -->
+<section id="catalog" class="bg-pearl py-28 md:py-32">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="flex flex-col md:flex-row md:items-end justify-between mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <div>
+        <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">Full Catalog</p>
+        <h2 class="font-serif text-4xl md:text-5xl">The Complete Wardrobe</h2>
+      </div>
+      <div class="flex gap-6 mt-6 md:mt-0 text-xs uppercase tracking-[0.28em] font-semibold text-espresso/50">
+        <span class="text-espresso border-b border-espresso pb-1">See More</span>
+      </div>
+    </div>
+
+    <div id="catalogGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+  </div>
+</section>
+
+<!-- ============ BEST SELLER ============ -->
+<section id="bestseller" class="bg-cream py-28 md:py-32 overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-burgundy mb-4">Most Loved</p>
+      <h2 class="font-serif text-4xl md:text-5xl">Best Sellers</h2>
+    </div>
+    <div id="bestsellerGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </div>
+</section>
+
+<!-- ============ NEW ARRIVAL ============ -->
+<section id="newarrival" class="bg-pearl py-28 md:py-32">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">Just Landed</p>
+      <h2 class="font-serif text-4xl md:text-5xl">New Arrivals</h2>
+    </div>
+    <div id="newarrivalGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials" class="bg-navy text-pearl py-28 md:py-32 relative overflow-hidden">
+  <svg class="absolute top-10 right-10 w-28 h-28 opacity-20 animate-floaty motion-reduce:animate-none" viewBox="0 0 100 100" fill="none" stroke="#C79A8B"><path d="M50,5 C25,20 20,50 50,95 C80,50 75,20 50,5Z"/></svg>
+  <div class="max-w-6xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">In Their Words</p>
+      <h2 class="font-serif text-4xl md:text-5xl">Worn, Loved, Lived In</h2>
+    </div>
+    <div class="grid md:grid-cols-3 gap-10">
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out bg-white/5 border border-white/10 rounded-3xl p-8">
+        <p class="font-serif text-2xl italic leading-relaxed mb-6">"Every piece feels like it was made to be lived in, not just looked at."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-rosegold/70 flex items-center justify-center text-xs font-semibold">RA</div>
+          <div><p class="text-sm">Rania A.</p><p class="text-xs text-pearl/50">Jakarta</p></div>
+        </div>
+      </div>
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-150 bg-white/5 border border-white/10 rounded-3xl p-8">
+        <p class="font-serif text-2xl italic leading-relaxed mb-6">"The Style Studio helped me picture the print before it even arrived."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-dusty/70 flex items-center justify-center text-xs font-semibold">SN</div>
+          <div><p class="text-sm">Salma N.</p><p class="text-xs text-pearl/50">Bandung</p></div>
+        </div>
+      </div>
+      <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-300 bg-white/5 border border-white/10 rounded-3xl p-8">
+        <p class="font-serif text-2xl italic leading-relaxed mb-6">"Quiet luxury, exactly as promised. The fabrics breathe beautifully."</p>
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-taupe/70 flex items-center justify-center text-xs font-semibold">FH</div>
+          <div><p class="text-sm">Farah H.</p><p class="text-xs text-pearl/50">Surabaya</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INSTAGRAM GALLERY ============ -->
+<section id="gallery" class="bg-pearl py-28 md:py-32">
+  <div class="max-w-7xl mx-auto px-6 md:px-10">
+    <div data-reveal class="text-center mb-16 opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">@velaire.official</p>
+      <h2 class="font-serif text-4xl md:text-5xl">Follow the Atelier</h2>
+    </div>
+    <div id="instaGrid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+  </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="bg-navy text-pearl py-24">
+  <div data-reveal class="max-w-3xl mx-auto px-6 text-center opacity-0 translate-y-9 transition-all duration-700 ease-out">
+    <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">The Journal</p>
+    <h2 class="font-serif text-4xl md:text-5xl mb-6">Stay Close to the Atelier</h2>
+    <p class="text-pearl/70 mb-10">New collections, quiet notes on fabric, and early access — once a month, never more.</p>
+    <form id="newsletterForm" class="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
+      <input required type="email" placeholder="Your email address" class="flex-1 bg-transparent border border-pearl/30 rounded-full px-6 py-4 text-sm placeholder:text-pearl/40 focus:outline-none focus:border-rosegold">
+      <button type="submit" class="relative overflow-hidden bg-rosegold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(199,154,139,0.4)] px-8 py-4 text-xs uppercase tracking-[0.2em] font-semibold rounded-full">Subscribe</button>
+    </form>
+    <p id="newsletterMsg" class="text-xs text-rosegold mt-4 opacity-0 transition-opacity duration-500"></p>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="bg-sand py-28 md:py-32">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-2 gap-16">
+    <div data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out">
+      <p class="text-xs uppercase tracking-[0.28em] font-semibold text-rosegold mb-4">Visit or Write</p>
+      <h2 class="font-serif text-4xl md:text-5xl mb-8">We'd Love to Hear From You</h2>
+      <div class="space-y-6 text-espresso/80">
+        <p><span class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-espresso block mb-1">Boutique</span>Jl. Kemang Raya No. 21, Jakarta Selatan, Indonesia</p>
+        <p><span class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-espresso block mb-1">Studio Hours</span>Tuesday – Sunday, 10:00 – 19:00</p>
+        <p><span class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-espresso block mb-1">Email</span>hello@velaire.co</p>
+      </div>
+    </div>
+    <form id="contactForm" data-reveal class="opacity-0 translate-y-9 transition-all duration-700 ease-out delay-150 bg-pearlwhite rounded-3xl p-8 md:p-10 space-y-5 shadow-sm">
+      <div>
+        <label class="text-[.62rem] uppercase tracking-[0.28em] font-semibold text-espresso/60 block mb-2">Full Name</label>
+        <input required type="text" class="w-full border-b border-espresso/20 bg-transparent py-3 focus:outline-none focus:border-rosegold">
+      </div>
+      <div>
+        <label class="text-[.62rem] uppercase tracking-[0.28em] font-semibold text-espresso/60 block mb-2">Email</label>
+        <input required type="email" class="w-full border-b border-espresso/20 bg-transparent py-3 focus:outline-none focus:border-rosegold">
+      </div>
+      <div>
+        <label class="text-[.62rem] uppercase tracking-[0.28em] font-semibold text-espresso/60 block mb-2">Message</label>
+        <textarea required rows="3" class="w-full border-b border-espresso/20 bg-transparent py-3 focus:outline-none focus:border-rosegold resize-none"></textarea>
+      </div>
+      <button type="submit" class="relative overflow-hidden bg-rosegold text-white transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_14px_28px_rgba(199,154,139,0.4)] px-9 py-4 text-xs uppercase tracking-[0.2em] font-semibold w-full sm:w-auto">Send Message</button>
+      <p id="contactMsg" class="text-xs text-burgundy opacity-0 transition-opacity duration-500"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-navy text-pearl pt-20 pb-8">
+  <div class="max-w-7xl mx-auto px-6 md:px-10 grid md:grid-cols-4 gap-12 mb-14">
+    <div>
+      <p class="font-serif text-2xl tracking-[0.18em] mb-4">VELAIRE</p>
+      <p class="text-sm text-pearl/60 leading-relaxed max-w-xs">Quiet luxury for modest dressing — designed in small batches, worn without compromise.</p>
+    </div>
+    <div>
+      <p class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-pearl/50 mb-4">Shop</p>
+      <ul class="space-y-3 text-sm text-pearl/75">
+        <li><a href="#catalog" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Full Catalog</a></li>
+        <li><a href="#bestseller" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Best Sellers</a></li>
+        <li><a href="#newarrival" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">New Arrivals</a></li>
+        <li><a href="#configurator" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Style Studio</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-pearl/50 mb-4">Company</p>
+      <ul class="space-y-3 text-sm text-pearl/75">
+        <li><a href="#about" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">About VELAIRE</a></li>
+        <li><a href="#testimonials" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Journal</a></li>
+        <li><a href="#contact" class="relative after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-px after:w-0 after:bg-current after:transition-all after:duration-300 hover:after:w-full">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="text-[.65rem] uppercase tracking-[0.28em] font-semibold text-pearl/50 mb-4">Follow</p>
+      <div class="flex gap-4">
+        <a href="#" aria-label="Instagram" class="w-9 h-9 rounded-full border border-pearl/30 flex items-center justify-center hover:border-rosegold hover:text-rosegold transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+        </a>
+        <a href="#" aria-label="Pinterest" class="w-9 h-9 rounded-full border border-pearl/30 flex items-center justify-center hover:border-rosegold hover:text-rosegold transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 17c1-4 1-9 3-9s2 3 1 5"/></svg>
+        </a>
+        <a href="#" aria-label="TikTok" class="w-9 h-9 rounded-full border border-pearl/30 flex items-center justify-center hover:border-rosegold hover:text-rosegold transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 8v8a3 3 0 1 1-2-2.8"/><path d="M9 8c2 0 4-1.2 4-4h2c0 2 2 3 3 3"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="h-px bg-gradient-to-r from-transparent via-pearl/30 to-transparent max-w-7xl mx-auto"></div>
+  <div class="max-w-7xl mx-auto px-6 md:px-10 pt-6 flex flex-col sm:flex-row justify-between text-xs text-pearl/40 gap-2">
+    <p>© 2026 VELAIRE Atelier. All rights reserved.</p>
+    <p>A fictional brand — crafted as a design concept.</p>
+  </div>
+</footer>
+
+<script>
+/* ---------- Product data (illustrative — no real product photography) ---------- */
+const products = [
+  {name:'Amara Wrap Dress', price:'IDR 1.480.000', tag:null, colors:['#1F2A44','#C79A8B','#3B312E']},
+  {name:'Noor Kimono Coat', price:'IDR 1.920.000', tag:'Bestseller', colors:['#B7A89B','#1F2A44']},
+  {name:'Lumen Abaya', price:'IDR 1.650.000', tag:'New', colors:['#3B312E','#D8B7B2']},
+  {name:'Solene Midi Dress', price:'IDR 1.120.000', tag:null, colors:['#C79A8B','#E7DDD4']},
+  {name:'Iris Pleated Skirt', price:'IDR 890.000', tag:null, colors:['#1F2A44','#B7A89B']},
+  {name:'Camille Blouse', price:'IDR 675.000', tag:'New', colors:['#F3E7D8','#D8B7B2']},
+  {name:'Adele Belted Coat', price:'IDR 2.150.000', tag:'Bestseller', colors:['#3B312E','#1F2A44']},
+  {name:'Marielle Hijab, Silk', price:'IDR 385.000', tag:null, colors:['#C79A8B','#6E2439']},
+];
+const bestsellers = products.filter(p=>p.tag==='Bestseller').concat(products.slice(0,1));
+const newarrivals = products.filter(p=>p.tag==='New').concat(products.slice(4,5));
+
+function productCard(p){
+  const badge = p.tag ? `<span class="absolute top-4 left-4 text-[.6rem] uppercase tracking-[0.2em] font-semibold bg-pearlwhite/90 text-espresso px-3 py-1 rounded-full z-10">${p.tag}</span>` : '';
+  const dots = p.colors.map(c=>`<span class="w-3 h-3 rounded-full border border-white/60" style="background:${c}"></span>`).join('');
+  return `
+  <div class="group relative transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_24px_50px_rgba(59,49,46,0.14)] rounded-2xl">
+    <div class="relative overflow-hidden aspect-[3/4] rounded-2xl mb-4">
+      ${badge}
+      <button class="fav-btn absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-pearlwhite/90 flex items-center justify-center">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3B312E" stroke-width="1.6" class="transition-all duration-300"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.9 2.6 5 6.2 5c2 0 3.4 1 5.8 3.5C14.4 6 15.8 5 17.8 5c3.6 0 5.5 3.9 3.7 7.5C19 16.65 12 21 12 21Z"/></svg>
+      </button>
+      <button class="absolute bottom-4 left-1/2 -translate-x-1/2 translate-y-3 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 text-[.6rem] uppercase tracking-[0.2em] font-semibold bg-navy text-pearl px-5 py-2.5 rounded-full z-10 whitespace-nowrap">Quick View</button>
+      <div class="w-full h-full rounded-2xl transition-transform duration-700 ease-out group-hover:scale-105" style="background:linear-gradient(160deg, #E7DDD4, #D8B7B2)"></div>
+    </div>
+    <div class="flex items-start justify-between gap-2">
+      <div>
+        <h3 class="font-serif text-lg leading-snug">${p.name}</h3>
+        <p class="text-sm text-espresso/60 mt-1">${p.price}</p>
+      </div>
+      <div class="flex gap-1.5 mt-2">${dots}</div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('catalogGrid').innerHTML = products.map(productCard).join('');
+document.getElementById('bestsellerGrid').innerHTML = bestsellers.map(productCard).join('');
+document.getElementById('newarrivalGrid').innerHTML = newarrivals.map(productCard).join('');
+
+const galleryPatterns = ['url(#pat-floral)','url(#pat-botanical)','url(#pat-watercolor)','url(#pat-marble)','url(#pat-abstract)','url(#pat-geometric)'];
+document.getElementById('instaGrid').innerHTML = galleryPatterns.map((p)=>`
+  <div class="group relative overflow-hidden rounded-xl aspect-square">
+    <div class="w-full h-full transition-transform duration-700 ease-out group-hover:scale-110" style="background:${p}, linear-gradient(160deg,#E7DDD4,#D8B7B2)"></div>
+    <div class="absolute inset-0 bg-navy/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F7F3EE" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+    </div>
+  </div>`).join('');
+
+/* ---------- Favorite toggle ---------- */
+document.addEventListener('click', (e)=>{
+  const btn = e.target.closest('.fav-btn');
+  if(!btn) return;
+  const svg = btn.querySelector('svg');
+  svg.classList.toggle('fill-burgundy');
+  svg.classList.toggle('stroke-burgundy');
+  svg.classList.toggle('scale-125');
+});
+
+/* ---------- Nav scroll state + mobile menu ---------- */
+const nav = document.getElementById('site-nav');
+const navScrolledClasses = ['bg-navy/90','backdrop-blur-md','shadow-lg'];
+window.addEventListener('scroll', ()=>{
+  if(window.scrollY > 40){ nav.classList.add(...navScrolledClasses); }
+  else { nav.classList.remove(...navScrolledClasses); }
+  const blob = document.getElementById('hero-blob');
+  if(blob) blob.style.transform = `translateY(${window.scrollY*0.15}px)`;
+});
+document.getElementById('menuBtn').addEventListener('click', ()=>{
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+document.querySelectorAll('#mobileMenu a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('mobileMenu').classList.add('hidden');
+}));
+
+/* ---------- Scroll reveal ---------- */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      en.target.classList.remove('opacity-0','translate-y-9');
+      en.target.classList.add('opacity-100','translate-y-0');
+      io.unobserve(en.target);
+    }
+  });
+},{threshold:.15});
+document.querySelectorAll('[data-reveal]').forEach(el=>io.observe(el));
+
+/* ---------- Hijab Style Configurator ---------- */
+const hijabShape = document.getElementById('hijabShape');
+const patternLabel = document.getElementById('patternLabel');
+const swatchActiveClasses = ['border-rosegold','bg-white/40','shadow-[0_16px_30px_rgba(199,154,139,0.35)]'];
+const swatchIdleClasses = ['border-white/50','bg-white/20'];
+document.querySelectorAll('.hijab-swatch').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.hijab-swatch').forEach(b=>{
+      b.classList.remove(...swatchActiveClasses);
+      b.classList.add(...swatchIdleClasses);
+    });
+    btn.classList.remove(...swatchIdleClasses);
+    btn.classList.add(...swatchActiveClasses);
+
+    hijabShape.classList.remove('opacity-100');
+    hijabShape.classList.add('opacity-0');
+    setTimeout(()=>{
+      hijabShape.setAttribute('fill', `url(#${btn.dataset.pattern})`);
+      patternLabel.textContent = btn.dataset.label;
+      hijabShape.classList.remove('opacity-0');
+      hijabShape.classList.add('opacity-100');
+    }, 260);
+  });
+});
+
+/* ---------- Newsletter + contact form feedback ---------- */
+document.getElementById('newsletterForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('newsletterMsg');
+  msg.textContent = 'Welcome to the atelier — check your inbox shortly.';
+  msg.classList.remove('opacity-0');
+  msg.classList.add('opacity-100');
+  e.target.reset();
+});
+document.getElementById('contactForm').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const msg = document.getElementById('contactMsg');
+  msg.textContent = 'Thank you — we will write back within two business days.';
+  msg.classList.remove('opacity-0');
+  msg.classList.add('opacity-100');
+  e.target.reset();
+});
+</script>
+</body>
+</html>

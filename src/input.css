@@ -1,0 +1,19 @@
+@import "tailwindcss";
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* ── Custom brand tokens ── */
+@theme {
+  --color-navy:      #1F2A44;
+  --color-navylight: #2C3B5C;
+  --color-rosegold:  #C79A8B;
+  --color-pearl:     #F7F3EE;
+  --color-taupe:     #B7A89B;
+  --color-dusty:     #D8B7B2;
+  --color-sand:      #E7DDD4;
+  --color-espresso:  #3B312E;
+  --color-burgundy:  #6E2439;
+
+  --font-display: 'Cormorant Garamond', serif;
+  --font-sans:    'Inter', sans-serif;
+}
