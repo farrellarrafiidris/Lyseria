@@ -2,40 +2,33 @@
     {
         "id": 1,
         "slug": "lys-de-chei",
-
-        "name": "Lys de chéi",
-
+        "name": "Lys de Chéi",
         "price": 329000,
-
         "category": "Pashmina",
-
         "material": "Viscose",
-
         "size": "175 x 75 cm",
-
-        "description": "A timeless pashmina crafted from premium voal fabric.",
-
+        "description": {
+            "label": "Signature Collection",
+            "quote": "Every bloom begins with a quiet dream.",
+            "content": "Lys de Chéi adalah karya pertama yang lahir serta menjadi identitas koleksi. Terinspirasi dari bunga lily yang sedang mekar, pattern ini melambangkan awal dari sebuah perjalanan kreatif. Setiap kelopak yang terbuka menggambarkan keberanian untuk bertumbuh, sementara sentuhan pink yang lembut merepresentasikan kelembutan, kasih sayang, dan feminitas. Pattern ini lahir sebagai jawaban dari semua mimpi yang dicari dan ditunggu."
+        },
         "images": [
             "assets/products/lys_de_chei.png"
         ]
     },
-
     {
         "id": 2,
-        "slug": "brise_fleurie",
-
-        "name": "Brise fleurie",
-
+        "slug": "brise-fleurie",
+        "name": "Brise Fleurie",
         "price": 329000,
-
         "category": "Pashmina",
-
         "material": "Viscose",
-
         "size": "175 x 75 cm",
-
-        "description": "A timeless pashmina crafted from premium voal fabric.",
-
+        "description": {
+            "label": "Floral Breeze",
+            "quote": "Like flowers dancing with the wind.",
+            "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, Brise Fleurie melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
+        },
         "images": [
             "assets/products/brise_fleurie.png"
         ]
@@ -43,19 +36,16 @@
     {
         "id": 3,
         "slug": "aurore",
-
         "name": "Aurore",
-
         "price": 329000,
-
         "category": "Pashmina",
-
         "material": "Viscose",
-
         "size": "175 x 75 cm",
-
-        "description": "A timeless pashmina crafted from premium voal fabric.",
-
+        "description": {
+            "label": "First Light",
+            "quote": "Every sunrise is another chance to bloom.",
+            "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Aurore menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
+        },
         "images": [
             "assets/products/aurore.png"
         ]
@@ -63,19 +53,16 @@
     {
         "id": 4,
         "slug": "velours",
-
         "name": "Velours",
-
         "price": 329000,
-
         "category": "Pashmina",
-
         "material": "Viscose",
-
         "size": "175 x 75 cm",
-
-        "description": "A timeless pashmina crafted from premium voal fabric.",
-
+        "description": {
+            "label": "The Art of Emotion",
+            "quote": "Every brushstroke carries a feeling.",
+            "content": "Velours lahir dari kecintaan terhadap seni lukis. Sapuan warna yang lembut menyerupai cat air menggambarkan bahwa emosi tidak selalu harus sempurna untuk menjadi indah. Pattern ini merayakan ekspresi, kreativitas, dan keyakinan yang didukung keberanian untuk menciptakan sesuatu yang unik dan berbeda."
+        },
         "images": [
             "assets/products/velours.png"
         ]

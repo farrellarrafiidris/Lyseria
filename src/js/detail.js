@@ -6,11 +6,11 @@ async function loadProduct() {
         const params = new URLSearchParams(window.location.search);
         const slug = params.get("slug");
 
-        // Ambil data JSON
+        // Ambil data dari JSON
         const response = await fetch("./data/products.json");
         const products = await response.json();
 
-        // Cari produk sesuai slug
+        // Cari produk berdasarkan slug
         const product = products.find(item => item.slug === slug);
 
         const container = document.getElementById("product-detail");
@@ -33,7 +33,6 @@ async function loadProduct() {
             <div class="grid lg:grid-cols-2 gap-16">
 
                 <!-- Gambar -->
-
                 <div>
 
                     <img
@@ -44,7 +43,6 @@ async function loadProduct() {
                 </div>
 
                 <!-- Informasi -->
-
                 <div class="flex flex-col justify-center">
 
                     <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
@@ -65,11 +63,27 @@ async function loadProduct() {
 
                     </p>
 
-                    <p class="mt-8 text-gray-600 leading-8">
+                    <div class="mt-8">
 
-                        ${product.description}
+                        <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
 
-                    </p>
+                            ${product.description.label}
+
+                        </p>
+
+                        <blockquote class="mt-4 text-2xl italic font-serif text-navy">
+
+                            "${product.description.quote}"
+
+                        </blockquote>
+
+                        <p class="mt-8 text-gray-600 leading-8">
+
+                            ${product.description.content}
+
+                        </p>
+
+                    </div>
 
                     <div class="mt-10 space-y-3">
 

@@ -1086,6 +1086,47 @@
   .mx-auto {
     margin-inline: auto;
   }
+  @layer daisyui.l1.l2.l3 {
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: calc(0.25rem * 1.5);
+      white-space: nowrap;
+      color: currentcolor;
+    }
+    @supports (color: color-mix(in lab, red, red)) {
+      .label {
+        color: color-mix(in oklab, currentcolor 60%, transparent);
+      }
+    }
+    .label:has(input) {
+      cursor: pointer;
+    }
+    .label:is(.input > *, .select > *) {
+      display: flex;
+      height: calc(100% - 0.5rem);
+      align-items: center;
+      padding-inline: calc(0.25rem * 3);
+      white-space: nowrap;
+      font-size: inherit;
+      &:first-child {
+        margin-inline-start: calc(0.25rem * -3);
+        margin-inline-end: calc(0.25rem * 3);
+        border-inline-end: var(--border) solid currentColor;
+        @supports (color: color-mix(in lab, red, red)) {
+          border-inline-end: var(--border) solid color-mix(in oklab, currentColor 10%, #0000);
+        }
+      }
+      &:last-child {
+        margin-inline-start: calc(0.25rem * 3);
+        margin-inline-end: calc(0.25rem * -3);
+        border-inline-start: var(--border) solid currentColor;
+        @supports (color: color-mix(in lab, red, red)) {
+          border-inline-start: var(--border) solid color-mix(in oklab, currentColor 10%, #0000);
+        }
+      }
+    }
+  }
   .mt-1 {
     margin-top: var(--spacing);
   }
@@ -1535,6 +1576,9 @@
     @supports (color: color-mix(in lab, red, red)) {
       border-color: color-mix(in oklab, var(--color-espresso) 20%, transparent);
     }
+  }
+  .border-pearl {
+    border-color: var(--color-pearl);
   }
   .border-pearl\/20 {
     border-color: color-mix(in srgb, #F7F3EE 20%, transparent);
@@ -2292,6 +2336,12 @@
     }
     .hover\:border-rosegold:hover {
       border-color: var(--color-rosegold);
+    }
+    .hover\:bg-pearl:hover {
+      background-color: var(--color-pearl);
+    }
+    .hover\:text-navy:hover {
+      color: var(--color-navy);
     }
     .hover\:text-pearl:hover {
       color: var(--color-pearl);
