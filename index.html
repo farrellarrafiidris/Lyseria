@@ -16,9 +16,9 @@
     <a class="font-display text-4xl tracking-[.15em]">Lyséria</a>
     <ul class="hidden lg:flex gap-10 uppercase tracking-[.25em] text-xs font-sans">
       <li><a href="#about">About</a></li>
-      <li><a href="#studio">Style Studio</a></li>
+      <!-- <li><a href="#studio">Style Studio</a></li> -->
       <li><a href="#catalog">Catalog</a></li>
-      <li><a href="#journal">Journal</a></li>
+      <!-- <li><a href="#journal">Journal</a></li> -->
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="flex gap-5 text-xl">
@@ -43,12 +43,13 @@
     </div>
 
     <div class="flex justify-center">
-        <div class="w-90 h-130 rounded-[80px] bg-navylight flex items-center justify-center shadow-2xl">
-            <div class="text-center">
-                <div class="w-40 h-80 mx-auto rounded-t-full rounded-b-[70px] bg-sand border-8 border-pearl/20"></div>
-                <p class="mt-6 uppercase tracking-[.3em] text-xs text-pearl/60">— The Nocturne Wrap —</p>
-            </div>
-        </div>
+        <div class="w-[420px] h-[560px] rounded-[80px] bg-navylight shadow-2xl overflow-hidden">
+        <img
+            src="./assets/images/logo2.png"
+            alt="Lyséria Logo"
+            class="w-full h-full object-contain p-12">
+
+    </div>
     </div>
 </div>
 </section>
@@ -118,10 +119,150 @@
     </div>
 
 </section>
+<!-- Contact -->
+<section id="contact" class="bg-navy text-white py-24">
 
+    <div class="max-w-7xl mx-auto px-8">
+
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+            <!-- Left -->
+            <div>
+
+                <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                    Contact
+                </p>
+
+                <h2 class="font-display text-5xl mt-4">
+                    Let's Talk
+                </h2>
+
+                <p class="mt-6 text-pearl leading-8 max-w-lg">
+                    Whether you have questions about our collections or want to collaborate,
+                    we'd love to hear from you.
+                </p>
+
+                <div class="mt-10 space-y-6">
+
+                    <div>
+                        <p class="text-sm uppercase tracking-widest text-rosegold">
+                            Instagram
+                        </p>
+
+                        <a href="#" class="text-xl hover:opacity-80 transition">
+                            @lyseria.id
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="text-sm uppercase tracking-widest text-rosegold">
+                            WhatsApp
+                        </p>
+
+                        <a href="#" class="text-xl hover:opacity-80 transition">
+                            +62 812-3456-7890
+                        </a>
+                    </div>
+
+                    <div>
+                        <p class="text-sm uppercase tracking-widest text-rosegold">
+                            Email
+                        </p>
+
+                        <a href="#" class="text-xl hover:opacity-80 transition">
+                            hello@lyseria.id
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Right -->
+            <div class="bg-pearl rounded-3xl p-8 text-black">
+
+                <h3 class="font-display text-3xl mb-8">
+                    Send a Message
+                </h3>
+
+                <form class="space-y-5">
+
+                    <input
+                        type="text"
+                        placeholder="Full Name"
+                        class="input input-bordered w-full">
+
+                    <input
+                        type="email"
+                        placeholder="Email Address"
+                        class="input input-bordered w-full">
+
+                    <textarea
+                        placeholder="Your Message"
+                        class="textarea textarea-bordered w-full h-40"></textarea>
+
+                    <button class="btn bg-white w-full">
+                        Send Message
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Footer -->
+<footer class="bg-navy text-white border-t border-white/10">
+
+    <div class="max-w-7xl mx-auto px-8 py-8">
+
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+
+            <div>
+
+                <h3 class="font-display text-2xl">
+                    Lyséria
+                </h3>
+
+                <p class="text-sm text-white/60 mt-1">
+                    Timeless modest fashion crafted with elegance.
+                </p>
+
+            </div>
+
+            <div class="flex gap-8 text-sm text-white/70">
+
+                <a href="#about" class="hover:text-white transition">
+                    About
+                </a>
+
+                <a href="#catalog" class="hover:text-white transition">
+                    Catalog
+                </a>
+
+                <a href="#contact" class="hover:text-white transition">
+                    Contact
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="border-t border-white/10 mt-8 pt-6 text-center text-sm text-white/50">
+
+            © 2026 Lyséria. All rights reserved.
+
+        </div>
+
+    </div>
+
+</footer>
 <script src="./src/js/home.js"></script>
-<section id="journal" class="min-h-screen flex items-center justify-center bg-navylight"><h2 class="font-display text-6xl">Journal</h2></section>
-<section id="contact" class="min-h-screen flex items-center justify-center"><h2 class="font-display text-6xl">Contact</h2></section>
+
 
 </body>
 </html>
