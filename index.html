@@ -253,24 +253,34 @@
                     Send a Message
                 </h3>
 
-                <form class="space-y-5">
+                <form id="contact-form" class="space-y-5">
 
                     <input
+                        id="name"
                         type="text"
                         placeholder="Full Name"
-                        class="input input-bordered w-full">
+                        class="input input-bordered w-full"
+                        required>
 
                     <input
+                        id="email"
                         type="email"
                         placeholder="Email Address"
-                        class="input input-bordered w-full">
+                        class="input input-bordered w-full"
+                        required>
 
                     <textarea
+                        id="message"
                         placeholder="Your Message"
-                        class="textarea textarea-bordered w-full h-40"></textarea>
+                        class="textarea textarea-bordered w-full h-40"
+                        required></textarea>
 
-                    <button class="btn bg-white w-full">
+                    <button
+                        class="btn bg-white w-full"
+                        type="submit">
+
                         Send Message
+
                     </button>
 
                 </form>
@@ -331,7 +341,8 @@
 </footer>
 <script src="./src/js/countdown.js"></script>
 <script src="./src/js/home.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="./src/js/contact.js"></script>
 
 </body>
 </html>
