@@ -3,7 +3,7 @@
 // =============================
 
 // Tahun, Bulan, Tanggal, Jam, Menit
-const launchDate = new Date("2026-11-01T19:00:00");
+const launchDate = new Date("2026-08-28T19:00:00");
 
 const countdown = document.getElementById("countdown");
 
