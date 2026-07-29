@@ -1,43 +1,57 @@
 async function loadProducts() {
 
-    const response = await fetch("./data/products.json");
+    try {
 
-    const products = await response.json();
+        const response = await fetch("./data/products.json");
 
-    const container = document.getElementById("product-list");
+        const collections = await response.json();
 
-    container.innerHTML = "";
+        const container = document.getElementById("product-list");
 
-    // Home cuma tampil 3 produk pertama
-    products.slice(0, 3).forEach(product => {
+        container.innerHTML = "";
 
-        const card = `
-            <div class="group">
+        // Gabungkan semua produk dari semua collection
+        const products = collections.flatMap(collection => collection.products);
 
-                <div class="aspect-[3/4] bg-sand rounded-3xl overflow-hidden">
+        // Ambil 3 produk pertama
+        products.slice(0, 3).forEach(product => {
 
-                    <img
-                        src="${product.images[0]}"
-                        alt="${product.name}"
-                        class="w-full h-full object-cover group-hover:scale-105 transition duration-300 blur-2xl">
+            const card = `
 
-                </div>
+                <div class="group">
 
-                <div class="mt-5">
+                    <div class="aspect-[3/4] rounded-3xl overflow-hidden bg-pearl">
 
-                        <p class="text-sm uppercase tracking-widest text-gray-400">
-                            ${product.category}
+                        <img
+                            src="${product.images[0]}"
+                            alt="${product.name}"
+                            class="w-full h-full object-cover duration-500 group-hover:scale-105">
+
+                    </div>
+
+                    <div class="mt-5">
+
+                        <p class="uppercase tracking-[.25em] text-xs text-rosegold">
+
+                            ${product.description.label}
+
                         </p>
 
-                        <h2 class="font-serif text-2xl mt-2 text-black">
-                            ${product.name}
-                        </h2>
+                        <h3 class="font-display text-3xl mt-3 text-navy">
 
-                        
+                            ${product.name}
+
+                        </h3>
+
+                        <p class="mt-3 text-rosegold">
+
+                            Rp ${product.price.toLocaleString("id-ID")}
+
+                        </p>
 
                         <a
                             href="detail.html?slug=${product.slug}"
-                            class="btn btn-outline mt-5 rounded-full">
+                            class="btn btn-outline rounded-full mt-5">
 
                             View Detail
 
@@ -45,12 +59,21 @@ async function loadProducts() {
 
                     </div>
 
-            </div>
-        `;
+                </div>
 
-        container.innerHTML += card;
+            `;
 
-    });
+            container.innerHTML += card;
+
+        });
+
+    }
+
+    catch (error) {
+
+        console.error(error);
+
+    }
 
 }
 

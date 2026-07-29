@@ -6,78 +6,146 @@ async function loadProduct() {
         const params = new URLSearchParams(window.location.search);
         const slug = params.get("slug");
 
-        // Ambil data dari JSON
+        // Ambil semua collection
         const response = await fetch("./data/products.json");
-        const products = await response.json();
+        const collections = await response.json();
 
-        // Cari produk berdasarkan slug
-        const product = products.find(item => item.slug === slug);
+        // Cari product & collection
+        let product = null;
+        let currentCollection = null;
+
+        collections.forEach(collection => {
+
+            const found = collection.products.find(item => item.slug === slug);
+
+            if (found) {
+
+                product = found;
+                currentCollection = collection;
+
+            }
+
+        });
 
         const container = document.getElementById("product-detail");
 
-        // Kalau produk tidak ditemukan
         if (!product) {
 
             container.innerHTML = `
-                <h1 class="text-4xl text-center font-serif">
+                <h1 class="text-5xl text-center">
                     Product Not Found
                 </h1>
             `;
 
             return;
+
         }
 
-        // Render halaman
+        // Produk lain dalam batch
+        const relatedProducts = currentCollection.products.filter(item => item.slug !== slug);
+
+        // Generate Card
+        let relatedCards = "";
+
+        relatedProducts.forEach(item => {
+
+            relatedCards += `
+
+                <div class="group">
+
+                    <div class="overflow-hidden rounded-3xl">
+
+                        <img
+                            src="${item.images[0]}"
+                            alt="${item.name}"
+                            class="w-full aspect-[3/4] object-cover duration-500 group-hover:scale-105">
+
+                    </div>
+
+                    <div class="mt-5">
+
+                        <p class="uppercase tracking-[.25em] text-xs text-rosegold">
+
+                            ${item.description.label}
+
+                        </p>
+
+                        <h3 class="font-display text-3xl mt-3">
+
+                            ${item.name}
+
+                        </h3>
+
+                        <p class="mt-3 text-rosegold">
+
+                            Rp ${item.price.toLocaleString("id-ID")}
+
+                        </p>
+
+                        <a
+                            href="detail.html?slug=${item.slug}"
+                            class="btn btn-outline rounded-full mt-5">
+
+                            View Detail
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
         container.innerHTML = `
 
-            <div class="grid lg:grid-cols-2 gap-16">
+            <div class="grid lg:grid-cols-2 gap-20 items-center">
 
-                <!-- Gambar -->
                 <div>
 
                     <img
                         src="${product.images[0]}"
                         alt="${product.name}"
-                        class="rounded-3xl w-full aspect-[3/4] object-cover blur-2xl">
+                        class="w-full rounded-[40px]">
 
                 </div>
 
-                <!-- Informasi -->
-                <div class="flex flex-col justify-center">
+                <div>
 
-                    <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
+                    <p class="uppercase tracking-[.3em] text-xs text-rosegold">
 
                         ${product.category}
 
                     </p>
 
-                    <h1 class="font-serif text-6xl mt-5">
+                    <h1 class="font-display text-6xl mt-5">
 
                         ${product.name}
 
                     </h1>
 
-                    <p class="text-2xl mt-6">
+                    <p class="text-2xl mt-6 text-rosegold">
 
-                       <span class=" line-through text-rosegold">Rp ${product.price.toLocaleString("id-ID")}</span> <span class="text-red-500">Coming Soon</span>
+                        Rp ${product.price.toLocaleString("id-ID")}
 
                     </p>
 
-                    <div class="mt-8">
+                    <div class="mt-10">
 
-                        <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
+                        <p class="uppercase tracking-[.3em] text-xs text-rosegold">
 
                             ${product.description.label}
 
                         </p>
 
-                        <blockquote class="mt-4 text-2xl italic font-serif text-navy">
+                        <h3 class="font-display text-3xl mt-4">
 
                             "${product.description.quote}"
 
-                        </blockquote>
+                        </h3>
 
-                        <p class="mt-8 text-gray-600 leading-8">
+                        <p class="mt-8 leading-9 text-gray-600">
 
                             ${product.description.content}
 
@@ -85,45 +153,64 @@ async function loadProduct() {
 
                     </div>
 
-                    <div class="mt-10 space-y-3">
+                    <div class="mt-10 space-y-4">
 
-                        <div>
+                        <p><strong>Material :</strong> ${product.material}</p>
 
-                            <span class="font-semibold">
-                                Material :
-                            </span>
-
-                            ${product.material}
-
-                        </div>
-
-                        <div>
-
-                            <span class="font-semibold">
-                                Size :
-                            </span>
-
-                            ${product.size}
-
-                        </div>
+                        <p><strong>Size :</strong> ${product.size}</p>
 
                     </div>
 
-                    <button class="btn btn-neutral rounded-full mt-10 w-fit">
+                    <a
+                        href="https://wa.me/6281279053999?text=Hello%20LYSÉRIA,%20I'm%20interested%20in%20${encodeURIComponent(product.name)}."
+                        target="_blank"
+                        class="btn bg-navy text-white rounded-full mt-10">
 
                         Contact Us
 
-                    </button>
+                    </a>
 
                 </div>
 
             </div>
 
+            <section class="mt-36">
+
+                <div class="text-center">
+
+                    <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+
+                        More From This Collection
+
+                    </p>
+
+                    <h2 class="font-display text-5xl mt-4">
+
+                        In the Same Collection
+
+                    </h2>
+
+                    <p class="mt-5 text-gray-500">
+
+                        Discover more pieces from the ${currentCollection.name}.
+
+                    </p>
+
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+
+                    ${relatedCards}
+
+                </div>
+
+            </section>
+
         `;
 
     }
 
-    catch (error) {
+    catch(error){
 
         console.error(error);
 
