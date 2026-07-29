@@ -53,24 +53,6 @@
     {
         
         "id": 4,
-        "slug": "velours",
-        "name": "Velours",
-        "price": 329000,
-        "category": "Revealing soon",
-        "material": "Revealing soon",
-        "size": "Revealing soon",
-        "description": {
-            "label": "The Art of Emotion",
-            "quote": "Every brushstroke carries a feeling.",
-            "content": "Velours lahir dari kecintaan terhadap seni lukis. Sapuan warna yang lembut menyerupai cat air menggambarkan bahwa emosi tidak selalu harus sempurna untuk menjadi indah. Pattern ini merayakan ekspresi, kreativitas, dan keyakinan yang didukung keberanian untuk menciptakan sesuatu yang unik dan berbeda."
-        },
-        "images": [
-            "assets/products/velours.png"
-        ]
-    },
-    {
-        
-        "id": 5,
         "slug": "madeleine",
         "name": "Madeleine",
         "price": 329000,
