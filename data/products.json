@@ -25,7 +25,7 @@
         "material": "Revealing Soon",
         "size": "Reavealing Soon",
         "description": {
-            "label": "Floral Breeze",
+            "label": "Signature Collection",
             "quote": "Like flowers dancing with the wind.",
             "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, Brise Fleurie melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
         },
@@ -42,7 +42,7 @@
         "material": "Revealing Soon",
         "size": "Reavealing Soon",
         "description": {
-            "label": "First Light",
+            "label": "Signature Collection",
             "quote": "Every sunrise is another chance to bloom.",
             "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Aurore menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
         },
@@ -51,6 +51,7 @@
         ]
     },
     {
+        
         "id": 4,
         "slug": "velours",
         "name": "Velours",
@@ -65,6 +66,24 @@
         },
         "images": [
             "assets/products/velours.png"
+        ]
+    },
+    {
+        
+        "id": 5,
+        "slug": "madeleine",
+        "name": "Madeleine",
+        "price": 329000,
+        "category": "Revealing soon",
+        "material": "Revealing soon",
+        "size": "Revealing soon",
+        "description": {
+            "label": "Signature Collection",
+            "quote": "The warmest places are not always destinations they are feelings we carry within us.",
+            "content": "Pattern ini terinspirasi dari rasa nyaman yang kita sebut rumah. Bukan sekadar tempat, tetapi perasaan aman, damai, dan dicintai. Bunga-bunga yang mengelilingi melambangkan kenangan yang selalu membawa kita kembali pada kehangatan tersebut."
+        },
+        "images": [
+            "assets/products/madeleine.png"
         ]
     }
 ]
