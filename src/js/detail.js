@@ -2,15 +2,12 @@ async function loadProduct() {
 
     try {
 
-        // Ambil slug dari URL
         const params = new URLSearchParams(window.location.search);
         const slug = params.get("slug");
 
-        // Ambil semua collection
         const response = await fetch("./data/products.json");
         const collections = await response.json();
 
-        // Cari product & collection
         let product = null;
         let currentCollection = null;
 
@@ -32,7 +29,7 @@ async function loadProduct() {
         if (!product) {
 
             container.innerHTML = `
-                <h1 class="text-5xl text-center">
+                <h1 class="text-center text-5xl">
                     Product Not Found
                 </h1>
             `;
@@ -41,19 +38,29 @@ async function loadProduct() {
 
         }
 
-        // Produk lain dalam batch
+        // ===========================
+        // Related Product
+        // ===========================
+
         const relatedProducts = currentCollection.products.filter(item => item.slug !== slug);
 
-        // Generate Card
+        const isDesktop = window.innerWidth >= 1024;
+        const isScrollable = !isDesktop || relatedProducts.length > 4;
+        const scrollId = "related-scroll";
+
+        const cardClass = isScrollable
+            ? "w-[260px] md:w-[280px] lg:w-[300px] flex-none"
+            : "w-full";
+
         let relatedCards = "";
 
         relatedProducts.forEach(item => {
 
             relatedCards += `
 
-                <div class="group">
+                <div class="${cardClass} group">
 
-                    <div class="overflow-hidden rounded-3xl">
+                    <div class="overflow-hidden rounded-3xl bg-pearl">
 
                         <img
                             src="${item.images[0]}"
@@ -139,7 +146,7 @@ async function loadProduct() {
 
                         </p>
 
-                        <h3 class="font-display text-3xl mt-4">
+                        <h3 class="font-display text-3xl mt-4 italic">
 
                             "${product.description.quote}"
 
@@ -153,11 +160,27 @@ async function loadProduct() {
 
                     </div>
 
-                    <div class="mt-10 space-y-4">
+                    <div class="mt-10 space-y-3">
 
-                        <p><strong>Material :</strong> ${product.material}</p>
+                        <p>
 
-                        <p><strong>Size :</strong> ${product.size}</p>
+                            <span class="font-semibold">
+                                Material :
+                            </span>
+
+                            ${product.material}
+
+                        </p>
+
+                        <p>
+
+                            <span class="font-semibold">
+                                Size :
+                            </span>
+
+                            ${product.size}
+
+                        </p>
 
                     </div>
 
@@ -176,31 +199,73 @@ async function loadProduct() {
 
             <section class="mt-36">
 
-                <div class="text-center">
+                <div class="flex justify-between items-end mb-8">
 
-                    <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                    <div>
 
-                        More From This Collection
+                        <p class="uppercase tracking-[.3em] text-xs text-rosegold">
 
-                    </p>
+                            Continue Exploring
 
-                    <h2 class="font-display text-5xl mt-4">
+                        </p>
 
-                        In the Same Collection
+                        <h2 class="font-display text-5xl mt-3">
 
-                    </h2>
+                            In The Same Collection
 
-                    <p class="mt-5 text-gray-500">
+                        </h2>
 
-                        Discover more pieces from the ${currentCollection.name}.
+                        <p class="mt-3 text-gray-500">
 
-                    </p>
+                            Discover more pieces from the ${currentCollection.name}.
+
+                        </p>
+
+                    </div>
+
+                    ${isScrollable && isDesktop ? `
+
+                    <div class="flex gap-3">
+
+                        <button
+                            onclick="document.getElementById('${scrollId}').scrollBy({left:-340,behavior:'smooth'})"
+                            class="w-12 h-12 rounded-full border border-gray-300 hover:bg-navy hover:text-white duration-300">
+
+                            ←
+
+                        </button>
+
+                        <button
+                            onclick="document.getElementById('${scrollId}').scrollBy({left:340,behavior:'smooth'})"
+                            class="w-12 h-12 rounded-full border border-gray-300 hover:bg-navy hover:text-white duration-300">
+
+                            →
+
+                        </button>
+
+                    </div>
+
+                    ` : ""}
 
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-16">
+                <div class="bg-[#FCFAF8] rounded-[36px] border border-[#F2ECE6] shadow-sm p-8">
 
-                    ${relatedCards}
+                    <div
+                        id="${scrollId}"
+                        class="${isScrollable ? "overflow-x-auto scrollbar-hide scroll-smooth" : ""}">
+
+                        <div class="${
+                            isScrollable
+                                ? "flex gap-6 lg:gap-8 w-max"
+                                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                        }">
+
+                            ${relatedCards}
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -210,7 +275,7 @@ async function loadProduct() {
 
     }
 
-    catch(error){
+    catch (error) {
 
         console.error(error);
 
@@ -219,3 +284,15 @@ async function loadProduct() {
 }
 
 loadProduct();
+
+window.addEventListener("resize", () => {
+
+    clearTimeout(window.detailResize);
+
+    window.detailResize = setTimeout(() => {
+
+        loadProduct();
+
+    }, 200);
+
+});
