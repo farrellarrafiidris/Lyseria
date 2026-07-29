@@ -1,0 +1,79 @@
+[
+  {
+    "id": 1,
+    "name": "Première Édition",
+    "year": 2026,
+    "description": "The first chapter of Lyséria, where every pattern tells the story of growth, hope, and elegance.",
+    "products": [
+      {
+        "id": 1,
+        "slug": "lys-de-chei",
+        "name": "Lys de Chéi",
+        "price": 329000,
+        "category": "Revealing Soon",
+        "material": "Revealing Soon",
+        "size": "Revealing Soon",
+        "description": {
+          "label": "Signature Collection",
+          "quote": "Every bloom begins with a quiet dream.",
+          "content": "Lys de Chéi adalah karya pertama yang lahir serta menjadi identitas koleksi. Terinspirasi dari bunga lily yang sedang mekar, pattern ini melambangkan awal dari sebuah perjalanan kreatif. Setiap kelopak yang terbuka menggambarkan keberanian untuk bertumbuh, sementara sentuhan pink yang lembut merepresentasikan kelembutan, kasih sayang, dan feminitas. Pattern ini lahir sebagai jawaban dari semua mimpi yang dicari dan ditunggu."
+        },
+        "images": [
+          "assets/products/signature_collection/lys_de_chei.png"
+        ]
+      },
+      {
+        "id": 2,
+        "slug": "brise-fleurie",
+        "name": "Brise Fleurie",
+        "price": 329000,
+        "category": "Revealing Soon",
+        "material": "Revealing Soon",
+        "size": "Revealing Soon",
+        "description": {
+          "label": "Signature Collection",
+          "quote": "Like flowers dancing with the wind.",
+          "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, Brise Fleurie melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
+        },
+        "images": [
+          "assets/products/signature_collection/brise_fleurie.png"
+        ]
+      },
+      {
+        "id": 3,
+        "slug": "aurore",
+        "name": "Aurore",
+        "price": 329000,
+        "category": "Revealing Soon",
+        "material": "Revealing Soon",
+        "size": "Revealing Soon",
+        "description": {
+          "label": "Signature Collection",
+          "quote": "Every sunrise is another chance to bloom.",
+          "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Aurore menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
+        },
+        "images": [
+          "assets/products/signature_collection/aurore.png"
+        ]
+      },
+      
+      {
+        "id": 4,
+        "slug": "madeleine",
+        "name": "Madeleine",
+        "price": 329000,
+        "category": "Revealing Soon",
+        "material": "Revealing Soon",
+        "size": "Revealing Soon",
+        "description": {
+          "label": "Signature Collection",
+          "quote": "The warmest places are not always destinations—they are feelings we carry within us.",
+          "content": "Pattern ini terinspirasi dari rasa nyaman yang kita sebut rumah. Bukan sekadar tempat, tetapi perasaan aman, damai, dan dicintai. Bunga-bunga yang mengelilingi melambangkan kenangan yang selalu membawa kita kembali pada kehangatan tersebut."
+        },
+        "images": [
+          "assets/products/signature_collection/madeleine.png"
+        ]
+      }
+    ]
+  }
+]

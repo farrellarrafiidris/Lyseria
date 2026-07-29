@@ -25,7 +25,7 @@ async function loadProducts() {
                         <img
                             src="${product.images[0]}"
                             alt="${product.name}"
-                            class="w-full h-full object-cover duration-500 group-hover:scale-105">
+                            class="w-full h-full object-cover duration-500 group-hover:scale-105 blur-3xl">
 
                     </div>
 
@@ -43,9 +43,9 @@ async function loadProducts() {
 
                         </h3>
 
-                        <p class="mt-3 text-rosegold">
+                        <p class="mt-3 ">
 
-                            Rp ${product.price.toLocaleString("id-ID")}
+                            <span class="text-rosegold line-through">Rp ${product.price.toLocaleString("id-ID")}</span><span class="text-red-500 font-medium"> Coming Soon</span>
 
                         </p>
 

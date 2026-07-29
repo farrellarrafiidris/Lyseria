@@ -34,7 +34,7 @@ async function loadCollections() {
                             <img
                                 src="${product.images[0]}"
                                 alt="${product.name}"
-                                class="w-full aspect-[3/4] object-cover duration-500 group-hover:scale-105">
+                                class="w-full aspect-[3/4] object-cover duration-500 group-hover:scale-105 blur-3xl">
 
                         </div>
 
@@ -48,8 +48,8 @@ async function loadCollections() {
                                 ${product.name}
                             </h3>
 
-                            <p class="mt-3 text-rosegold">
-                                Rp ${product.price.toLocaleString("id-ID")}
+                            <p class="mt-3>
+                               <span class="text-rosegold line-through">Rp ${product.price.toLocaleString("id-ID")}</span><span class="text-red-500 font-medium"> Coming Soon</span>
                             </p>
 
                             <a
