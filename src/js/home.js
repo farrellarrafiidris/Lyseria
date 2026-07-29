@@ -29,13 +29,11 @@ async function loadProducts() {
                             ${product.category}
                         </p>
 
-                        <h2 class="font-serif text-3xl mt-2 text-black">
+                        <h2 class="font-serif text-2xl mt-2 text-black">
                             ${product.name}
                         </h2>
 
-                        <p class="mt-2 text-lg ">
-                            <span class=" line-through text-rosegold">Rp ${product.price.toLocaleString("id-ID")}</span> <span class="text-red-500">Coming Soon</span>
-                        </p>
+                        
 
                         <a
                             href="detail.html?slug=${product.slug}"
