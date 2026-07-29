@@ -43,10 +43,9 @@ async function loadProducts() {
 
                         </h3>
 
-                        <p class="mt-3 ">
+                        <p class="mt-3">
 
-                            <span class="text-rosegold line-through">Rp ${product.price.toLocaleString("id-ID")}</span><span class="text-red-500 font-medium"> Coming Soon</span>
-
+                            <span class="text-navy">Rp</span><span class="text-red-500 text-medium"> ${product.price.toLocaleString("id-ID")}</span>
                         </p>
 
                         <a

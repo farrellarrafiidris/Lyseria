@@ -85,7 +85,7 @@ async function loadProduct() {
 
                         <p class="mt-3>
 
-                            <span class="text-rosegold line-through">Rp ${product.price.toLocaleString("id-ID")}</span><span class="text-red-500 font-medium"> Coming Soon</span>
+                           Rp <span class="text-red-500 text-medium">${product.price.toLocaleString("id-ID")}</span>
 
                         </p>
 
@@ -134,7 +134,7 @@ async function loadProduct() {
 
                     <p class="text-xl lg:text-2xl mt-4">
 
-                        <span class="text-rosegold line-through">Rp ${product.price.toLocaleString("id-ID")}</span><span class="text-red-500 font-medium"> Coming Soon</span>
+                        Rp <span class="text-red-500">${product.price.toLocaleString("id-ID")}</span>
 
                     </p>
 
