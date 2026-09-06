@@ -1,78 +1,108 @@
 [
   {
     "id": 1,
-    "name": "Première Édition",
+    "name": "SIGNE BY CHÉI",
     "year": 2026,
     "description": "The first chapter of Lyséria, where every pattern tells the story of growth, hope, and elegance.",
     "products": [
       {
         "id": 1,
-        "slug": "lys-de-chei",
-        "name": "Lys de Chéi",
-        "price": "Coming Soon",
-        "category": "Revealing Soon",
-        "material": "Revealing Soon",
-        "size": "Revealing Soon",
+        "slug": "jolie",
+        "name": "Jolie",
+        "price": "175000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
         "description": {
-          "label": "Signature Collection",
+          "label": "SIGNE BY CHÉI",
           "quote": "Every bloom begins with a quiet dream.",
-          "content": "Lys de Chéi adalah karya pertama yang lahir serta menjadi identitas koleksi. Terinspirasi dari bunga lily yang sedang mekar, pattern ini melambangkan awal dari sebuah perjalanan kreatif. Setiap kelopak yang terbuka menggambarkan keberanian untuk bertumbuh, sementara sentuhan pink yang lembut merepresentasikan kelembutan, kasih sayang, dan feminitas. Pattern ini lahir sebagai jawaban dari semua mimpi yang dicari dan ditunggu."
+          "content": "Jolie adalah karya pertama yang lahir serta menjadi identitas koleksi. Terinspirasi dari bunga lily yang sedang mekar, pattern ini melambangkan awal dari sebuah perjalanan kreatif. Setiap kelopak yang terbuka menggambarkan keberanian untuk bertumbuh, sementara sentuhan pink yang lembut merepresentasikan kelembutan, kasih sayang, dan feminitas. Pattern ini lahir sebagai jawaban dari semua mimpi yang dicari dan ditunggu."
         },
         "images": [
-          "assets/products/signature_collection/lys_de_chei.png"
-        ]
+          "assets/products/signé_by_chei/jolie.png"
+        ],
+        "status": "released"
       },
       {
         "id": 2,
-        "slug": "brise-fleurie",
-        "name": "Brise Fleurie",
-        "price": "Coming Soon",
-        "category": "Revealing Soon",
-        "material": "Revealing Soon",
-        "size": "Revealing Soon",
+        "slug": "seve",
+        "name": "SÉVE",
+        "price": "175000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
         "description": {
-          "label": "Signature Collection",
+          "label": "SIGNE BY CHÉI",
           "quote": "Like flowers dancing with the wind.",
-          "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, Brise Fleurie melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
+          "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, SÉVE melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
         },
         "images": [
-          "assets/products/signature_collection/brise_fleurie.png"
-        ]
+          "assets/products/signé_by_chei/seve.png"
+        ],
+        "status": "released"
       },
       {
         "id": 3,
-        "slug": "aurore",
-        "name": "Aurore",
-        "price": "Coming Soon",
-        "category": "Revealing Soon",
-        "material": "Revealing Soon",
-        "size": "Revealing Soon",
+        "slug": "miel",
+        "name": "MIEL",
+        "price": "175000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
         "description": {
           "label": "Signature Collection",
           "quote": "Every sunrise is another chance to bloom.",
-          "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Aurore menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
+          "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Miel menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
         },
         "images": [
-          "assets/products/signature_collection/aurore.png"
-        ]
-      },
-      
+          "assets/products/signé_by_chei/miel.png"
+        ],
+        "status": "released"
+      }
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "ETHEREAL",
+    "year": 2026,
+    "description": "A collection inspired by the delicate beauty of Eastern ornamentation, where intricate patterns meet soft elegance. Ethereal captures a sense of timeless grace dreamlike, refined, and effortlessly sophisticated.",
+    "products": [
       {
         "id": 4,
-        "slug": "madeleine",
-        "name": "Madeleine",
-        "price": "Coming Soon",
-        "category": "Revealing Soon",
-        "material": "Revealing Soon",
-        "size": "Revealing Soon",
+        "slug": "jade-coming-soon",
+        "name": "Jade",
+        "price": "199000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
         "description": {
-          "label": "Signature Collection",
-          "quote": "The warmest places are not always destinations—they are feelings we carry within us.",
-          "content": "Pattern ini terinspirasi dari rasa nyaman yang kita sebut rumah. Bukan sekadar tempat, tetapi perasaan aman, damai, dan dicintai. Bunga-bunga yang mengelilingi melambangkan kenangan yang selalu membawa kita kembali pada kehangatan tersebut."
+          "label": "ETHEREAL",
+          "quote": "Where serenity meets timeless beauty.",
+          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength. Its emerald-teal tone brings a sense of freshness and depth, creating an elegance that feels both natural and refined."
         },
         "images": [
-          "assets/products/signature_collection/madeleine.png"
-        ]
+          "assets/products/ethereal/jade.png"
+        ],
+        "status": "coming_soon"
+      },
+      {
+        "id": 5,
+        "slug": "oad-coming-soon",
+        "name": "Oud",
+        "price": "199000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
+        "description": {
+          "label": "ETHEREAL",
+          "quote": "Where warmth lingers in timeless elegance.",
+          "content": "Inspired by the rich character of oud, Oud embodies warmth, depth, and understated luxury. Its deep mahogany tone reflects a quiet sophistication—bold yet graceful, leaving a lasting impression."
+        },
+        "images": [
+          "assets/products/ethereal/oud.png"
+        ],
+        "status": "coming_soon"
       }
     ]
   }
