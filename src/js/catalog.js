@@ -27,7 +27,7 @@ async function loadCollections() {
                             <img
                                 src="${product.images[0]}"
                                 alt="${product.name}"
-                                class="w-full aspect-[3/4] object-cover object-right duration-500 group-hover:scale-105 ${isComingSoon ? "blur-2xl select-none pointer-events-none" : ""}">
+                                class="w-full aspect-[3/4] object-cover object-center duration-500 group-hover:scale-105 ${isComingSoon ? "blur-2xl select-none pointer-events-none" : ""}">
 
                             <!-- Label LYSÉRIA (Kanan Atas, Bawah ke Atas) -->
                             <span 
@@ -53,8 +53,8 @@ async function loadCollections() {
                                 ${product.name}
                             </h3>
 
-                            <p class="mt-3 font-serif text-md">
-                                <span class="text-navy">Rp</span><span class="text-black"> ${Number(product.price).toLocaleString("id-ID")}</span>
+                            <p class="mt-3 font-serif text-xl text-navy">
+                                <span>Rp</span><span"> ${Number(product.price).toLocaleString("id-ID")}</span>
                             </p>
 
                             ${isComingSoon ? `

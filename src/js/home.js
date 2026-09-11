@@ -11,11 +11,11 @@ async function loadProducts() {
         products.slice(0, 3).forEach(product => {
             const card = `
                 <div class="group">
-                    <div class="relative aspect-[3/4] rounded-3xl overflow-hidden bg-pearl" style="background-image: url();"> // disini
+                    <div class="relative aspect-[3/4] rounded-3xl overflow-hidden bg-pearl">
                         <img
                             src="${product.images[0]}"
                             alt="${product.name}"
-                            class="w-full h-full object-cover object-right duration-500 group-hover:scale-105">
+                            class="w-full h-full object-cover object-center duration-500 group-hover:scale-105">
 
                         <!-- TULISAN LYSÉRIA (KANAN ATAS, BAWAH KE ATAS) -->
                         <span 
@@ -33,7 +33,7 @@ async function loadProducts() {
                             ${product.name}
                         </h3>
 
-                        <p class="mt-2 font-serif text-navy">
+                        <p class="mt-2 font-serif text-xl text-navy">
                             <span>Rp</span> ${Number(product.price).toLocaleString("id-ID")}</span>
                         </p>
 

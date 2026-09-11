@@ -74,7 +74,7 @@ async function loadProduct() {
                                 w-full
                                 h-full
                                 object-cover
-                                object-right
+                                object-center
                                 duration-500
                                 group-hover:scale-105
                                 ${isItemComingSoon
