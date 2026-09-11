@@ -53,9 +53,15 @@ async function loadCollections() {
                                 ${product.name}
                             </h3>
 
-                            <p class="mt-3 font-serif text-xl text-navy">
-                                <span>Rp</span><span"> ${Number(product.price).toLocaleString("id-ID")}</span>
-                            </p>
+                                ${isComingSoon ? `
+                                    <p class="mt-3 font-serif text-xl text-rosegold uppercase tracking-widest">
+                                        Coming Soon
+                                    </p>
+                                ` : `
+                                    <p class="mt-3 font-serif text-xl text-navy">
+                                        <span>Rp</span> ${Number(product.price).toLocaleString("id-ID")}
+                                    </p>
+                                `}
 
                             ${isComingSoon ? `
                                 <span class="inline-block border border-gray-300 text-gray-400 rounded-full px-6 py-2.5 mt-5 text-sm cursor-not-allowed">
