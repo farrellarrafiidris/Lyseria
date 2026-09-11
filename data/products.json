@@ -19,7 +19,7 @@
           "content": "Jolie adalah karya pertama yang lahir serta menjadi identitas koleksi. Terinspirasi dari bunga lily yang sedang mekar, pattern ini melambangkan awal dari sebuah perjalanan kreatif. Setiap kelopak yang terbuka menggambarkan keberanian untuk bertumbuh, sementara sentuhan pink yang lembut merepresentasikan kelembutan, kasih sayang, dan feminitas. Pattern ini lahir sebagai jawaban dari semua mimpi yang dicari dan ditunggu."
         },
         "images": [
-          "assets/products/signé_by_chei/jolie.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097894/jolie.png"
         ],
         "status": "released"
       },
@@ -37,7 +37,7 @@
           "content": "Pattern ini menggambarkan hamparan bunga yang bergoyang mengikuti angin. Terinspirasi dari momen ketika alam terasa hidup tanpa harus dipaksakan, SÉVE melambangkan kebebasan, ketenangan, berpadu dengan kecantikan yang seharusnya datang secara alami."
         },
         "images": [
-          "assets/products/signé_by_chei/seve.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097901/seve.png"
         ],
         "status": "released"
       },
@@ -55,7 +55,7 @@
           "content": "Warna-warna hangat dalam pattern ini terinspirasi dari cahaya pertama saat matahari terbit. Miel menjadi simbol harapan, awal yang baru, dan keyakinan bahwa setiap hari membawa kesempatan untuk tumbuh menjadi versi terbaik dari diri sendiri serta meyakinkan hari esok akan selalu menjadi harapan yang lebih baik."
         },
         "images": [
-          "assets/products/signé_by_chei/miel.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097806/miel.png"
         ],
         "status": "released"
       }
@@ -82,7 +82,7 @@
           "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength. Its emerald-teal tone brings a sense of freshness and depth, creating an elegance that feels both natural and refined."
         },
         "images": [
-          "assets/products/ethereal/jade.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png"
         ],
         "status": "coming_soon"
       },
@@ -100,7 +100,7 @@
           "content": "Inspired by the rich character of oud, Oud embodies warmth, depth, and understated luxury. Its deep mahogany tone reflects a quiet sophistication—bold yet graceful, leaving a lasting impression."
         },
         "images": [
-          "assets/products/ethereal/oud.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png"
         ],
         "status": "coming_soon"
       }
