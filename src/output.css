@@ -1526,6 +1526,24 @@
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
   }
+  @layer daisyui.l1.l2.l3 {
+    .link {
+      cursor: pointer;
+      text-decoration-line: underline;
+    }
+    .link:focus {
+      --tw-outline-style: none;
+      outline-style: none;
+      @media (forced-colors: active) {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+    }
+    .link:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
+  }
   .cursor-not-allowed {
     cursor: not-allowed;
   }
