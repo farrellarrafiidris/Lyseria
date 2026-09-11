@@ -49,7 +49,7 @@ async function loadCollections() {
                                 ${product.category}
                             </p>
 
-                            <h3 class="font-display text-3xl mt-3 text-navy">
+                            <h3 class="font-display text-3xl mt-3 text-navy uppercase">
                                 ${product.name}
                             </h3>
 

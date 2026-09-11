@@ -90,7 +90,7 @@ async function loadProduct() {
                                 position: absolute;
                                 top: 16px;
                                 right: 14px;
-                                z-index: 50;
+                                z-index: 3;
                                 writing-mode: vertical-rl;
                                 transform: rotate(180deg);
                                 color: #1B2A4A;
@@ -153,6 +153,7 @@ async function loadProduct() {
                             text-3xl
                             mt-3
                             text-navy
+                            uppercase
                         ">
                             ${item.name}
                         </h3>
