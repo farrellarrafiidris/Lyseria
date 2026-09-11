@@ -137,7 +137,7 @@ async function loadProduct() {
                     </div>
 
                     <!-- RELATED PRODUCT INFO -->
-                    <div class="mt-5">
+                    <div class="mt-5 ">
 
                         <p class="
                             uppercase
@@ -525,6 +525,77 @@ async function loadProduct() {
                 </div>
 
             </div>
+
+            <!-- ================= -->
+            <!-- FULL PRODUCT IMAGE -->
+            <!-- ================= -->
+
+            <section class="mt-24">
+
+                <!-- SECTION TITLE -->
+                <div class="text-center mb-10">
+
+                    <p class="
+                        uppercase
+                        tracking-[.3em]
+                        text-xs
+                        text-rosegold
+                    ">
+                        The Complete Piece
+                    </p>
+
+                    <h2 class="
+                        font-display
+                        text-4xl
+                        lg:text-5xl
+                        mt-3
+                        text-navy
+                    ">
+                        See The Full Design
+                    </h2>
+
+                    <p class="
+                        mt-4
+                        text-gray-500
+                        max-w-xl
+                        mx-auto
+                        leading-relaxed
+                    ">
+                        Discover every detail and the complete beauty of ${product.name}.
+                    </p>
+
+                </div>
+
+
+                <!-- FULL PRODUCT IMAGE -->
+                <div class="
+                    relative
+                    w-full
+                    rounded-[32px]
+                    overflow-hidden
+                    bg-[#F7F3EE]
+                    shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                ">
+
+                    <img
+                        src="${product.images[0]}"
+                        alt="Full view of ${product.name}"
+
+                        class="
+                            block
+                            w-full
+                            h-auto
+                            object-contain
+                            transition-transform
+                            duration-700
+                            ease-out
+                            hover:scale-[1.02]
+                        "
+                    >
+
+                </div>
+
+            </section>
 
 
             <!-- ================= -->
