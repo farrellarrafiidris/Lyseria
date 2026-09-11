@@ -133,7 +133,7 @@ async function loadProduct() {
                     </p>
 
                     <div class="mt-8">
-                        <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                        <p class="uppercase tracking-[.3em] text-xs text-rosegold text-justify">
                             ${product.description.label}
                         </p>
 
