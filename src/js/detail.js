@@ -571,7 +571,6 @@ async function loadProduct() {
                 <div class="
                     relative
                     w-full
-                    rounded-[32px]
                     overflow-hidden
                     bg-[#F7F3EE]
                     shadow-[0_20px_60px_rgba(0,0,0,0.12)]
