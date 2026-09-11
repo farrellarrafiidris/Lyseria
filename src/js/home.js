@@ -11,7 +11,7 @@ async function loadProducts() {
         products.slice(0, 3).forEach(product => {
             const card = `
                 <div class="group">
-                    <div class="relative aspect-[3/4] rounded-3xl overflow-hidden bg-pearl">
+                    <div class="relative aspect-[3/4] rounded-3xl overflow-hidden bg-pearl" style="background-image: url();"> // disini
                         <img
                             src="${product.images[0]}"
                             alt="${product.name}"
@@ -33,8 +33,8 @@ async function loadProducts() {
                             ${product.name}
                         </h3>
 
-                        <p class="mt-2 font-serif text-md">
-                            <span class="text-navy">Rp</span><span class="text-black"> ${Number(product.price).toLocaleString("id-ID")}</span>
+                        <p class="mt-2 font-serif text-navy">
+                            <span>Rp</span> ${Number(product.price).toLocaleString("id-ID")}</span>
                         </p>
 
                         <a

@@ -9,14 +9,14 @@
         "id": 1,
         "slug": "jolie",
         "name": "JOLIE",
-        "price": "199000",
+        "price": "219533",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
           "label": "SIGNE BY CHÉI",
           "quote": "Every bloom begins with a quiet dream.",
-          "content": "Jolie is the first creation to come to life, becoming the identity of the collection. Inspired by a blooming lily, this pattern symbolizes the beginning of a creative journey. Each opening petal represents the courage to grow, while the delicate touches of pink embody softness, affection, and femininity. This pattern was born as an answer to every dream that was once sought and patiently awaited."
+          "content": "Jolie is the first creation to come to life, becoming the identity of the collection. Inspired by a blooming lily, this pattern symbolizes the beginning of a creative journey. while the delicate touches of pink embody softness, affection, and femininity."
         },
         "images": [
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097894/jolie.png"
@@ -27,14 +27,14 @@
         "id": 2,
         "slug": "seve",
         "name": "SÉVE",
-        "price": "199000",
+        "price": "219533",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
           "label": "SIGNE BY CHÉI",
           "quote": "Like flowers dancing with the wind.",
-          "content": "This pattern depicts a field of flowers gently swaying with the wind. Inspired by moments when nature feels alive without ever being forced, SÉVE embodies freedom and tranquility, intertwined with a beauty that is meant to unfold naturally."
+          "content": "Inspired by moments when nature feels alive without ever being forced, SÉVE embodies freedom and tranquility, intertwined with a beauty that is meant to unfold naturally."
         },
         "images": [
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097901/seve.png"
@@ -45,14 +45,14 @@
         "id": 3,
         "slug": "miel",
         "name": "MIEL",
-        "price": "199000",
+        "price": "219533",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
           "label": "Signature Collection",
           "quote": "Every sunrise is another chance to bloom.",
-          "content": "The warm tones of this pattern are inspired by the first light of sunrise. Miel symbolizes hope, new beginnings, and the belief that each day brings an opportunity to grow into the best version of oneself, while holding onto the faith that tomorrow will always carry the promise of something better."
+          "content": "The warm tones of this pattern are inspired by the first light of sunrise. Miel symbolizes hope, new beginnings, and the belief that each day brings an opportunity to grow into the best version of oneself."
         },
         "images": [
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097806/miel.png"
@@ -61,7 +61,6 @@
       }
     ]
   },
-
   {
     "id": 2,
     "name": "ETHEREAL",
@@ -72,14 +71,14 @@
         "id": 4,
         "slug": "jade-coming-soon",
         "name": "Jade",
-        "price": "199000",
+        "price": "219533",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
           "label": "ETHEREAL",
           "quote": "Where serenity meets timeless beauty.",
-          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength. Its emerald-teal tone brings a sense of freshness and depth, creating an elegance that feels both natural and refined."
+          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
         },
         "images": [
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png"
@@ -90,14 +89,14 @@
         "id": 5,
         "slug": "oad-coming-soon",
         "name": "Oud",
-        "price": "199000",
+        "price": "219533",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
           "label": "ETHEREAL",
           "quote": "Where warmth lingers in timeless elegance.",
-          "content": "Inspired by the rich character of oud, Oud embodies warmth, depth, and understated luxury. Its deep mahogany tone reflects a quiet sophistication—bold yet graceful, leaving a lasting impression."
+          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
         },
         "images": [
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png"
