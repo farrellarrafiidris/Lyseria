@@ -36,7 +36,7 @@ async function loadCollections() {
                             </span>
 
                             ${isComingSoon ? `
-                                <div class="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+                                <div class="absolute inset-0 flex items-center justify-center  backdrop-blur-[2px]">
                                     <span class="text-white text-xs tracking-widest uppercase px-4 py-2 rounded-full shadow-md font-medium">
                                         Coming Soon
                                     </span>
