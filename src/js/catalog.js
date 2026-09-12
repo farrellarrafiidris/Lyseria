@@ -23,7 +23,7 @@ async function loadCollections() {
 
                 cards += `
                     <div class="${cardClass} group">
-                        <div class="relative overflow-hidden rounded-3xl">
+                        <div class="relative overflow-hidden rounded-2xl">
                             <img
                                 src="${product.images[0]}"
                                 alt="${product.name}"
