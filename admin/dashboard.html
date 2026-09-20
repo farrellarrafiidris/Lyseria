@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — LYSÉRIA</title>
+    <link href="/src/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="/admin/admin.css">
+</head>
+<body class="admin-body">
+
+<!-- ═══════════════════════ SIDEBAR ═══════════════════════ -->
+<aside id="sidebar" class="admin-sidebar">
+
+    <!-- Brand -->
+    <div class="sidebar-brand">
+        <img src="../assets/images/logo.png" alt="Logo" class="sidebar-logo">
+        <div>
+            <p class="sidebar-brand-name">LYSÉRIA</p>
+            <p class="sidebar-brand-sub">Admin Panel</p>
+        </div>
+    </div>
+
+    <!-- Nav -->
+    <nav class="sidebar-nav">
+        <p class="sidebar-section-label">Main</p>
+
+        <a href="#" class="sidebar-link active" data-section="overview" id="nav-overview">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            Overview
+        </a>
+
+        <p class="sidebar-section-label mt-4">Catalog</p>
+
+        <a href="#" class="sidebar-link" data-section="products" id="nav-products">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            Products
+        </a>
+
+        <a href="#" class="sidebar-link" data-section="collections" id="nav-collections">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+            </svg>
+            Collections
+        </a>
+    </nav>
+
+    <!-- Sidebar Footer -->
+    <div class="sidebar-footer">
+        <div class="sidebar-user">
+            <div class="sidebar-avatar">A</div>
+            <div>
+                <p class="sidebar-username">admin</p>
+                <p class="sidebar-user-role">Administrator</p>
+            </div>
+        </div>
+        <button id="logout-btn" class="sidebar-logout" title="Logout">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+            </svg>
+        </button>
+    </div>
+
+</aside>
+
+<!-- ═══════════════════════ MAIN ═══════════════════════ -->
+<main class="admin-main">
+
+    <!-- Top Bar -->
+    <header class="admin-topbar">
+        <button id="sidebar-toggle" class="topbar-menu-btn" aria-label="Toggle sidebar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <div>
+            <h1 id="page-title" class="topbar-title">Overview</h1>
+            <p id="page-sub" class="topbar-sub">Welcome back, Admin</p>
+        </div>
+        <div class="topbar-right">
+            <a href="/" target="_blank" class="topbar-site-link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                </svg>
+                View Site
+            </a>
+            <button id="export-btn" class="topbar-export-btn" title="Export JSON">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                </svg>
+                Export JSON
+            </button>
+        </div>
+    </header>
+
+    <!-- Content -->
+    <div class="admin-content">
+
+        <!-- ── OVERVIEW SECTION ── -->
+        <section id="section-overview" class="admin-section active">
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card stat-card-purple">
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="stat-label">Total Products</p>
+                        <p class="stat-value" id="stat-total">—</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-gold">
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="stat-label">Collections</p>
+                        <p class="stat-value" id="stat-collections">—</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-green">
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="stat-label">Released</p>
+                        <p class="stat-value" id="stat-released">—</p>
+                    </div>
+                </div>
+
+                <div class="stat-card stat-card-slate">
+                    <div class="stat-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="stat-label">Coming Soon</p>
+                        <p class="stat-value" id="stat-coming">—</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Products -->
+            <div class="dash-card mt-8">
+                <div class="dash-card-header">
+                    <h2 class="dash-card-title">Recent Products</h2>
+                    <button class="btn-secondary" onclick="switchSection('products')">View All</button>
+                </div>
+                <div class="table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Collection</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="overview-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ── PRODUCTS SECTION ── -->
+        <section id="section-products" class="admin-section">
+
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Products</h2>
+                    <p class="section-sub">Manage all scarf products across collections</p>
+                </div>
+                <button id="add-product-btn" class="btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Add Product
+                </button>
+            </div>
+
+            <!-- Search & Filter -->
+            <div class="table-controls">
+                <input type="text" id="product-search" class="table-search" placeholder="Search products…">
+                <select id="product-filter-status" class="table-filter">
+                    <option value="">All Statuses</option>
+                    <option value="released">Released</option>
+                    <option value="coming_soon">Coming Soon</option>
+                </select>
+                <select id="product-filter-collection" class="table-filter">
+                    <option value="">All Collections</option>
+                </select>
+            </div>
+
+            <div class="dash-card">
+                <div class="table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Collection</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ── COLLECTIONS SECTION ── -->
+        <section id="section-collections" class="admin-section">
+
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Collections</h2>
+                    <p class="section-sub">Manage product collections and series</p>
+                </div>
+                <button id="add-collection-btn" class="btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                    </svg>
+                    Add Collection
+                </button>
+            </div>
+
+            <div class="dash-card">
+                <div class="table-wrap">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Collection Name</th>
+                                <th>Year</th>
+                                <th>Description</th>
+                                <th>Products</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="collections-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</main>
+
+<!-- ═══════════════════════ TOAST ═══════════════════════ -->
+<div id="toast" class="toast hidden">
+    <svg id="toast-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span id="toast-text">Saved successfully.</span>
+</div>
+
+<!-- ═══════════════════════ CONFIRM MODAL ═══════════════════════ -->
+<div id="confirm-modal" class="modal-overlay hidden">
+    <div class="adm-modal-box confirm-box">
+        <div class="confirm-icon-wrap">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="#ef4444" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+        </div>
+        <h3 class="confirm-title" id="confirm-title">Delete this item?</h3>
+        <p class="confirm-sub" id="confirm-sub">This action cannot be undone.</p>
+        <div class="confirm-actions">
+            <button id="confirm-cancel" type="button" class="btn-secondary">Cancel</button>
+            <button id="confirm-ok" type="button" class="btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════ PRODUCT MODAL ═══════════════════════ -->
+<div id="product-modal" class="modal-overlay hidden">
+    <div class="adm-modal-box product-modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title" id="product-modal-title">Add Product</h3>
+            <button type="button" class="modal-close" id="product-modal-close" aria-label="Close">✕</button>
+        </div>
+        <form id="product-form" class="modal-form" novalidate>
+            <input type="hidden" id="pf-id">
+            <input type="hidden" id="pf-collection-id">
+
+            <div class="form-grid-2">
+                <div class="form-field">
+                    <label class="form-label" for="pf-name">Product Name <span class="required">*</span></label>
+                    <input id="pf-name" type="text" class="form-input" placeholder="e.g. JOLIE" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-slug">Slug <span class="required">*</span></label>
+                    <input id="pf-slug" type="text" class="form-input" placeholder="e.g. jolie" required>
+                </div>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-field">
+                    <label class="form-label" for="pf-price">Price (Rp) <span class="required">*</span></label>
+                    <input id="pf-price" type="number" class="form-input" placeholder="e.g. 219533" min="0" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-status">Status <span class="required">*</span></label>
+                    <select id="pf-status" class="form-input" required>
+                        <option value="released">Released</option>
+                        <option value="coming_soon">Coming Soon</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-field">
+                    <label class="form-label" for="pf-category">Category <span class="required">*</span></label>
+                    <input id="pf-category" type="text" class="form-input" placeholder="e.g. Pashmina" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-material">Material</label>
+                    <input id="pf-material" type="text" class="form-input" placeholder="e.g. Viscose">
+                </div>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-field">
+                    <label class="form-label" for="pf-size">Size</label>
+                    <input id="pf-size" type="text" class="form-input" placeholder="e.g. 175x70cm">
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-collection">Collection <span class="required">*</span></label>
+                    <select id="pf-collection" class="form-input" required></select>
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="pf-image">Image URL <span class="required">*</span></label>
+                <input id="pf-image" type="url" class="form-input" placeholder="https://…" required>
+                <div id="pf-image-preview-wrap" class="image-preview-wrap hidden">
+                    <img id="pf-image-preview" src="" alt="Preview" class="image-preview">
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="pf-desc-label">Description Label</label>
+                <input id="pf-desc-label" type="text" class="form-input" placeholder="e.g. SIGNE BY CHÉI">
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="pf-desc-quote">Quote</label>
+                <input id="pf-desc-quote" type="text" class="form-input" placeholder="e.g. Every bloom begins with a quiet dream.">
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="pf-desc-content">Description Content</label>
+                <textarea id="pf-desc-content" class="form-textarea" rows="3" placeholder="Full product description…"></textarea>
+            </div>
+
+            <div id="product-form-error" class="form-error hidden"></div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="product-form-cancel">Cancel</button>
+                <button type="submit" class="btn-primary" id="product-form-submit">Save Product</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ═══════════════════════ COLLECTION MODAL ═══════════════════════ -->
+<div id="collection-modal" class="modal-overlay hidden">
+    <div class="adm-modal-box collection-modal-box">
+        <div class="modal-header">
+            <h3 class="modal-title" id="collection-modal-title">Add Collection</h3>
+            <button type="button" class="modal-close" id="collection-modal-close" aria-label="Close">✕</button>
+        </div>
+        <form id="collection-form" class="modal-form" novalidate>
+            <input type="hidden" id="cf-id">
+
+            <div class="form-field">
+                <label class="form-label" for="cf-name">Collection Name <span class="required">*</span></label>
+                <input id="cf-name" type="text" class="form-input" placeholder="e.g. SIGNE BY CHÉI" required>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="cf-year">Year <span class="required">*</span></label>
+                <input id="cf-year" type="number" class="form-input" placeholder="e.g. 2026" min="2020" max="2099" required>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="cf-desc">Description</label>
+                <textarea id="cf-desc" class="form-textarea" rows="3" placeholder="Short description of the collection…"></textarea>
+            </div>
+
+            <div id="collection-form-error" class="form-error hidden"></div>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-secondary" id="collection-form-cancel">Cancel</button>
+                <button type="submit" class="btn-primary" id="collection-form-submit">Save Collection</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/admin/admin.js"></script>
+
+</body>
+</html>

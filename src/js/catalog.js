@@ -1,6 +1,7 @@
 async function loadCollections() {
     try {
-        const response = await fetch("./data/products.json");
+        // Baca langsung dari products.json (diupdate oleh server.js)
+        const response = await fetch("./data/products.json?t=" + Date.now());
         const collections = await response.json();
 
         const container = document.getElementById("collection-list");

@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Tailwind build (di-generate otomatis, tidak perlu di-commit)
+# Uncomment baris di bawah kalau mau exclude output.css
+# src/output.css
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V8
+.Trashes
+
+# Editor
+.vscode/settings.json
+*.swp
+*.swo
+
+# Logs
+npm-debug.log*
+*.log
+
+# Environment (kalau nanti pakai .env)
+.env
+.env.local
+.env.production
