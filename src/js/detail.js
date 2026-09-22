@@ -78,9 +78,9 @@ async function loadProduct() {
                                 duration-500
                                 group-hover:scale-105
                                 ${isItemComingSoon
-                                    ? "blur-2xl select-none pointer-events-none"
-                                    : ""
-                                }
+                    ? "blur-2xl select-none pointer-events-none"
+                    : ""
+                }
                             "
                         >
 
@@ -287,9 +287,9 @@ async function loadProduct() {
                                         ease-out
 
                                         ${isMainComingSoon
-                                            ? "blur-2xl"
-                                            : ""
-                                        }
+                ? "blur-2xl"
+                : ""
+            }
                                     "
 
                                     style="
@@ -508,7 +508,7 @@ async function loadProduct() {
                     ` : `
 
                         <a
-                            href="https://wa.me/6281279053999?text=Hello%20LYSÉRIA,%20I'm%20interested%20in%20${encodeURIComponent(product.name)}."
+                            href="https://wa.me/6285181764377?text=Hello%20LYSÉRIA,%20I'm%20interested%20in%20${encodeURIComponent(product.name)}."
                             target="_blank"
                             class="
                                 btn
@@ -720,19 +720,19 @@ async function loadProduct() {
 
                         class="
                             ${isScrollable
-                                ? "overflow-x-auto scrollbar-hide scroll-smooth"
-                                : ""
-                            }
+                ? "overflow-x-auto scrollbar-hide scroll-smooth"
+                : ""
+            }
                         "
                     >
 
                         <div class="
                             ${isScrollable
 
-                                ? "flex gap-6 lg:gap-8 w-max"
+                ? "flex gap-6 lg:gap-8 w-max"
 
-                                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-                            }
+                : "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+            }
                         ">
 
                             ${relatedCards}
