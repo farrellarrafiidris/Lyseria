@@ -12,7 +12,7 @@ async function loadProducts() {
         products.slice(0, 3).forEach(product => {
             const card = `
                 <div class="group">
-                    <div class="relative aspect-[3/4] rounded-3xl overflow-hidden bg-pearl">
+                    <div class="relative aspect-3/4 rounded-3xl overflow-hidden bg-pearl">
                         <img
                             src="${product.images[0]}"
                             alt="${product.name}"

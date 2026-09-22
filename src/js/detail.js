@@ -61,7 +61,7 @@ async function loadProduct() {
                     <!-- RELATED PRODUCT IMAGE -->
                     <div class="
                         relative
-                        aspect-[3/4]
+                        aspect-3/4
                         overflow-hidden
                         rounded-3xl
                         bg-pearl
@@ -233,7 +233,7 @@ async function loadProduct() {
                     <div class="
                         relative
                         w-full
-                        aspect-[3/4]
+                        aspect-3/4
                         rounded-[40px]
                         bg-[#E9E2D9]
                         p-5
@@ -246,7 +246,7 @@ async function loadProduct() {
                             w-full
                             h-full
                             rounded-[28px]
-                            bg-[#F7F3EE]
+                            bg-pearl
                             p-3
                             overflow-hidden
                             border
@@ -573,7 +573,7 @@ async function loadProduct() {
                     relative
                     w-full
                     overflow-hidden
-                    bg-[#F7F3EE]
+                    bg-pearl
                     shadow-[0_20px_60px_rgba(0,0,0,0.12)]
                 ">
 

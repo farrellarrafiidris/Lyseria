@@ -28,7 +28,7 @@ async function loadCollections() {
                             <img
                                 src="${product.images[0]}"
                                 alt="${product.name}"
-                                class="w-full aspect-[3/4] object-cover object-center duration-500 group-hover:scale-105 ${isComingSoon ? "blur-2xl select-none pointer-events-none" : ""}">
+                                class="w-full aspect-3/4 object-cover object-center duration-500 group-hover:scale-105 ${isComingSoon ? "blur-2xl select-none pointer-events-none" : ""}">
 
                             <!-- Label LYSÉRIA (Kanan Atas, Bawah ke Atas) -->
                             <span 
