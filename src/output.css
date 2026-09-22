@@ -1674,8 +1674,14 @@
   .h-3 {
     height: calc(var(--spacing) * 3);
   }
+  .h-4 {
+    height: calc(var(--spacing) * 4);
+  }
   .h-5 {
     height: calc(var(--spacing) * 5);
+  }
+  .h-7 {
+    height: calc(var(--spacing) * 7);
   }
   .h-8 {
     height: calc(var(--spacing) * 8);
@@ -1743,6 +1749,9 @@
   .w-12 {
     width: calc(var(--spacing) * 12);
   }
+  .w-16 {
+    width: calc(var(--spacing) * 16);
+  }
   .w-20 {
     width: calc(var(--spacing) * 20);
   }
@@ -1757,6 +1766,9 @@
   }
   .w-64 {
     width: calc(var(--spacing) * 64);
+  }
+  .w-80 {
+    width: calc(var(--spacing) * 80);
   }
   .w-125 {
     width: calc(var(--spacing) * 125);
@@ -1845,6 +1857,28 @@
   }
   .transform {
     transform: var(--tw-rotate-x,) var(--tw-rotate-y,) var(--tw-rotate-z,) var(--tw-skew-x,) var(--tw-skew-y,);
+  }
+  @layer daisyui.l1.l2.l3 {
+    .skeleton {
+      border-radius: var(--radius-box);
+      background-color: var(--color-base-300);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .skeleton {
+        transition-duration: 15s;
+      }
+    }
+    .skeleton {
+      will-change: background-position;
+      background-image: linear-gradient( 105deg, #0000 0% 40%, var(--color-base-100) 50%, #0000 60% 100% );
+      background-size: 200% auto;
+      background-position-x: -50%;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .skeleton {
+        animation: skeleton 1.8s ease-in-out infinite;
+      }
+    }
   }
   .cursor-not-allowed {
     cursor: not-allowed;
@@ -2306,6 +2340,9 @@
   }
   .pb-8 {
     padding-bottom: calc(var(--spacing) * 8);
+  }
+  .pb-12 {
+    padding-bottom: calc(var(--spacing) * 12);
   }
   .pb-16 {
     padding-bottom: calc(var(--spacing) * 16);

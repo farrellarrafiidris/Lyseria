@@ -4,6 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <title>LYSÉRIA</title>
+    <style>
+        @keyframes shimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+    </style>
         <link href="./src/output.css" rel="stylesheet">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -30,11 +36,12 @@
 
 <section
     id="countdown-bar"
-    class="fixed top-[88px] inset-x-0 z-40 bg-rosegold text-white">
+    class="fixed top-[88px] inset-x-0 z-40 bg-rosegold text-white"
+    style="transition: transform .3s ease, opacity .3s ease;">
 
     <div class="max-w-7xl mx-auto px-6 py-3">
 
-        <div class="flex items-center justify-center gap-2 text-center">
+        <div class="flex items-center justify-center gap-2 text-center relative">
 
             <p class="uppercase tracking-[.25em] text-xs">
                 Grand Opening
@@ -52,11 +59,42 @@
                 Loading...
             </span>
 
+            <!-- Dismiss button -->
+            <button
+                id="countdown-close"
+                aria-label="Dismiss"
+                style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;padding:4px 8px;font-size:1rem;line-height:1;transition:color .15s;"
+                onmouseenter="this.style.color='#fff'"
+                onmouseleave="this.style.color='rgba(255,255,255,.7)'">
+                ✕
+            </button>
+
         </div>
 
     </div>
 
 </section>
+
+<script>
+(function() {
+    // Hide countdown bar permanently if dismissed
+    if (localStorage.getItem('lyseria_countdown_dismissed')) {
+        const bar = document.getElementById('countdown-bar');
+        if (bar) bar.style.display = 'none';
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('countdown-close')?.addEventListener('click', function() {
+            const bar = document.getElementById('countdown-bar');
+            if (bar) {
+                bar.style.opacity = '0';
+                bar.style.transform = 'translateY(-100%)';
+                setTimeout(() => { bar.style.display = 'none'; }, 300);
+            }
+            localStorage.setItem('lyseria_countdown_dismissed', '1');
+        });
+    });
+})();
+</script>
 
 <section class="relative min-h-screen overflow-hidden">
 

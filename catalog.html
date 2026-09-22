@@ -4,85 +4,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="description" content="Browse the full LYSÉRIA collection — timeless scarves crafted with elegance and modest beauty.">
     <link href="./src/output.css" rel="stylesheet">
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">   
-
+    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
     <title>Collection | LYSÉRIA</title>
+
+    <style>
+        /* ── Skeleton Shimmer ── */
+        @keyframes shimmer {
+            0%   { background-position: -600px 0; }
+            100% { background-position:  600px 0; }
+        }
+        .skeleton {
+            background: linear-gradient(90deg, #ede8e3 25%, #f5f0eb 50%, #ede8e3 75%);
+            background-size: 600px 100%;
+            animation: shimmer 1.4s infinite linear;
+            border-radius: 12px;
+        }
+
+        /* ── Filter Bar ── */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            padding: 20px 0 28px;
+        }
+        .filter-select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B7A89B' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding: 10px 40px 10px 16px;
+            border: 1.5px solid #E7DDD4;
+            border-radius: 999px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: #3B312E;
+            background-color: #fff;
+            cursor: pointer;
+            transition: border-color .2s, box-shadow .2s;
+            outline: none;
+            min-width: 160px;
+        }
+        .filter-select:focus {
+            border-color: #C79A8B;
+            box-shadow: 0 0 0 3px rgba(199,154,139,.15);
+        }
+        .filter-count {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: #B7A89B;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* ── No Results ── */
+        .no-results {
+            text-align: center;
+            padding: 80px 24px;
+            color: #B7A89B;
+        }
+
+        /* ── Back to Top ── */
+        #back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            z-index: 999;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #1F2A44;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,.2);
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px);
+            transition: opacity .3s ease, transform .3s ease;
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+        #back-to-top:hover {
+            background: #C79A8B;
+            transform: translateY(-2px);
+        }
+    </style>
 </head>
 
 <body class="bg-white">
 
     <!-- Navbar -->
     <nav class="fixed top-0 left-0 w-full bg-navy shadow-sm z-50">
-
         <div class="navbar max-w-7xl mx-auto px-6">
-
             <div class="navbar-start">
-
-                <a href="index.html" class="font-display text-4xl tracking-[.15em] text-pearl">
-
-                    LYSÉRIA
-
-                </a>
-
+                <a href="index.html" class="font-display text-4xl tracking-[.15em] text-pearl">LYSÉRIA</a>
             </div>
-
             <div class="navbar-end">
-
-                <a
-                    href="index.html"
-                    class="btn btn-outline btn-sm rounded-full border-pearl text-pearl hover:bg-pearl hover:text-navy">
-
+                <a href="index.html" class="btn btn-outline btn-sm rounded-full border-pearl text-pearl hover:bg-pearl hover:text-navy">
                     ← Back to Home
-
                 </a>
-
             </div>
-
         </div>
-
     </nav>
 
     <!-- Hero -->
-    <section class="pt-40 pb-20">
-
+    <section class="pt-40 pb-12">
         <div class="max-w-7xl mx-auto px-6 text-center">
-
-            <p class="uppercase tracking-[0.3em] text-xs text-rosegold">
-                Our Collection
-            </p>
-
-            <h1 class="text-6xl font-serif mt-4">
-                Timeless Pieces
-            </h1>
-
+            <p class="uppercase tracking-[0.3em] text-xs text-rosegold">Our Collection</p>
+            <h1 class="text-6xl font-serif mt-4">Timeless Pieces</h1>
             <p class="max-w-xl mx-auto mt-6 text-gray-500">
                 Discover every piece crafted with elegance and modesty.
             </p>
-
         </div>
-
     </section>
 
-    <!-- Product -->
-   <section>
-
+    <!-- Filter Bar -->
+    <section>
         <div class="max-w-7xl mx-auto px-8">
-
-            <div id="collection-list"></div>
-
+            <div class="filter-bar" id="filter-bar">
+                <select class="filter-select" id="filter-collection" aria-label="Filter by collection">
+                    <option value="">All Collections</option>
+                </select>
+                <select class="filter-select" id="filter-sort" aria-label="Sort products">
+                    <option value="default">Default Order</option>
+                    <option value="name-asc">Name A → Z</option>
+                    <option value="name-desc">Name Z → A</option>
+                    <option value="price-asc">Price: Low → High</option>
+                    <option value="price-desc">Price: High → Low</option>
+                </select>
+                <span class="filter-count" id="filter-count"></span>
+            </div>
         </div>
-
     </section>
+
+    <!-- Product List -->
+    <section>
+        <div class="max-w-7xl mx-auto px-8">
+            <!-- Skeleton placeholders shown before data loads -->
+            <div id="skeleton-list">
+                <div class="mb-28">
+                    <div class="flex justify-between items-end mb-8">
+                        <div>
+                            <div class="skeleton h-3 w-24 mb-3"></div>
+                            <div class="skeleton h-10 w-64 mb-3"></div>
+                            <div class="skeleton h-4 w-80"></div>
+                        </div>
+                    </div>
+                    <div class="bg-[#FCFAF8] rounded-[36px] border border-[#F2ECE6] p-8">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                            ${[1,2,3,4].map(() => `
+                                <div>
+                                    <div class="skeleton aspect-3/4 rounded-2xl mb-4"></div>
+                                    <div class="skeleton h-3 w-16 mb-2"></div>
+                                    <div class="skeleton h-7 w-28 mb-2"></div>
+                                    <div class="skeleton h-4 w-20"></div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="collection-list" class="hidden"></div>
+            <div id="no-results" class="no-results hidden">
+                <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="#B7A89B" stroke-width="1.5" style="margin:0 auto 16px;display:block;">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+                <p style="font-size:1rem;font-weight:600;color:#3B312E;margin-bottom:6px;">No products found</p>
+                <p style="font-size:.85rem;">Try changing the filter or sort options.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Top -->
+    <button id="back-to-top" aria-label="Back to top" title="Back to top">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+        </svg>
+    </button>
 
     <script src="./src/js/catalog.js"></script>
+    <script>
+        // Back to Top
+        const btn = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            btn.classList.toggle('visible', window.scrollY > 400);
+        });
+        btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    </script>
 
 </body>
-
 </html>

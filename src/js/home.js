@@ -1,11 +1,25 @@
 async function loadProducts() {
     try {
-        // Baca langsung dari products.json (diupdate oleh server.js)
-        const response = await fetch("./data/products.json?t=" + Date.now());
-        const collections = await response.json();
-        const container = document.getElementById("product-list");
+        // Tampilkan skeleton dulu
+        const container = document.getElementById('product-list');
+        if (container) {
+            container.innerHTML = [1,2,3].map(() => `
+                <div>
+                    <div style="border-radius:24px;overflow:hidden;background:linear-gradient(90deg,#ede8e3 25%,#f5f0eb 50%,#ede8e3 75%);background-size:600px 100%;animation:shimmer 1.4s infinite linear;aspect-ratio:3/4;"></div>
+                    <div style="margin-top:20px;">
+                        <div style="height:10px;width:80px;border-radius:6px;background:linear-gradient(90deg,#ede8e3 25%,#f5f0eb 50%,#ede8e3 75%);background-size:600px 100%;animation:shimmer 1.4s infinite linear;margin-bottom:10px;"></div>
+                        <div style="height:28px;width:160px;border-radius:6px;background:linear-gradient(90deg,#ede8e3 25%,#f5f0eb 50%,#ede8e3 75%);background-size:600px 100%;animation:shimmer 1.4s infinite linear;margin-bottom:10px;"></div>
+                        <div style="height:14px;width:100px;border-radius:6px;background:linear-gradient(90deg,#ede8e3 25%,#f5f0eb 50%,#ede8e3 75%);background-size:600px 100%;animation:shimmer 1.4s infinite linear;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
 
-        container.innerHTML = "";
+        // Baca langsung dari products.json (diupdate oleh server.js)
+        const response = await fetch('./data/products.json?t=' + Date.now());
+        const collections = await response.json();
+
+        container.innerHTML = '';
 
         const products = collections.flatMap(collection => collection.products);
 
