@@ -46,9 +46,18 @@ async function loadCollections() {
                         </div>
 
                         <div class="mt-5">
-                            <p class="uppercase tracking-[.25em] text-xs text-rosegold">
+                            ${isComingSoon ? `
+                                
+                                <p class="uppercase tracking-[.25em] text-xs text-rosegold">
+                                Comming Soon
+                                </p>
+                                `
+                                :
+                                `
+                                <p class="uppercase tracking-[.25em] text-xs text-rosegold">
                                 ${product.category}
-                            </p>
+                                </p>
+                                `}
 
                             <h3 class="font-display text-3xl mt-3 text-navy uppercase">
                                 ${product.name}

@@ -104,5 +104,49 @@
         "status": "coming_soon"
       }
     ]
+  },
+  {
+    "id": 3,
+    "name": "ALTHEOUS",
+    "year": 2026,
+    "description": "Inspired by colors that drift like mist, ALTHEOUS captures the beauty of fluid watercolor delicate, dreamlike, and quietly enchanting.",
+    "products": [
+      {
+        "id": 6,
+        "name": "GALEVE",
+        "slug": "galeve",
+        "price": "0",
+        "status": "coming_soon",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70",
+        "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789958794/ComingSoon.png"
+        ],
+        "description": {
+          "label": "text",
+          "quote": "text",
+          "content": "text"
+        }
+      },
+      {
+        "id": 7,
+        "name": "NOCTURNE",
+        "slug": "nocturne",
+        "price": "0",
+        "status": "coming_soon",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70",
+        "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789958794/ComingSoon.png"
+        ],
+        "description": {
+          "label": "text",
+          "quote": "text",
+          "content": "text"
+        }
+      }
+    ]
   }
 ]
