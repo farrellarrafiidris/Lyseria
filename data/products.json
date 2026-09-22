@@ -62,50 +62,6 @@
     ]
   },
   {
-    "id": 2,
-    "name": "ETHEREAL",
-    "year": 2026,
-    "description": "Inspired by the delicate beauty of Eastern ornamentation, Ethereal blends intricate patterns with timeless grace dreamlike, refined, and effortlessly sophisticated.",
-    "products": [
-      {
-        "id": 4,
-        "slug": "jade-coming-soon",
-        "name": "Jade",
-        "price": "000000",
-        "category": "Pashmina",
-        "material": "Viscose",
-        "size": "175x70cm",
-        "description": {
-          "label": "ETHEREAL",
-          "quote": "Where serenity meets timeless beauty.",
-          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
-        },
-        "images": [
-          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png"
-        ],
-        "status": "coming_soon"
-      },
-      {
-        "id": 5,
-        "slug": "oad-coming-soon",
-        "name": "Oud",
-        "price": "000000",
-        "category": "Pashmina",
-        "material": "Viscose",
-        "size": "175x70cm",
-        "description": {
-          "label": "ETHEREAL",
-          "quote": "Where warmth lingers in timeless elegance.",
-          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
-        },
-        "images": [
-          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png"
-        ],
-        "status": "coming_soon"
-      }
-    ]
-  },
-  {
     "id": 3,
     "name": "ALTHEOUS",
     "year": 2026,
@@ -146,6 +102,50 @@
           "quote": "text",
           "content": "text"
         }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "ETHEREAL",
+    "year": 2026,
+    "description": "Inspired by the delicate beauty of Eastern ornamentation, Ethereal blends intricate patterns with timeless grace dreamlike, refined, and effortlessly sophisticated.",
+    "products": [
+      {
+        "id": 4,
+        "slug": "jade-coming-soon",
+        "name": "Jade",
+        "price": "000000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
+        "description": {
+          "label": "ETHEREAL",
+          "quote": "Where serenity meets timeless beauty.",
+          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
+        },
+        "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png"
+        ],
+        "status": "coming_soon"
+      },
+      {
+        "id": 5,
+        "slug": "oad-coming-soon",
+        "name": "Oud",
+        "price": "000000",
+        "category": "Pashmina",
+        "material": "Viscose",
+        "size": "175x70cm",
+        "description": {
+          "label": "ETHEREAL",
+          "quote": "Where warmth lingers in timeless elegance.",
+          "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
+        },
+        "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png"
+        ],
+        "status": "coming_soon"
       }
     ]
   }

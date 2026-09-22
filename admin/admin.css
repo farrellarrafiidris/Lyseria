@@ -872,6 +872,99 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
     .login-card { padding: 32px 24px; }
 }
 
+/* ── Drag & Drop Reorder ── */
+
+/* Grip handle column */
+.drag-handle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: grab;
+    user-select: none;
+    color: var(--taupe);
+    transition: color .15s ease;
+    padding: 2px 0;
+}
+.drag-handle:active { cursor: grabbing; }
+.drag-handle:hover { color: var(--rosegold); }
+
+.drag-grip-icon {
+    font-size: 1rem;
+    line-height: 1;
+    letter-spacing: -1px;
+    opacity: .55;
+    flex-shrink: 0;
+}
+.drag-order-num {
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--taupe);
+    min-width: 16px;
+    text-align: center;
+}
+
+/* Row state while being dragged */
+.row-dragging {
+    opacity: .35;
+    background: #f8f8fb !important;
+    outline: 2px dashed var(--sand);
+    outline-offset: -2px;
+}
+
+/* Row being hovered over as drop target */
+.row-drag-over {
+    border-top: 2px solid var(--rosegold) !important;
+}
+.row-drag-over td {
+    background: rgba(199,154,139,.04) !important;
+}
+
+/* ↑ ↓ order buttons */
+.order-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-left: 2px;
+}
+.btn-order {
+    width: 20px;
+    height: 18px;
+    padding: 0;
+    border: 1px solid #e0e0e6;
+    border-radius: 4px;
+    background: #fff;
+    color: var(--taupe);
+    font-size: .65rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+.btn-order:hover:not(:disabled) {
+    background: var(--rosegold);
+    border-color: var(--rosegold);
+    color: #fff;
+}
+.btn-order:disabled {
+    opacity: .25;
+    cursor: not-allowed;
+}
+
+/* Compact order cell */
+.td-order {
+    padding-left: 12px !important;
+    padding-right: 8px !important;
+    width: 52px;
+}
+
+/* Smooth row transition after reorder */
+.admin-table tbody tr {
+    transition: background .15s ease;
+}
+
 /* ── Utility ── */
 .hidden { display: none !important; }
 .mt-4  { margin-top: 1rem; }

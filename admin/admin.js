@@ -67,6 +67,101 @@ function formatPrice(val) {
     return Number(val).toLocaleString('id-ID');
 }
 
+// ─── Drag-and-Drop Reorder (Generic) ─────────────────────────────
+/**
+ * Attach HTML5 drag-and-drop + ↑↓ button logic to a <tbody>.
+ * @param {HTMLElement} tbody
+ * @param {(fromIdx: number, toIdx: number) => void} onReorder  called after every move
+ */
+function initReorder(tbody, onReorder) {
+    let dragSrc = null;
+
+    function getRows() { return Array.from(tbody.querySelectorAll('tr')); }
+
+    function clearHighlights() {
+        getRows().forEach(r => r.classList.remove('row-drag-over'));
+    }
+
+    tbody.addEventListener('dragstart', e => {
+        const row = e.target.closest('tr');
+        if (!row) return;
+        dragSrc = row;
+        // slight delay so browser screenshot is taken before we fade it
+        requestAnimationFrame(() => row.classList.add('row-dragging'));
+        e.dataTransfer.effectAllowed = 'move';
+    });
+
+    tbody.addEventListener('dragend', () => {
+        if (dragSrc) dragSrc.classList.remove('row-dragging');
+        dragSrc = null;
+        clearHighlights();
+    });
+
+    tbody.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        clearHighlights();
+        const row = e.target.closest('tr');
+        if (row && row !== dragSrc) row.classList.add('row-drag-over');
+    });
+
+    tbody.addEventListener('dragleave', e => {
+        if (!tbody.contains(e.relatedTarget)) clearHighlights();
+    });
+
+    tbody.addEventListener('drop', e => {
+        e.preventDefault();
+        clearHighlights();
+        const targetRow = e.target.closest('tr');
+        if (!targetRow || targetRow === dragSrc || !dragSrc) return;
+
+        const rows = getRows();
+        const fromIdx = rows.indexOf(dragSrc);
+        const toIdx   = rows.indexOf(targetRow);
+        if (fromIdx === -1 || toIdx === -1) return;
+
+        // DOM move
+        if (fromIdx < toIdx) {
+            tbody.insertBefore(dragSrc, targetRow.nextSibling);
+        } else {
+            tbody.insertBefore(dragSrc, targetRow);
+        }
+
+        onReorder(fromIdx, toIdx);
+    });
+}
+
+// ─── Save Order Helpers ───────────────────────────────────────────
+async function saveProductOrder(collectionId, fromIdx, toIdx) {
+    const collections = JSON.parse(JSON.stringify(_collectionsCache));
+    const col = collections.find(c => c.id === collectionId);
+    if (!col) return;
+
+    const [moved] = col.products.splice(fromIdx, 1);
+    col.products.splice(toIdx, 0, moved);
+
+    const ok = await saveCollections(collections);
+    if (ok) {
+        showToast('Urutan produk disimpan.');
+        _collectionsCache = collections;
+        renderProducts(getCurrentFilter());
+    }
+}
+
+async function saveCollectionOrder(fromIdx, toIdx) {
+    const collections = JSON.parse(JSON.stringify(_collectionsCache));
+    const [moved] = collections.splice(fromIdx, 1);
+    collections.splice(toIdx, 0, moved);
+
+    const ok = await saveCollections(collections);
+    if (ok) {
+        showToast('Urutan koleksi disimpan.');
+        _collectionsCache = collections;
+        renderCollections();
+        populateFilters();
+    }
+}
+
 function statusBadge(status) {
     if (status === 'released') return `<span class="badge badge-released">Released</span>`;
     return `<span class="badge badge-coming">Coming Soon</span>`;
@@ -173,9 +268,36 @@ function renderOverview(collections) {
 // ─── Products Table ──────────────────────────────────────────────
 let _collectionsCache = [];
 
+/**
+ * Render products table.
+ * When NO filter is active, drag-and-drop reorder is enabled per-collection.
+ * When a filter/search is active, drag handles are hidden (urutan tidak bisa
+ * di-reorder karena list tidak merepresentasikan urutan asli di JSON).
+ */
 function renderProducts(filter = {}) {
     const tbody = document.getElementById('products-table-body');
-    let products = flatProducts(_collectionsCache);
+
+    // Determine if any filter is active (disables reorder)
+    // Reorder dinonaktifkan hanya kalau ada search atau status filter aktif
+    // (karena urutan list tidak lagi merepresentasikan urutan asli di JSON).
+    // Filter by collection saja TETAP mengaktifkan reorder — produk yang tampil
+    // masih berurutan sesuai posisi aslinya dalam collection tersebut.
+    const isFiltered = !!(filter.search || filter.status);
+
+    // Build flat list, but keep track of per-collection index
+    // (index dalam koleksinya masing-masing, bukan index global)
+    let products = [];
+    _collectionsCache.forEach(col => {
+        col.products.forEach((p, idx) => {
+            products.push({
+                ...p,
+                _collectionId:   col.id,
+                _collectionName: col.name,
+                _colIdx:         idx,              // index dalam koleksinya
+                _colTotal:       col.products.length,
+            });
+        });
+    });
 
     if (filter.search) {
         const q = filter.search.toLowerCase();
@@ -190,7 +312,7 @@ function renderProducts(filter = {}) {
     if (filter.collection) products = products.filter(p => String(p._collectionId) === filter.collection);
 
     if (!products.length) {
-        tbody.innerHTML = `<tr><td colspan="7">
+        tbody.innerHTML = `<tr><td colspan="8">
             <div class="empty-state">
                 <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -201,8 +323,38 @@ function renderProducts(filter = {}) {
         return;
     }
 
-    tbody.innerHTML = products.map(p => `
-        <tr>
+    tbody.innerHTML = products.map((p, rowIdx) => {
+        const isFirst = p._colIdx === 0;
+        const isLast  = p._colIdx === p._colTotal - 1;
+
+        const orderCell = isFiltered
+            ? `<td class="td-order"><span class="drag-order-num" style="opacity:.35">${p._colIdx + 1}</span></td>`
+            : `<td class="td-order" draggable="false">
+                <div class="drag-handle"
+                     draggable="true"
+                     data-col-id="${p._collectionId}"
+                     data-col-idx="${p._colIdx}"
+                     title="Drag untuk reorder">
+                    <span class="drag-grip-icon">⠿</span>
+                    <span class="drag-order-num">${p._colIdx + 1}</span>
+                </div>
+                <div class="order-btns">
+                    <button class="btn-order" title="Naikan"
+                            ${isFirst ? 'disabled' : ''}
+                            onclick="moveProduct(${p._collectionId}, ${p._colIdx}, -1)">
+                        ▲
+                    </button>
+                    <button class="btn-order" title="Turunkan"
+                            ${isLast ? 'disabled' : ''}
+                            onclick="moveProduct(${p._collectionId}, ${p._colIdx}, 1)">
+                        ▼
+                    </button>
+                </div>
+               </td>`;
+
+        return `
+        <tr data-col-id="${p._collectionId}" data-col-idx="${p._colIdx}">
+            ${orderCell}
             <td>
                 ${p.images?.[0]
                     ? `<img src="${p.images[0]}" class="table-product-img" alt="${p.name}"
@@ -237,8 +389,62 @@ function renderProducts(filter = {}) {
                     </button>
                 </div>
             </td>
-        </tr>
-    `).join('');
+        </tr>`;
+    }).join('');
+
+    // Attach drag-and-drop per collection block (only when not filtered)
+    if (!isFiltered) {
+        // Group rows by collectionId so we only reorder within same collection
+        const colIds = [...new Set(products.map(p => p._collectionId))];
+        colIds.forEach(colId => {
+            const rows = Array.from(tbody.querySelectorAll(`tr[data-col-id="${colId}"]`));
+            if (rows.length < 2) return;
+
+            let dragSrc = null;
+
+            rows.forEach(row => {
+                const handle = row.querySelector('.drag-handle');
+                if (!handle) return;
+
+                handle.addEventListener('dragstart', e => {
+                    dragSrc = row;
+                    e.dataTransfer.effectAllowed = 'move';
+                    requestAnimationFrame(() => row.classList.add('row-dragging'));
+                });
+
+                handle.addEventListener('dragend', () => {
+                    if (dragSrc) dragSrc.classList.remove('row-dragging');
+                    dragSrc = null;
+                    rows.forEach(r => r.classList.remove('row-drag-over'));
+                });
+
+                row.addEventListener('dragover', e => {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    rows.forEach(r => r.classList.remove('row-drag-over'));
+                    if (row !== dragSrc) row.classList.add('row-drag-over');
+                });
+
+                row.addEventListener('drop', e => {
+                    e.preventDefault();
+                    rows.forEach(r => r.classList.remove('row-drag-over'));
+                    if (!dragSrc || row === dragSrc) return;
+
+                    const fromIdx = parseInt(dragSrc.dataset.colIdx);
+                    const toIdx   = parseInt(row.dataset.colIdx);
+                    saveProductOrder(colId, fromIdx, toIdx);
+                });
+            });
+        });
+    }
+}
+
+// Move product by ±1 via ↑↓ button
+async function moveProduct(colId, fromIdx, direction) {
+    const toIdx = fromIdx + direction;
+    const col   = _collectionsCache.find(c => c.id === colId);
+    if (!col || toIdx < 0 || toIdx >= col.products.length) return;
+    await saveProductOrder(colId, fromIdx, toIdx);
 }
 
 // ─── Product Modal ───────────────────────────────────────────────
@@ -442,7 +648,7 @@ function renderCollections() {
     const cols  = _collectionsCache;
 
     if (!cols.length) {
-        tbody.innerHTML = `<tr><td colspan="5">
+        tbody.innerHTML = `<tr><td colspan="6">
             <div class="empty-state">
                 <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -454,11 +660,25 @@ function renderCollections() {
         return;
     }
 
-    tbody.innerHTML = cols.map(col => `
-        <tr>
+    tbody.innerHTML = cols.map((col, idx) => `
+        <tr data-col-order-idx="${idx}">
+            <td class="td-order">
+                <div class="drag-handle" draggable="true" data-order-idx="${idx}" title="Drag untuk reorder">
+                    <span class="drag-grip-icon">⠿</span>
+                    <span class="drag-order-num">${idx + 1}</span>
+                </div>
+                <div class="order-btns">
+                    <button class="btn-order" title="Naikan"
+                            ${idx === 0 ? 'disabled' : ''}
+                            onclick="moveCollection(${idx}, -1)">▲</button>
+                    <button class="btn-order" title="Turunkan"
+                            ${idx === cols.length - 1 ? 'disabled' : ''}
+                            onclick="moveCollection(${idx}, 1)">▼</button>
+                </div>
+            </td>
             <td><strong>${col.name}</strong></td>
             <td>${col.year}</td>
-            <td style="max-width:320px;white-space:normal;">${col.description || '—'}</td>
+            <td style="max-width:280px;white-space:normal;">${col.description || '—'}</td>
             <td>
                 <span style="font-weight:600;">${col.products.length}</span>
                 ${col.products.length > 0 ? `<span style="color:#9ca3af;font-size:.72rem;margin-left:6px;">
@@ -485,6 +705,53 @@ function renderCollections() {
             </td>
         </tr>
     `).join('');
+
+    // Attach drag-and-drop for collections
+    if (cols.length > 1) {
+        const rows = Array.from(tbody.querySelectorAll('tr[data-col-order-idx]'));
+        let dragSrc = null;
+
+        rows.forEach(row => {
+            const handle = row.querySelector('.drag-handle');
+            if (!handle) return;
+
+            handle.addEventListener('dragstart', e => {
+                dragSrc = row;
+                e.dataTransfer.effectAllowed = 'move';
+                requestAnimationFrame(() => row.classList.add('row-dragging'));
+            });
+
+            handle.addEventListener('dragend', () => {
+                if (dragSrc) dragSrc.classList.remove('row-dragging');
+                dragSrc = null;
+                rows.forEach(r => r.classList.remove('row-drag-over'));
+            });
+
+            row.addEventListener('dragover', e => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                rows.forEach(r => r.classList.remove('row-drag-over'));
+                if (row !== dragSrc) row.classList.add('row-drag-over');
+            });
+
+            row.addEventListener('drop', e => {
+                e.preventDefault();
+                rows.forEach(r => r.classList.remove('row-drag-over'));
+                if (!dragSrc || row === dragSrc) return;
+
+                const fromIdx = parseInt(dragSrc.dataset.colOrderIdx);
+                const toIdx   = parseInt(row.dataset.colOrderIdx);
+                saveCollectionOrder(fromIdx, toIdx);
+            });
+        });
+    }
+}
+
+// Move collection by ±1 via ↑↓ button
+async function moveCollection(fromIdx, direction) {
+    const toIdx = fromIdx + direction;
+    if (toIdx < 0 || toIdx >= _collectionsCache.length) return;
+    await saveCollectionOrder(fromIdx, toIdx);
 }
 
 // ─── Collection Modal ────────────────────────────────────────────
