@@ -24,6 +24,10 @@ async function loadProducts() {
         const products = collections.flatMap(collection => collection.products);
 
         products.slice(0, 3).forEach(product => {
+            // Register in global map for cart lookup
+            window._lyseriaProductsMap = window._lyseriaProductsMap || {};
+            window._lyseriaProductsMap[product.slug] = product;
+
             const card = `
                 <div class="group">
                     <div class="relative aspect-3/4 rounded-3xl overflow-hidden bg-pearl">
@@ -52,11 +56,25 @@ async function loadProducts() {
                             <span>Rp</span> ${Number(product.price).toLocaleString("id-ID")}</span>
                         </p>
 
-                        <a
-                            href="detail.html?slug=${product.slug}"
-                            class="btn btn-outline rounded-full mt-5">
-                            View Detail
-                        </a>
+                        <div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;">
+                            <a
+                                href="detail.html?slug=${product.slug}"
+                                class="btn btn-outline rounded-full"
+                                style="flex:1;min-width:130px;text-align:center;">
+                                View Detail
+                            </a>
+                            <button
+                                onclick="addToCartBySlug('${product.slug}')"
+                                title="Add to Cart"
+                                aria-label="Add ${product.name} to cart"
+                                style="width:44px;height:44px;border-radius:50%;border:1.5px solid #1B2A4A;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1B2A4A;transition:all 0.25s;flex-shrink:0;"
+                                onmouseenter="this.style.background='#1B2A4A';this.style.color='#FAF7F2'"
+                                onmouseleave="this.style.background='transparent';this.style.color='#1B2A4A'">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
             `;

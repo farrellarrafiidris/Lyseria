@@ -71,17 +71,17 @@
         "id": 6,
         "name": "GALEVE",
         "slug": "galeve",
-        "price": "0",
+        "price": "219533",
         "status": "coming_soon",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70",
         "images": [
-          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789958794/ComingSoon.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133050/CHERRYL_PASHMINA_VAPOR_page-0002.jpg"
         ],
         "description": {
-          "label": "text",
-          "quote": "text",
+          "label": "Quite Dream",
+          "quote": "Soft Movement, Earthy Tones, Effortless Beauty",
           "content": "text"
         }
       },
@@ -89,17 +89,17 @@
         "id": 7,
         "name": "NOCTURNE",
         "slug": "nocturne",
-        "price": "0",
+        "price": "219533",
         "status": "coming_soon",
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70",
         "images": [
-          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789958794/ComingSoon.png"
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133312/CHERRYL_PASHMINA_VAPOR_page-0001.jpg"
         ],
         "description": {
-          "label": "text",
-          "quote": "text",
+          "label": "Quite Dream",
+          "quote": "Deep, Quiet, and Made to Leave an Impression.",
           "content": "text"
         }
       }

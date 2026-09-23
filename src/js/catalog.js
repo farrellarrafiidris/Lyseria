@@ -78,6 +78,10 @@ function renderCatalog() {
 
         let cards = '';
         products.forEach(product => {
+            // Register for cart lookup
+            window._lyseriaProductsMap = window._lyseriaProductsMap || {};
+            window._lyseriaProductsMap[product.slug] = product;
+
             const isComingSoon = product.status === 'coming_soon';
             cards += `
                 <div class="${cardClass} group">
@@ -115,7 +119,18 @@ function renderCatalog() {
 
                         ${isComingSoon
                             ? `<span class="inline-block border border-gray-300 text-gray-400 rounded-full px-6 py-2.5 mt-5 text-sm cursor-not-allowed">Coming Soon</span>`
-                            : `<a href="detail.html?slug=${product.slug}" class="btn btn-outline rounded-full mt-5">View Detail</a>`
+                            : `<div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;">
+                                    <a href="detail.html?slug=${product.slug}" class="btn btn-outline rounded-full" style="flex:1;min-width:110px;text-align:center;">View Detail</a>
+                                    <button
+                                        onclick="addToCartBySlug('${product.slug}')"
+                                        title="Add to Cart"
+                                        aria-label="Add ${product.name} to cart"
+                                        style="width:44px;height:44px;border-radius:50%;border:1.5px solid #1B2A4A;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1B2A4A;transition:all 0.25s;flex-shrink:0;"
+                                        onmouseenter="this.style.background='#1B2A4A';this.style.color='#FAF7F2'"
+                                        onmouseleave="this.style.background='transparent';this.style.color='#1B2A4A'">
+                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                    </button>
+                               </div>`
                         }
                     </div>
                 </div>`;

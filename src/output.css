@@ -1263,6 +1263,9 @@
   .top-10 {
     top: calc(var(--spacing) * 10);
   }
+  .top-22 {
+    top: calc(var(--spacing) * 22);
+  }
   .top-24 {
     top: calc(var(--spacing) * 24);
   }
@@ -1420,25 +1423,6 @@
     order: 2;
   }
   @layer daisyui.l1.l2.l3 {
-    .modal-box {
-      grid-column-start: 1;
-      grid-row-start: 1;
-      max-height: 100vh;
-      width: calc(11 / 12 * 100%);
-      max-width: 32rem;
-      background-color: var(--color-base-100);
-      padding: calc(0.25rem * 6);
-      transition: translate 0.3s ease-out, scale 0.3s ease-out, opacity 0.2s ease-out 0.05s, box-shadow 0.3s ease-out;
-      border-top-left-radius: var(--modal-tl, var(--radius-box));
-      border-top-right-radius: var(--modal-tr, var(--radius-box));
-      border-bottom-left-radius: var(--modal-bl, var(--radius-box));
-      border-bottom-right-radius: var(--modal-br, var(--radius-box));
-      scale: 95%;
-      opacity: 0;
-      box-shadow: oklch(0% 0 0/ 0.25) 0px 25px 50px -12px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-    }
     .stat-value {
       grid-column-start: 1;
       white-space: nowrap;
@@ -1824,14 +1808,8 @@
   .flex-none {
     flex: none;
   }
-  .flex-shrink {
-    flex-shrink: 1;
-  }
   .grow {
     flex-grow: 1;
-  }
-  .border-collapse {
-    border-collapse: collapse;
   }
   .-translate-x-1\/2 {
     --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
@@ -1879,9 +1857,28 @@
         animation: skeleton 1.8s ease-in-out infinite;
       }
     }
+    .link {
+      cursor: pointer;
+      text-decoration-line: underline;
+    }
+    .link:focus {
+      --tw-outline-style: none;
+      outline-style: none;
+      @media (forced-colors: active) {
+        outline: 2px solid transparent;
+        outline-offset: 2px;
+      }
+    }
+    .link:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 2px;
+    }
   }
   .cursor-not-allowed {
     cursor: not-allowed;
+  }
+  .cursor-pointer {
+    cursor: pointer;
   }
   .cursor-zoom-in {
     cursor: zoom-in;
@@ -2108,9 +2105,6 @@
   }
   .bg-\[\#EEE8E0\] {
     background-color: #EEE8E0;
-  }
-  .bg-\[\#F7F3EE\] {
-    background-color: #F7F3EE;
   }
   .bg-\[\#FCFAF8\] {
     background-color: #FCFAF8;
@@ -2346,9 +2340,6 @@
   }
   .pb-16 {
     padding-bottom: calc(var(--spacing) * 16);
-  }
-  .pb-20 {
-    padding-bottom: calc(var(--spacing) * 20);
   }
   .pb-24 {
     padding-bottom: calc(var(--spacing) * 24);

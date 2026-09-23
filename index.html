@@ -28,15 +28,22 @@
       <!-- <li><a href="#journal">Journal</a></li> -->
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <div class="flex gap-5 text-xl">
-      <span>⌕</span><span>👜</span>
+    <div class="flex gap-5 items-center">
+      <span class="text-xl cursor-pointer">⌕</span>
+      <!-- Cart Icon with Badge -->
+      <button id="ly-cart-btn" aria-label="Open shopping cart" style="position:relative;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;color:#FAF7F2;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+        </svg>
+        <span class="ly-cart-badge" style="position:absolute;top:-7px;right:-7px;background:#C79A8B;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.58rem;font-weight:700;display:none;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">0</span>
+      </button>
     </div>
   </div>
 </nav>
 
 <section
     id="countdown-bar"
-    class="fixed top-[88px] inset-x-0 z-40 bg-rosegold text-white"
+    class="fixed top-22 inset-x-0 z-40 bg-rosegold text-white"
     style="transition: transform .3s ease, opacity .3s ease;">
 
     <div class="max-w-7xl mx-auto px-6 py-3">
@@ -381,6 +388,7 @@
     </div>
 
 </footer>
+<script src="./src/js/cart.js"></script>
 <script src="./src/js/countdown.js"></script>
 <script src="./src/js/home.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
