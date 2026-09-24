@@ -641,10 +641,162 @@ async function loadProduct() {
 
 
             <!-- ================= -->
-            <!-- RELATED PRODUCTS -->
+            <!-- COLOR GUIDE       -->
+            <!-- ================= -->
+
+            ${product.colorGuide ? `
+            <section class="mt-24">
+
+                <!-- Section Header -->
+                <div class="text-center mb-12">
+                    <p class="uppercase tracking-[.3em] text-xs text-rosegold">Styling Guide</p>
+                    <h2 class="font-display text-4xl lg:text-5xl mt-3 text-navy">Color Guide</h2>
+                    <p class="mt-4 text-gray-500 max-w-xl mx-auto leading-relaxed">
+                        Discover the most suitable undertone and the best way to style ${product.name}.
+                    </p>
+                </div>
+
+                <div style="
+                    background: linear-gradient(135deg, #FAF7F2 0%, #F2EBE3 100%);
+                    border: 1px solid #EDE8E3;
+                    border-radius: 36px;
+                    padding: 48px;
+                    display: grid;
+                    grid-template-columns: 1fr;
+                    gap: 40px;
+                ">
+
+                    <!-- Top Row: Palette + Undertone -->
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+
+                        <!-- Palette Swatches -->
+                        <div>
+                            <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#C79A8B;font-weight:700;margin:0 0 16px;">Color Palette</p>
+                            <div style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap;">
+                                ${product.colorGuide.paletteHex.map((hex, i) => `
+                                    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+                                        <div style="
+                                            width:52px;height:52px;border-radius:50%;
+                                            background:${hex};
+                                            box-shadow:0 4px 16px rgba(0,0,0,0.12), inset 0 1px 2px rgba(255,255,255,0.4);
+                                            border:2px solid rgba(255,255,255,0.7);
+                                        "></div>
+                                        <span style="font-size:0.6rem;color:#7A6A62;text-align:center;max-width:60px;line-height:1.3;">${product.colorGuide.palette[i]}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
+                        <!-- Undertone Labels -->
+                        <div>
+                            <p style="font-size:0.65rem;letter-spacing:0.3em;text-transform:uppercase;color:#C79A8B;font-weight:700;margin:0 0 16px;">Undertone Suitability</p>
+
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 12px 24px; align-items: center;">
+                                <!-- Warm -->
+                                <span style="font-size:0.85rem;color:#1B2A4A;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Warm</span>
+                                <div style="display:flex;gap:4px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="${star <= product.colorGuide.undertoneRating.warm ? '#1B2A4A' : 'none'}" stroke="${star <= product.colorGuide.undertoneRating.warm ? '#1B2A4A' : '#D4C5BC'}" stroke-width="1.5" stroke-linejoin="round">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    `).join('')}
+                                </div>
+                                
+                                <!-- Cool -->
+                                <span style="font-size:0.85rem;color:#1B2A4A;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Cool</span>
+                                <div style="display:flex;gap:4px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="${star <= product.colorGuide.undertoneRating.cool ? '#1B2A4A' : 'none'}" stroke="${star <= product.colorGuide.undertoneRating.cool ? '#1B2A4A' : '#D4C5BC'}" stroke-width="1.5" stroke-linejoin="round">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    `).join('')}
+                                </div>
+                                
+                                <!-- Neutral -->
+                                <span style="font-size:0.85rem;color:#1B2A4A;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;">Neutral</span>
+                                <div style="display:flex;gap:4px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="${star <= product.colorGuide.undertoneRating.neutral ? '#1B2A4A' : 'none'}" stroke="${star <= product.colorGuide.undertoneRating.neutral ? '#1B2A4A' : '#D4C5BC'}" stroke-width="1.5" stroke-linejoin="round">
+                                            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                                        </svg>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height:1px;background:linear-gradient(90deg,transparent,#EDE8E3,transparent);"></div>
+
+                    <!-- Styling Tip -->
+                    <div style="display:flex;gap:20px;align-items:flex-start;">
+                        <div style="
+                            width:44px;height:44px;flex-shrink:0;
+                            border-radius:50%;
+                            background:linear-gradient(135deg,#C79A8B,#D4AFA0);
+                            display:flex;align-items:center;justify-content:center;
+                            box-shadow:0 4px 14px rgba(199,154,139,0.3);
+                        ">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <p style="font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:#C79A8B;font-weight:700;margin:0 0 8px;">Styling Tip</p>
+                            <p style="font-size:0.92rem;color:#3B312E;line-height:1.8;margin:0;">${product.colorGuide.tip}</p>
+                        </div>
+                    </div>
+
+                    <!-- Legend -->
+                    <div style="margin-top: 10px;">
+                        <p style="font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#9A8880;font-weight:600;margin:0 0 12px;">Legend</p>
+                        <div style="display:flex; flex-wrap: wrap; gap: 16px; font-size: 0.75rem; color: #7A6A62;">
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex;gap:2px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `<svg width="10" height="10" viewBox="0 0 24 24" fill="${star <= 5 ? '#C79A8B' : 'none'}" stroke="${star <= 5 ? '#C79A8B' : '#D4C5BC'}" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`).join('')}
+                                </div>
+                                <span>Very suitable</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex;gap:2px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `<svg width="10" height="10" viewBox="0 0 24 24" fill="${star <= 4 ? '#C79A8B' : 'none'}" stroke="${star <= 4 ? '#C79A8B' : '#D4C5BC'}" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`).join('')}
+                                </div>
+                                <span>Highly suitable</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex;gap:2px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `<svg width="10" height="10" viewBox="0 0 24 24" fill="${star <= 3 ? '#C79A8B' : 'none'}" stroke="${star <= 3 ? '#C79A8B' : '#D4C5BC'}" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`).join('')}
+                                </div>
+                                <span>Moderately suitable</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex;gap:2px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `<svg width="10" height="10" viewBox="0 0 24 24" fill="${star <= 2 ? '#C79A8B' : 'none'}" stroke="${star <= 2 ? '#C79A8B' : '#D4C5BC'}" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`).join('')}
+                                </div>
+                                <span>Less suitable</span>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:6px;">
+                                <div style="display:flex;gap:2px;">
+                                    ${[1, 2, 3, 4, 5].map(star => `<svg width="10" height="10" viewBox="0 0 24 24" fill="${star <= 1 ? '#C79A8B' : 'none'}" stroke="${star <= 1 ? '#C79A8B' : '#D4C5BC'}" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`).join('')}
+                                </div>
+                                <span>Least suitable</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+            ` : ''}
+
+
+            <!-- ================= -->
+            <!-- RELATED PRODUCTS  -->
             <!-- ================= -->
 
             <section class="mt-36">
+
 
                 <div class="
                     flex
