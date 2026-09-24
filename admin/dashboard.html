@@ -378,6 +378,43 @@
                 <textarea id="pf-desc-content" class="form-textarea" rows="3" placeholder="Full product description…"></textarea>
             </div>
 
+            <!-- Color Guide Section -->
+            <div style="margin: 24px 0 16px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb;">
+                <h4 style="font-size: 14px; font-weight: 600; color: #1f2937; margin: 0;">Color Guide Setup</h4>
+                <p style="font-size: 12px; color: #6b7280; margin: 4px 0 0;">(Optional) Configuration for product styling guide.</p>
+            </div>
+
+            <div class="form-grid-2">
+                <div class="form-field">
+                    <label class="form-label" for="pf-cg-palette">Palette Names</label>
+                    <input id="pf-cg-palette" type="text" class="form-input" placeholder="e.g. Soft Pink, White">
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-cg-hex">Palette Hex Codes</label>
+                    <input id="pf-cg-hex" type="text" class="form-input" placeholder="e.g. #F2B8C6, #FFFFFF">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px;">
+                <div class="form-field">
+                    <label class="form-label" for="pf-cg-warm">Warm Rating</label>
+                    <input id="pf-cg-warm" type="number" class="form-input" placeholder="1-5" min="1" max="5">
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-cg-cool">Cool Rating</label>
+                    <input id="pf-cg-cool" type="number" class="form-input" placeholder="1-5" min="1" max="5">
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-cg-neutral">Neutral Rating</label>
+                    <input id="pf-cg-neutral" type="number" class="form-input" placeholder="1-5" min="1" max="5">
+                </div>
+            </div>
+
+            <div class="form-field">
+                <label class="form-label" for="pf-cg-tip">Styling Tip</label>
+                <textarea id="pf-cg-tip" class="form-textarea" rows="2" placeholder="e.g. Pairs beautifully with nude makeup..."></textarea>
+            </div>
+
             <div id="product-form-error" class="form-error hidden"></div>
 
             <div class="modal-actions">

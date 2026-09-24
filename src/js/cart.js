@@ -72,9 +72,21 @@ const CartManager = {
         return this.getCart().reduce((s, i) => s + i.qty, 0);
     },
 
-    checkoutWhatsApp() {
+    openCheckout() {
         const cart = this.getCart();
         if (!cart.length) { showToast('Cart kosong!', 'info'); return; }
+        CartUI.openCheckoutModal();
+    },
+
+    processCheckout() {
+        const cart = this.getCart();
+        
+        const name = document.getElementById('co-name').value.trim();
+        const phone = document.getElementById('co-phone').value.trim();
+        const address = document.getElementById('co-address').value.trim();
+        const city = document.getElementById('co-city').value.trim();
+        const postal = document.getElementById('co-postal').value.trim();
+        const payment = document.getElementById('co-payment').value;
 
         const lines = cart
             .map(i => `• ${i.name} x${i.qty}  —  Rp ${(i.price * i.qty).toLocaleString('id-ID')}`)
@@ -82,11 +94,20 @@ const CartManager = {
 
         const total = `Rp ${this.getTotal().toLocaleString('id-ID')}`;
 
-        const msg =
-            `Halo LYSÉRIA 🌸\n\nSaya ingin memesan:\n\n${lines}` +
-            `\n\n*Total: ${total}*\n\nMohon konfirmasi ketersediaan ya, terima kasih! 🙏`;
+        const msg = 
+            `Halo LYSÉRIA \n\nSaya ingin memesan:\n\n${lines}` +
+            `\n\n*Total: ${total}*\n\n` +
+            `*Data Pengiriman:*\n` +
+            `Nama: ${name}\n` +
+            `No. HP: ${phone}\n` +
+            `Alamat: ${address}\n` +
+            `Kota: ${city}\n` +
+            `Kode Pos: ${postal}\n\n` +
+            `*Metode Pembayaran:* ${payment}\n\n` +
+            `Mohon konfirmasi ketersediaan ya, terima kasih!`;
 
         window.open(`https://wa.me/${this.WA_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+        CartUI.closeCheckoutModal();
     }
 };
 
@@ -151,8 +172,63 @@ const CartUI = {
 
         const el = document.createElement('div');
         el.innerHTML = `
+            <!-- Checkout Modal -->
+            <div id="ly-checkout-modal" style="position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;">
+                <div style="position:absolute;inset:0;background:rgba(8,14,24,0.65);backdrop-filter:blur(4px);" onclick="CartUI.closeCheckoutModal()"></div>
+                <div style="position:relative;background:#FAF7F2;width:90%;max-width:480px;border-radius:24px;padding:32px;box-shadow:0 24px 80px rgba(0,0,0,0.25);font-family:'Inter',sans-serif;max-height:90vh;overflow-y:auto;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+                        <h3 style="margin:0;font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:#1B2A4A;font-weight:600;">Delivery Details</h3>
+                        <button type="button" onclick="CartUI.closeCheckoutModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:#9A8880;">✕</button>
+                    </div>
+                    <form id="ly-checkout-form" onsubmit="event.preventDefault(); CartManager.processCheckout()">
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Full Name <span style="color:#ef4444">*</span></label>
+                            <input type="text" id="co-name" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;" placeholder="e.g. Jane Doe">
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Phone Number <span style="color:#ef4444">*</span></label>
+                            <input type="tel" id="co-phone" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;" placeholder="e.g. 081234567890">
+                        </div>
+                        <div style="margin-bottom:16px;">
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Full Address <span style="color:#ef4444">*</span></label>
+                            <textarea id="co-address" required rows="3" style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;resize:vertical;" placeholder="Street name, building, house number..."></textarea>
+                        </div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px;">
+                            <div>
+                                <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">City <span style="color:#ef4444">*</span></label>
+                                <input type="text" id="co-city" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;" placeholder="e.g. Jakarta">
+                            </div>
+                            <div>
+                                <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Postal Code <span style="color:#ef4444">*</span></label>
+                                <input type="text" id="co-postal" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;" placeholder="e.g. 12345">
+                            </div>
+                        </div>
+                        <div style="margin-bottom:24px;">
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Payment Method <span style="color:#ef4444">*</span></label>
+                            <select id="co-payment" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;background-color:#fff;">
+                                <option value="" disabled selected>Select payment method</option>
+                                <option value="QRIS">QRIS</option>
+                                <option value="Bank Transfer">Bank Transfer</option>
+                            </select>
+                        </div>
+                        <button type="submit" style="
+                            width:100%;padding:16px;
+                            background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);
+                            color:#fff;border:none;border-radius:999px;
+                            font-family:'Inter',sans-serif;font-size:0.8rem;font-weight:700;
+                            letter-spacing:0.15em;text-transform:uppercase;
+                            cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;
+                            box-shadow:0 8px 24px rgba(37,211,102,0.25);
+                        ">
+                            Proceed to WhatsApp
+                        </button>
+                    </form>
+                </div>
+            </div>
+
             <!-- Cart Overlay -->
             <div id="ly-cart-overlay" style="position:fixed;inset:0;z-index:1000;background:rgba(8,14,24,0.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity 0.35s ease;"></div>
+
 
             <!-- Cart Drawer -->
             <aside id="ly-cart-drawer" role="dialog" aria-modal="true" aria-label="Shopping Cart" style="
@@ -192,7 +268,7 @@ const CartUI = {
                     </div>
 
                     <!-- WhatsApp Checkout Button -->
-                    <button id="ly-checkout-btn" onclick="CartManager.checkoutWhatsApp()" style="
+                    <button id="ly-checkout-btn" onclick="CartManager.openCheckout()" style="
                         width:100%;padding:16px 24px;
                         background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);
                         color:#fff;border:none;border-radius:999px;
@@ -258,6 +334,23 @@ const CartUI = {
 
     toggleDrawer() {
         _drawerOpen ? this.closeDrawer() : this.openDrawer();
+    },
+
+    openCheckoutModal() {
+        this.closeDrawer();
+        const modal = document.getElementById('ly-checkout-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+    },
+
+    closeCheckoutModal() {
+        const modal = document.getElementById('ly-checkout-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
     },
 
     updateBadge() {

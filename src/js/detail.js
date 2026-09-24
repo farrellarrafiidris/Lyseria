@@ -659,15 +659,10 @@ async function loadProduct() {
                 <div style="
                     background: linear-gradient(135deg, #FAF7F2 0%, #F2EBE3 100%);
                     border: 1px solid #EDE8E3;
-                    border-radius: 36px;
-                    padding: 48px;
-                    display: grid;
-                    grid-template-columns: 1fr;
-                    gap: 40px;
-                ">
+                " class="rounded-3xl p-6 md:p-12 grid grid-cols-1 gap-8 md:gap-10">
 
                     <!-- Top Row: Palette + Undertone -->
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
                         <!-- Palette Swatches -->
                         <div>

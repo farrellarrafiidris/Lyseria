@@ -495,6 +495,14 @@ function openProductModal(collectionId = null, productId = null) {
         document.getElementById('pf-desc-label').value    = product.description?.label || '';
         document.getElementById('pf-desc-quote').value    = product.description?.quote || '';
         document.getElementById('pf-desc-content').value  = product.description?.content || '';
+        
+        document.getElementById('pf-cg-palette').value    = product.colorGuide?.palette?.join(', ') || '';
+        document.getElementById('pf-cg-hex').value        = product.colorGuide?.paletteHex?.join(', ') || '';
+        document.getElementById('pf-cg-warm').value       = product.colorGuide?.undertoneRating?.warm || '';
+        document.getElementById('pf-cg-cool').value       = product.colorGuide?.undertoneRating?.cool || '';
+        document.getElementById('pf-cg-neutral').value    = product.colorGuide?.undertoneRating?.neutral || '';
+        document.getElementById('pf-cg-tip').value        = product.colorGuide?.tip || '';
+        
         colSel.value = collectionId;
 
         // Preview gambar
@@ -576,6 +584,13 @@ async function handleProductSave(e) {
     const descQuote   = document.getElementById('pf-desc-quote').value.trim();
     const descContent = document.getElementById('pf-desc-content').value.trim();
 
+    const cgPalette   = document.getElementById('pf-cg-palette').value.trim();
+    const cgHex       = document.getElementById('pf-cg-hex').value.trim();
+    const cgWarm      = document.getElementById('pf-cg-warm').value.trim();
+    const cgCool      = document.getElementById('pf-cg-cool').value.trim();
+    const cgNeutral   = document.getElementById('pf-cg-neutral').value.trim();
+    const cgTip       = document.getElementById('pf-cg-tip').value.trim();
+
     // Validasi
     if (!name || !slug || !price || !category || !colId) {
         err.textContent = 'Nama, slug, harga, kategori, dan koleksi wajib diisi.';
@@ -588,6 +603,19 @@ async function handleProductSave(e) {
         images: image ? [image] : [],
         description: { label: descLabel, quote: descQuote, content: descContent }
     };
+
+    if (cgPalette || cgHex || cgTip) {
+        productData.colorGuide = {
+            palette: cgPalette ? cgPalette.split(',').map(s => s.trim()) : [],
+            paletteHex: cgHex ? cgHex.split(',').map(s => s.trim()) : [],
+            undertoneRating: {
+                warm: cgWarm ? parseInt(cgWarm) : 0,
+                cool: cgCool ? parseInt(cgCool) : 0,
+                neutral: cgNeutral ? parseInt(cgNeutral) : 0
+            },
+            tip: cgTip
+        };
+    }
 
     const collections = JSON.parse(JSON.stringify(_collectionsCache)); // deep copy
     const editId      = document.getElementById('pf-id').value;
