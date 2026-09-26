@@ -9,9 +9,9 @@
         "id": 1,
         "slug": "jolie",
         "name": "JOLIE",
-        "price": "219533",
+        "price": "183000",
         "category": "Pashmina",
-        "material": "Viscose",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
         "description": {
           "label": "SIGNÉ BY CHEI",
@@ -44,9 +44,9 @@
         "id": 2,
         "slug": "seve",
         "name": "SÉVE",
-        "price": "219533",
+        "price": "183000",
         "category": "Pashmina",
-        "material": "Viscose",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
         "description": {
           "label": "SIGNÉ BY CHEI",
@@ -79,9 +79,9 @@
         "id": 3,
         "slug": "miel",
         "name": "MIEL",
-        "price": "219533",
+        "price": "183000",
         "category": "Pashmina",
-        "material": "Viscose",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
         "description": {
           "label": "SIGNÉ BY CHEI",
@@ -122,12 +122,13 @@
         "id": 6,
         "name": "GALEVE",
         "slug": "galeve",
-        "price": "219533",
+        "price": "183000",
         "status": "released",
         "category": "Pashmina",
-        "material": "Viscose",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70",
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133050/CHERRYL_PASHMINA_VAPOR_page-0002.jpg",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133050/CHERRYL_PASHMINA_VAPOR_page-0002.jpg"
         ],
         "description": {
@@ -156,12 +157,13 @@
         "id": 7,
         "name": "NOCTURNE",
         "slug": "nocturne",
-        "price": "219533",
+        "price": "183000",
         "status": "released",
         "category": "Pashmina",
-        "material": "Viscose",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70",
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133312/CHERRYL_PASHMINA_VAPOR_page-0001.jpg",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790133312/CHERRYL_PASHMINA_VAPOR_page-0001.jpg"
         ],
         "description": {
