@@ -465,7 +465,8 @@ function openProductModal(collectionId = null, productId = null) {
 
     form.reset();
     err.classList.add('hidden');
-    document.getElementById('pf-image-preview-wrap').classList.add('hidden');
+    document.getElementById('pf-image-model-preview-wrap').classList.add('hidden');
+    document.getElementById('pf-image-full-preview-wrap').classList.add('hidden');
     document.getElementById('pf-id').value            = '';
     document.getElementById('pf-collection-id').value = '';
 
@@ -491,7 +492,8 @@ function openProductModal(collectionId = null, productId = null) {
         document.getElementById('pf-category').value      = product.category || '';
         document.getElementById('pf-material').value      = product.material || '';
         document.getElementById('pf-size').value          = product.size || '';
-        document.getElementById('pf-image').value         = product.images?.[0] || '';
+        document.getElementById('pf-image-model').value   = product.images?.[0] || '';
+        document.getElementById('pf-image-full').value    = product.images?.[1] || product.images?.[0] || '';
         document.getElementById('pf-desc-label').value    = product.description?.label || '';
         document.getElementById('pf-desc-quote').value    = product.description?.quote || '';
         document.getElementById('pf-desc-content').value  = product.description?.content || '';
@@ -507,8 +509,12 @@ function openProductModal(collectionId = null, productId = null) {
 
         // Preview gambar
         if (product.images?.[0]) {
-            document.getElementById('pf-image-preview').src = product.images[0];
-            document.getElementById('pf-image-preview-wrap').classList.remove('hidden');
+            document.getElementById('pf-image-model-preview').src = product.images[0];
+            document.getElementById('pf-image-model-preview-wrap').classList.remove('hidden');
+        }
+        if (product.images?.[1] || product.images?.[0]) {
+            document.getElementById('pf-image-full-preview').src = product.images?.[1] || product.images?.[0];
+            document.getElementById('pf-image-full-preview-wrap').classList.remove('hidden');
         }
     } else {
         title.textContent = 'Tambah Produk';
@@ -526,20 +532,22 @@ function closeProductModal() {
 
 // Preview gambar saat URL diketik
 function initImagePreview() {
-    const imageInput = document.getElementById('pf-image');
-    if (!imageInput) return;
-    imageInput.addEventListener('input', () => {
-        const url     = imageInput.value.trim();
-        const preview = document.getElementById('pf-image-preview');
-        const wrap    = document.getElementById('pf-image-preview-wrap');
-        if (url) {
-            preview.src = url;
-            wrap.classList.remove('hidden');
-            preview.onerror = () => wrap.classList.add('hidden');
-            preview.onload  = () => wrap.classList.remove('hidden');
-        } else {
-            wrap.classList.add('hidden');
-        }
+    ['model', 'full'].forEach(type => {
+        const imageInput = document.getElementById(`pf-image-${type}`);
+        if (!imageInput) return;
+        imageInput.addEventListener('input', () => {
+            const url     = imageInput.value.trim();
+            const preview = document.getElementById(`pf-image-${type}-preview`);
+            const wrap    = document.getElementById(`pf-image-${type}-preview-wrap`);
+            if (url) {
+                preview.src = url;
+                wrap.classList.remove('hidden');
+                preview.onerror = () => wrap.classList.add('hidden');
+                preview.onload  = () => wrap.classList.remove('hidden');
+            } else {
+                wrap.classList.add('hidden');
+            }
+        });
     });
 }
 
@@ -579,7 +587,8 @@ async function handleProductSave(e) {
     const material    = document.getElementById('pf-material').value.trim();
     const size        = document.getElementById('pf-size').value.trim();
     const colId       = parseInt(document.getElementById('pf-collection').value);
-    const image       = document.getElementById('pf-image').value.trim();
+    const imageModel  = document.getElementById('pf-image-model').value.trim();
+    const imageFull   = document.getElementById('pf-image-full').value.trim();
     const descLabel   = document.getElementById('pf-desc-label').value.trim();
     const descQuote   = document.getElementById('pf-desc-quote').value.trim();
     const descContent = document.getElementById('pf-desc-content').value.trim();
@@ -600,7 +609,7 @@ async function handleProductSave(e) {
 
     const productData = {
         name, slug, price, status, category, material, size,
-        images: image ? [image] : [],
+        images: [imageModel, imageFull].filter(Boolean),
         description: { label: descLabel, quote: descQuote, content: descContent }
     };
 

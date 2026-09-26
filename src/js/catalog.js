@@ -114,7 +114,7 @@ function renderCatalog() {
 
                         ${isComingSoon
                             ? `<p class="mt-3 font-serif text-xl text-rosegold uppercase tracking-widest">Coming Soon</p>`
-                            : `<p class="mt-3 font-serif text-xl text-navy"><span>Rp</span> ${Number(product.price).toLocaleString('id-ID')}</p>`
+                            : `<div class="mt-3 text-navy flex items-baseline gap-1.5"><span class="font-serif italic text-lg">Rp</span> <span class="font-sans font-medium text-[1.1rem] tracking-wide">${Number(product.price).toLocaleString('id-ID')}</span></div>`
                         }
 
                         ${isComingSoon

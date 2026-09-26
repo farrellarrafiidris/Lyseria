@@ -52,9 +52,10 @@ async function loadProducts() {
                             ${product.name}
                         </h3>
 
-                        <p class="mt-2 font-serif text-xl text-navy">
-                            <span>Rp</span> ${Number(product.price).toLocaleString("id-ID")}</span>
-                        </p>
+                        <div class="mt-2 text-navy flex items-baseline gap-1.5">
+                            <span class="font-serif italic text-lg">Rp</span> 
+                            <span class="font-sans font-medium text-[1.1rem] tracking-wide">${Number(product.price).toLocaleString("id-ID")}</span>
+                        </div>
 
                         <div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;">
                             <a

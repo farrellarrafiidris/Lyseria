@@ -166,11 +166,13 @@ async function loadProduct() {
 
                         <p class="
                             mt-3
-                            font-serif
-                            text-md
+                            text-navy
+                            flex
+                            items-baseline
+                            gap-1.5
                         ">
-                            Rp 
-                            <span>
+                            <span class="font-serif italic text-md">Rp</span>
+                            <span class="font-sans font-medium text-base tracking-wide">
                                 ${Number(item.price).toLocaleString("id-ID")}
                             </span>
                         </p>
@@ -418,13 +420,14 @@ async function loadProduct() {
 
 
                     <p class="
-                        text-xl
-                        lg:text-2xl
                         mt-4
-                        font-serif
+                        text-navy
+                        flex
+                        items-baseline
+                        gap-2
                     ">
-                        Rp
-                        <span>
+                        <span class="font-serif italic text-xl lg:text-2xl">Rp</span>
+                        <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide">
                             ${Number(product.price).toLocaleString("id-ID")}
                         </span>
                     </p>
@@ -620,7 +623,7 @@ async function loadProduct() {
                 ">
 
                     <img
-                        src="${product.images[0]}"
+                        src="${product.images[1] || product.images[0]}"
                         alt="Full view of ${product.name}"
 
                         class="

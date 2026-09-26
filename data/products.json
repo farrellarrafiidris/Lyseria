@@ -14,17 +14,28 @@
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
-          "label": "SIGNE BY CHÉI",
+          "label": "SIGNÉ BY CHEI",
           "quote": "Every bloom begins with a quiet dream.",
           "content": "Jolie is the first creation to come to life, becoming the identity of the collection. Inspired by a blooming lily, this pattern symbolizes the beginning of a creative journey. while the delicate touches of pink embody softness, affection, and femininity."
         },
         "colorGuide": {
-          "palette": ["Soft Pink", "White"],
-          "paletteHex": ["#F2B8C6", "#FFFFFF"],
-          "undertoneRating": { "warm": 3, "cool": 5, "neutral": 4 },
+          "palette": [
+            "Soft Pink",
+            "White"
+          ],
+          "paletteHex": [
+            "#F2B8C6",
+            "#FFFFFF"
+          ],
+          "undertoneRating": {
+            "warm": 3,
+            "cool": 5,
+            "neutral": 4
+          },
           "tip": "Pairs beautifully with nude or soft coral makeup. These gentle tones enhance an elegant and feminine impression that feels timeless and graceful."
         },
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790396285/Jolie_Model_PNG.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097894/jolie.png"
         ],
         "status": "released"
@@ -38,17 +49,28 @@
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
-          "label": "SIGNE BY CHÉI",
+          "label": "SIGNÉ BY CHEI",
           "quote": "Like flowers dancing with the wind.",
           "content": "Inspired by moments when nature feels alive without ever being forced, SÉVE embodies freedom and tranquility, intertwined with a beauty that is meant to unfold naturally."
         },
         "colorGuide": {
-          "palette": ["Sky Blue", "Botanical Green"],
-          "paletteHex": ["#A8CEDE", "#6B9E7A"],
-          "undertoneRating": { "warm": 3, "cool": 5, "neutral": 4 },
+          "palette": [
+            "Sky Blue",
+            "Botanical Green"
+          ],
+          "paletteHex": [
+            "#A8CEDE",
+            "#6B9E7A"
+          ],
+          "undertoneRating": {
+            "warm": 3,
+            "cool": 5,
+            "neutral": 4
+          },
           "tip": "Complements earth-toned or clean white outfits. A refreshing palette that evokes a natural and calm presence, perfect for everyday elegance."
         },
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790396301/Seve_Model_PNG.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097901/seve.png"
         ],
         "status": "released"
@@ -62,17 +84,28 @@
         "material": "Viscose",
         "size": "175x70cm",
         "description": {
-          "label": "Signature Collection",
+          "label": "SIGNÉ BY CHEI",
           "quote": "Every sunrise is another chance to bloom.",
           "content": "The warm tones of this pattern are inspired by the first light of sunrise. Miel symbolizes hope, new beginnings, and the belief that each day brings an opportunity to grow into the best version of oneself."
         },
         "colorGuide": {
-          "palette": ["Soft Yellow", "Soft Olive Green"],
-          "paletteHex": ["#EDD88A", "#9BAF7A"],
-          "undertoneRating": { "warm": 5, "cool": 3, "neutral": 4 },
-          "tip": "Style with brown, cream, or olive outfits for a harmonious look — as warm and radiant as the morning light."
+          "palette": [
+            "Soft Yellow",
+            "Soft Olive Green"
+          ],
+          "paletteHex": [
+            "#EDD88A",
+            "#9BAF7A"
+          ],
+          "undertoneRating": {
+            "warm": 5,
+            "cool": 3,
+            "neutral": 4
+          },
+          "tip": "Style with brown, cream, or olive outfits for a harmonious look  as warm and radiant as the morning light."
         },
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790396288/Miel_Model_PNG.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789097806/miel.png"
         ],
         "status": "released"
@@ -103,10 +136,20 @@
           "content": "A seamless harmony of muted olive green and soft pink, GALEVE embodies modern balance and serene charm. Its dual-tone palette brings an understated warmth and distinct character to the collection."
         },
         "colorGuide": {
-          "palette": ["Soft Matcha Green", "Soft Pink Cream"],
-          "paletteHex": ["#A8B99C", "#E8C8BA"],
-          "undertoneRating": { "warm": 4, "cool": 4, "neutral": 5 },
-          "tip": "Versatile for all undertones. Looks stunning paired with cream, light brown, or off-white tones — effortlessly balanced and serene."
+          "palette": [
+            "Soft Matcha Green",
+            "Soft Pink Cream"
+          ],
+          "paletteHex": [
+            "#A8B99C",
+            "#E8C8BA"
+          ],
+          "undertoneRating": {
+            "warm": 4,
+            "cool": 4,
+            "neutral": 5
+          },
+          "tip": "Versatile for all undertones. Looks stunning paired with cream, light brown, or off-white tones effortlessly balanced and serene."
         }
       },
       {
@@ -127,9 +170,19 @@
           "content": "Inspired by midnight skies, NOCTURNE embodies understated elegance and mystery. Its deep, shadowy tones bring a timeless sophistication that captures the quiet depth of twilight."
         },
         "colorGuide": {
-          "palette": ["Dark Brown", "Cream"],
-          "paletteHex": ["#4A2F24", "#F5EDD8"],
-          "undertoneRating": { "warm": 5, "cool": 3, "neutral": 4 },
+          "palette": [
+            "Dark Brown",
+            "Cream"
+          ],
+          "paletteHex": [
+            "#4A2F24",
+            "#F5EDD8"
+          ],
+          "undertoneRating": {
+            "warm": 5,
+            "cool": 3,
+            "neutral": 4
+          },
           "tip": "Most radiant on medium to deep skin tones. Pair with nude or black outfits for a strong, effortlessly sophisticated look."
         }
       }
@@ -155,9 +208,21 @@
           "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
         },
         "colorGuide": {
-          "palette": ["Teal", "Emerald", "Brown"],
-          "paletteHex": ["#4E9E9E", "#4A7C59", "#7B5140"],
-          "undertoneRating": { "warm": 5, "cool": 4, "neutral": 5 },
+          "palette": [
+            "Teal",
+            "Emerald",
+            "Brown"
+          ],
+          "paletteHex": [
+            "#4E9E9E",
+            "#4A7C59",
+            "#7B5140"
+          ],
+          "undertoneRating": {
+            "warm": 5,
+            "cool": 4,
+            "neutral": 5
+          },
           "tip": "These jewel tones are captivating on all skin tones. Stand out best when paired with neutral or deep brown outfits for a refined, editorial look."
         },
         "images": [
@@ -179,9 +244,19 @@
           "content": "Inspired by the enduring allure of jade, Jade represents balance, serenity, and quiet strength."
         },
         "colorGuide": {
-          "palette": ["Mahogany", "Cream"],
-          "paletteHex": ["#8B3A2E", "#F2E8D5"],
-          "undertoneRating": { "warm": 5, "cool": 3, "neutral": 4 },
+          "palette": [
+            "Mahogany",
+            "Cream"
+          ],
+          "paletteHex": [
+            "#8B3A2E",
+            "#F2E8D5"
+          ],
+          "undertoneRating": {
+            "warm": 5,
+            "cool": 3,
+            "neutral": 4
+          },
           "tip": "Especially flattering on medium to deep skin tones. The luxurious warmth of this palette is perfect for both formal and casual occasions."
         },
         "images": [

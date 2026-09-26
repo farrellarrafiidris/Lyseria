@@ -1269,9 +1269,6 @@
   .top-24 {
     top: calc(var(--spacing) * 24);
   }
-  .top-\[88px\] {
-    top: 88px;
-  }
   .-right-40 {
     right: calc(var(--spacing) * -40);
   }

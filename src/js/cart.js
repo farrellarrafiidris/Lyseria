@@ -264,7 +264,10 @@ const CartUI = {
                 <div style="padding:20px 28px 28px;border-top:1px solid #EDE8E3;flex-shrink:0;background:#FAF7F2;">
                     <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;">
                         <span style="font-size:0.68rem;letter-spacing:0.28em;text-transform:uppercase;color:#9A8880;font-weight:500;">Total</span>
-                        <span id="ly-cart-total" style="font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:#1B2A4A;font-weight:600;line-height:1;">Rp 0</span>
+                        <div id="ly-cart-total" style="display:flex; align-items:baseline; gap:6px; color:#1B2A4A;">
+                            <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem;">Rp</span>
+                            <span style="font-family:'Inter',sans-serif; font-size:1.6rem; font-weight:600; letter-spacing:0.02em;">0</span>
+                        </div>
                     </div>
 
                     <!-- WhatsApp Checkout Button -->
@@ -378,7 +381,7 @@ const CartUI = {
                     <p style="font-size:0.73rem;color:#B7A89B;margin:0;">Add some beautiful pieces!</p>
                 </div>
             `;
-            if (totalEl) totalEl.textContent = 'Rp 0';
+            if (totalEl) totalEl.innerHTML = `<span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem;">Rp</span><span style="font-family:'Inter',sans-serif; font-size:1.6rem; font-weight:600; letter-spacing:0.02em;">0</span>`;
             return;
         }
 
@@ -394,7 +397,10 @@ const CartUI = {
                 <div style="flex:1;min-width:0;">
                     <p style="margin:0;font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;color:#C79A8B;font-weight:700;">LYSÉRIA</p>
                     <p style="margin:3px 0 4px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#1B2A4A;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</p>
-                    <p style="margin:0 0 10px;font-size:0.74rem;color:#9A8880;">Rp ${item.price.toLocaleString('id-ID')}</p>
+                    <div style="margin:0 0 10px; display:flex; align-items:baseline; gap:4px; color:#9A8880;">
+                        <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.8rem;">Rp</span>
+                        <span style="font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.02em;">${item.price.toLocaleString('id-ID')}</span>
+                    </div>
 
                     <!-- Qty Controls -->
                     <div style="display:flex;align-items:center;gap:8px;">
@@ -407,7 +413,10 @@ const CartUI = {
                             style="width:26px;height:26px;border-radius:50%;border:1.5px solid #EDE8E3;background:#fff;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;color:#1B2A4A;transition:all 0.18s;flex-shrink:0;line-height:1;"
                             onmouseenter="this.style.background='#1B2A4A';this.style.color='#fff';this.style.borderColor='#1B2A4A'"
                             onmouseleave="this.style.background='#fff';this.style.color='#1B2A4A';this.style.borderColor='#EDE8E3'">+</button>
-                        <span style="margin-left:auto;font-size:0.82rem;font-weight:700;color:#1B2A4A;">Rp ${(item.price * item.qty).toLocaleString('id-ID')}</span>
+                        <div style="margin-left:auto; display:flex; align-items:baseline; gap:4px; color:#1B2A4A;">
+                            <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.9rem;">Rp</span>
+                            <span style="font-family:'Inter',sans-serif; font-size:0.85rem; font-weight:600; letter-spacing:0.02em;">${(item.price * item.qty).toLocaleString('id-ID')}</span>
+                        </div>
                     </div>
                 </div>
 
@@ -421,7 +430,7 @@ const CartUI = {
             </div>
         `).join('');
 
-        if (totalEl) totalEl.textContent = `Rp ${CartManager.getTotal().toLocaleString('id-ID')}`;
+        if (totalEl) totalEl.innerHTML = `<span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.5rem;">Rp</span><span style="font-family:'Inter',sans-serif; font-size:1.6rem; font-weight:600; letter-spacing:0.02em;">${CartManager.getTotal().toLocaleString('id-ID')}</span>`;
     }
 };
 
