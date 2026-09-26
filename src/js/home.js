@@ -3,7 +3,7 @@ async function loadProducts() {
         // Tampilkan skeleton dulu
         const container = document.getElementById('product-list');
         if (container) {
-            container.innerHTML = [1,2,3].map(() => `
+            container.innerHTML = [1, 2, 3].map(() => `
                 <div>
                     <div style="border-radius:24px;overflow:hidden;background:linear-gradient(90deg,#ede8e3 25%,#f5f0eb 50%,#ede8e3 75%);background-size:600px 100%;animation:shimmer 1.4s infinite linear;aspect-ratio:3/4;"></div>
                     <div style="margin-top:20px;">
@@ -18,6 +18,103 @@ async function loadProducts() {
         // Baca langsung dari products.json (diupdate oleh server.js)
         const response = await fetch('./data/products.json?t=' + Date.now());
         const collections = await response.json();
+
+        // Populate About Carousel with fade logic
+        const aboutCarousel = document.getElementById('about-carousel');
+        if (aboutCarousel) {
+            const signeCollection = collections.find(c => c.name.toUpperCase().includes('SIGNE BY CHÉI') || c.id === 1);
+            if (signeCollection && signeCollection.products) {
+                const photos = signeCollection.products
+                    .map(p => p.images[0])
+                    .filter(Boolean);
+
+                if (photos.length > 0) {
+                    aboutCarousel.innerHTML = photos.map((photo, idx) => `
+                        <div class="absolute inset-0 transition-opacity duration-700 ease-in-out ${idx === 0 ? 'opacity-100 z-10' : 'opacity-0 z-0'}" data-carousel-slide="${idx}">
+                            <img src="${photo}" alt="Signé by Chei" class="w-full h-full object-cover object-center">
+                        </div>
+                    `).join('');
+
+                    const dotsContainer = document.getElementById('about-carousel-dots');
+                    if (dotsContainer) {
+                        dotsContainer.innerHTML = photos.map((_, idx) => `
+                            <button class="h-2 rounded-full transition-all duration-300 ${idx === 0 ? 'bg-white w-6' : 'bg-white/50 w-2'}" data-carousel-dot="${idx}" aria-label="Go to slide ${idx + 1}"></button>
+                        `).join('');
+                    }
+
+                    // Carousel Logic
+                    window.aboutCarouselCurrentIdx = 0;
+                    window.aboutCarouselTotal = photos.length;
+
+                    window.updateAboutCarousel = (newIdx) => {
+                        const slides = document.querySelectorAll('[data-carousel-slide]');
+                        const dots = document.querySelectorAll('[data-carousel-dot]');
+                        if (!slides.length) return;
+                        
+                        // Hide old
+                        if (slides[window.aboutCarouselCurrentIdx]) {
+                            slides[window.aboutCarouselCurrentIdx].classList.replace('opacity-100', 'opacity-0');
+                            slides[window.aboutCarouselCurrentIdx].classList.replace('z-10', 'z-0');
+                        }
+                        if (dots[window.aboutCarouselCurrentIdx]) {
+                            dots[window.aboutCarouselCurrentIdx].classList.replace('bg-white', 'bg-white/50');
+                            dots[window.aboutCarouselCurrentIdx].classList.replace('w-6', 'w-2');
+                        }
+
+                        // Update index
+                        window.aboutCarouselCurrentIdx = (newIdx + window.aboutCarouselTotal) % window.aboutCarouselTotal;
+
+                        // Show new
+                        if (slides[window.aboutCarouselCurrentIdx]) {
+                            slides[window.aboutCarouselCurrentIdx].classList.replace('opacity-0', 'opacity-100');
+                            slides[window.aboutCarouselCurrentIdx].classList.replace('z-0', 'z-10');
+                        }
+                        if (dots[window.aboutCarouselCurrentIdx]) {
+                            dots[window.aboutCarouselCurrentIdx].classList.replace('bg-white/50', 'bg-white');
+                            dots[window.aboutCarouselCurrentIdx].classList.replace('w-2', 'w-6');
+                        }
+                    };
+
+                    const prevBtn = document.getElementById('about-btn-prev');
+                    const nextBtn = document.getElementById('about-btn-next');
+                    
+                    if (prevBtn) prevBtn.onclick = () => window.updateAboutCarousel(window.aboutCarouselCurrentIdx - 1);
+                    if (nextBtn) nextBtn.onclick = () => window.updateAboutCarousel(window.aboutCarouselCurrentIdx + 1);
+
+                    document.querySelectorAll('[data-carousel-dot]').forEach(dot => {
+                        dot.onclick = (e) => {
+                            const targetIdx = parseInt(e.target.getAttribute('data-carousel-dot'));
+                            window.updateAboutCarousel(targetIdx);
+                        };
+                    });
+
+                    // Swipe logic
+                    let touchStartX = 0;
+                    let touchEndX = 0;
+                    aboutCarousel.addEventListener('touchstart', e => {
+                        touchStartX = e.changedTouches[0].screenX;
+                    }, {passive: true});
+                    
+                    aboutCarousel.addEventListener('touchend', e => {
+                        touchEndX = e.changedTouches[0].screenX;
+                        handleSwipe();
+                    }, {passive: true});
+
+                    function handleSwipe() {
+                        const threshold = 50;
+                        if (touchEndX < touchStartX - threshold) {
+                            window.updateAboutCarousel(window.aboutCarouselCurrentIdx + 1); // Swipe left (next)
+                        }
+                        if (touchEndX > touchStartX + threshold) {
+                            window.updateAboutCarousel(window.aboutCarouselCurrentIdx - 1); // Swipe right (prev)
+                        }
+                    }
+
+                } else {
+                    aboutCarousel.innerHTML = '<div class="w-full h-full bg-sand flex items-center justify-center"><p class="text-espresso/50">No photos available</p></div>';
+                }
+            }
+        }
 
         container.innerHTML = '';
 

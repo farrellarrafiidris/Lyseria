@@ -1,398 +1,414 @@
 <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <title>LYSÉRIA</title>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>LYSÉRIA</title>
     <style>
         @keyframes shimmer {
-            0%   { background-position: -600px 0; }
-            100% { background-position:  600px 0; }
+            0% {
+                background-position: -600px 0;
+            }
+
+            100% {
+                background-position: 600px 0;
+            }
         }
     </style>
-        <link href="./src/output.css" rel="stylesheet">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap" rel="stylesheet">
-        <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
-    </head>
+    <link href="./src/output.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@100..900&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
+</head>
+
 <body class="bg-navy text-pearl overflow-x-hidden">
 
-<nav class="fixed top-0 inset-x-0 z-50 bg-navy">
-  <div class="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
-    <a class="font-display text-4xl tracking-[.15em] ">LYSÉRIA</a>
-    <ul class="hidden lg:flex gap-10 uppercase tracking-[.25em] text-xs font-sans">
-      <li><a href="#about">About</a></li>
-      <!-- <li><a href="#studio">Style Studio</a></li> -->
-      <li><a href="#catalog">Catalog</a></li>
-      <!-- <li><a href="#journal">Journal</a></li> -->
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="flex gap-5 items-center">
-      <span class="text-xl cursor-pointer">⌕</span>
-      <!-- Cart Icon with Badge -->
-      <button id="ly-cart-btn" aria-label="Open shopping cart" style="position:relative;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;color:#FAF7F2;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-        </svg>
-        <span class="ly-cart-badge" style="position:absolute;top:-7px;right:-7px;background:#C79A8B;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.58rem;font-weight:700;display:none;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">0</span>
-      </button>
-    </div>
-  </div>
-</nav>
+    <nav class="fixed top-0 inset-x-0 z-50 bg-navy">
+        <div class="max-w-7xl mx-auto flex items-center justify-between px-8 py-6">
+            <a class="font-display text-4xl tracking-[.15em] ">LYSÉRIA</a>
+            <ul class="hidden lg:flex gap-10 uppercase tracking-[.25em] text-xs font-sans">
+                <li><a href="#about">About</a></li>
+                <!-- <li><a href="#studio">Style Studio</a></li> -->
+                <li><a href="#catalog">Catalog</a></li>
+                <!-- <li><a href="#journal">Journal</a></li> -->
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="flex gap-5 items-center">
+                <span class="text-xl cursor-pointer">⌕</span>
+                <!-- Cart Icon with Badge -->
+                <button id="ly-cart-btn" aria-label="Open shopping cart"
+                    style="position:relative;background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;color:#FAF7F2;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.8">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span class="ly-cart-badge"
+                        style="position:absolute;top:-7px;right:-7px;background:#C79A8B;color:#fff;border-radius:50%;width:18px;height:18px;font-size:0.58rem;font-weight:700;display:none;align-items:center;justify-content:center;font-family:'Inter',sans-serif;">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
 
-<section
-    id="countdown-bar"
-    class="fixed top-22 inset-x-0 z-40 bg-rosegold text-white"
-    style="transition: transform .3s ease, opacity .3s ease;">
+    <section id="countdown-bar" class="fixed top-22 inset-x-0 z-40 bg-rosegold text-white"
+        style="transition: transform .3s ease, opacity .3s ease;">
 
-    <div class="max-w-7xl mx-auto px-6 py-3">
+        <div class="max-w-7xl mx-auto px-6 py-3">
 
-        <div class="flex items-center justify-center gap-2 text-center relative">
+            <div class="flex items-center justify-center gap-2 text-center relative">
 
-            <p class="uppercase tracking-[.25em] text-xs">
-                Grand Opening
-            </p>
+                <p class="uppercase tracking-[.25em] text-xs">
+                    Grand Opening
+                </p>
 
-            <span>•</span>
+                <span>•</span>
 
-            <p class="text-sm">
-                Launching In
-            </p>
+                <p class="text-sm">
+                    Launching In
+                </p>
 
-            <span
-                id="countdown"
-                class="font-semibold tracking-wider">
-                Loading...
-            </span>
+                <span id="countdown" class="font-semibold tracking-wider">
+                    Loading...
+                </span>
 
-            <!-- Dismiss button -->
-            <button
-                id="countdown-close"
-                aria-label="Dismiss"
-                style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;padding:4px 8px;font-size:1rem;line-height:1;transition:color .15s;"
-                onmouseenter="this.style.color='#fff'"
-                onmouseleave="this.style.color='rgba(255,255,255,.7)'">
-                ✕
-            </button>
+                <!-- Dismiss button -->
+                <button id="countdown-close" aria-label="Dismiss"
+                    style="position:absolute;right:0;top:50%;transform:translateY(-50%);background:none;border:none;color:rgba(255,255,255,.7);cursor:pointer;padding:4px 8px;font-size:1rem;line-height:1;transition:color .15s;"
+                    onmouseenter="this.style.color='#fff'" onmouseleave="this.style.color='rgba(255,255,255,.7)'">
+                    ✕
+                </button>
+
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
-</section>
-
-<script>
-(function() {
-    // Hide countdown bar permanently if dismissed
-    if (localStorage.getItem('lyseria_countdown_dismissed')) {
-        const bar = document.getElementById('countdown-bar');
-        if (bar) bar.style.display = 'none';
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('countdown-close')?.addEventListener('click', function() {
-            const bar = document.getElementById('countdown-bar');
-            if (bar) {
-                bar.style.opacity = '0';
-                bar.style.transform = 'translateY(-100%)';
-                setTimeout(() => { bar.style.display = 'none'; }, 300);
+    <script>
+        (function () {
+            // Hide countdown bar permanently if dismissed
+            if (localStorage.getItem('lyseria_countdown_dismissed')) {
+                const bar = document.getElementById('countdown-bar');
+                if (bar) bar.style.display = 'none';
             }
-            localStorage.setItem('lyseria_countdown_dismissed', '1');
-        });
-    });
-})();
-</script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.getElementById('countdown-close')?.addEventListener('click', function () {
+                    const bar = document.getElementById('countdown-bar');
+                    if (bar) {
+                        bar.style.opacity = '0';
+                        bar.style.transform = 'translateY(-100%)';
+                        setTimeout(() => { bar.style.display = 'none'; }, 300);
+                    }
+                    localStorage.setItem('lyseria_countdown_dismissed', '1');
+                });
+            });
+        })();
+    </script>
 
-<section class="relative min-h-screen overflow-hidden">
+    <section class="relative min-h-screen overflow-hidden">
 
-    <!-- Background Blur -->
-    <div class="absolute -left-40 bottom-0 w-125 h-125 rounded-full bg-navylight/40 blur-3xl"></div>
-    <div class="absolute -right-40 top-0 w-125 h-125 rounded-full bg-rosegold/10 blur-3xl"></div>
+        <!-- Background Blur -->
+        <div class="absolute -left-40 bottom-0 w-125 h-125 rounded-full bg-navylight/40 blur-3xl"></div>
+        <div class="absolute -right-40 top-0 w-125 h-125 rounded-full bg-rosegold/10 blur-3xl"></div>
 
-    <div class="max-w-7xl mx-auto min-h-screen grid lg:grid-cols-2 gap-16 lg:gap-20 items-center px-6 lg:px-8 pt-28 pb-16">
-
-        <!-- Left -->
-        <div>
-
-            <p class="uppercase tracking-[.35em] text-xs text-rosegold font-semibold mb-6">
-                Modest Fashion — Reimagined
-            </p>
-
-            <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl leading-none">
-                Dressed in<br>
-                <span class="italic text-rosegold">Quiet</span> Grace.
-            </h1>
-
-            <p class="mt-8 text-base lg:text-lg leading-8 lg:leading-9 max-w-lg text-pearl/70">
-                Timeless silhouettes, considered fabrics, and a wardrobe built for stillness Lyséria is modest dressing without compromise.
-            </p>
-
-            <div class="mt-10 flex flex-wrap gap-4 lg:gap-8 items-center">
-
-                <a class="px-8 py-4 bg-rosegold text-white uppercase tracking-[.2em] text-xs rounded-full">
-                    Discover the Collection
-                </a>
-
-                <a class="uppercase tracking-[.2em] text-xs">
-                    Try the Style Studio →
-                </a>
-
-            </div>
-
-        </div>
-
-        <!-- Right -->
-        <div class="flex justify-center">
-
-            <!-- <div class="w-64 h-80 sm:w-80 sm:h-[420px] lg:w-[420px] lg:h-[560px] rounded-[50px] lg:rounded-[80px] bg-navylight shadow-2xl overflow-hidden"> -->
-
-                <img
-                    src="./assets/images/logo.png"
-                    alt="Lyséria Logo"
-                    class="w-full h-full object-contain p-8 sm:p-10 lg:p-12">
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section id="about" class="bg-pearl py-24">
-
-    <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center px-8">
-
-        <!-- Image -->
-        <div>
-            <div class="aspect-4/5 rounded-3xl bg-sand"></div>
-        </div>
-
-        <!-- Content -->
-        <div>
-            <p class="uppercase tracking-[.3em] text-xs text-rosegold mb-4">
-                About Lyséria
-            </p>
-
-            <h2 class="font-display text-5xl text-navy leading-tight">
-                Every pattern begins with a imagination, every bloom begins with new hope.
-            </h2>
-
-            <p class="mt-6 leading-8 text-espresso/80 text-lg text-justify">
-                Every design in this collection is an original creation, thoughtfully crafted and inspired by the effortless rhythm of natural botanical growth. Nature is embraced as a symbol of renewal, organic beauty, and graceful evolution, while abstract art becomes a canvas of expression a gentle reminder that everyone has their own season to blossom.
-            </p>
-        </div>
-
-    </div>
-
-</section>
-<!-- <section id="studio" class="min-h-screen flex items-center justify-center bg-navylight"><h2 class="font-display text-6xl">Style Studio</h2></section> -->
-<section id="catalog" class="bg-white py-24">
-
-    <div class="max-w-7xl mx-auto px-8">
-
-        <div class="text-center mb-16">
-
-            <p class="uppercase tracking-[.3em] text-xs text-rosegold">
-                Our Collection
-            </p>
-
-            <h2 class="font-display text-5xl text-navy mt-4">
-                Timeless Pieces
-            </h2>
-
-            <p class="mt-6 text-espresso/70 max-w-xl mx-auto">
-                Discover our signature pieces designed to accompany every moment with elegance and comfort.
-            </p>
-
-        </div>
-
-        <!-- Semua card akan dibuat oleh JavaScript -->
         <div
-            id="product-list"
-            class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
-        </div>
-
-        <div class="text-center mt-12">
-            <a href="catalog.html" class=" bg-navy text-pearl rounded-full px-8 py-4 uppercase text-xs">
-                View All Collection
-            </a>
-        </div>
-
-    </div>
-
-</section>
-<!-- Closing Statement -->
-<section class="bg-pearl py-28">
-
-    <div class="max-w-4xl mx-auto px-8 text-center">
-
-        <p class="uppercase tracking-[.3em] text-xs text-rosegold">
-            A Final Thought
-        </p>
-
-        <h2 class="font-display text-5xl text-navy mt-6 leading-tight">
-            Where nature blooms into wearable art.
-        </h2>
-
-        <p class="mt-8 text-espresso/70 leading-8 max-w-2xl mx-auto">
-            LYSÉRIA believes that art and nature are two complementary elements. Drawing inspiration from blooming flowers, the vast sea, and tranquil breezes elevated by an artistic touch each scarf becomes a wearable canvas that tells a story, made not just to be worn, but to be felt.
-        </p>
-
-    </div>
-
-</section>
-<!-- Contact -->
-<section id="contact" class="bg-navy text-white py-24">
-
-    <div class="max-w-7xl mx-auto px-8">
-
-        <div class="grid lg:grid-cols-2 gap-16 items-center">
+            class="max-w-7xl mx-auto min-h-screen grid lg:grid-cols-2 gap-16 lg:gap-20 items-center px-6 lg:px-8 pt-28 pb-16">
 
             <!-- Left -->
             <div>
 
-                <p class="uppercase tracking-[.3em] text-xs text-rosegold">
-                    Contact
+                <p class="uppercase tracking-[.35em] text-xs text-rosegold font-semibold mb-6">
+                    Modest Fashion — Reimagined
                 </p>
 
-                <h2 class="font-display text-5xl mt-4">
-                    Let's Talk
-                </h2>
+                <h1 class="font-display text-5xl sm:text-6xl lg:text-8xl leading-none">
+                    Dressed in<br>
+                    <span class="italic text-rosegold">Quiet</span> Grace.
+                </h1>
 
-                <p class="mt-6 text-pearl leading-8 max-w-lg">
-                    Whether you have questions about our collections or want to collaborate,
-                    we'd love to hear from you.
+                <p class="mt-8 text-base lg:text-lg leading-8 lg:leading-9 max-w-lg text-pearl/70">
+                    Timeless silhouettes, considered fabrics, and a wardrobe built for stillness Lyséria is modest
+                    dressing without compromise.
                 </p>
 
-                <div class="mt-10 space-y-6">
+                <div class="mt-10 flex flex-wrap gap-4 lg:gap-8 items-center">
 
-                    <div>
-                        <p class="text-sm uppercase tracking-widest text-rosegold">
-                            Instagram
-                        </p>
+                    <a class="px-8 py-4 bg-rosegold text-white uppercase tracking-[.2em] text-xs rounded-full">
+                        Discover the Collection
+                    </a>
 
-                        <a href="https://ig.me/m/lyseria.co" target="_blank" class="text-xl hover:opacity-80 transition">
-                            @lyseria.co
-                        </a>
-                    </div>
-
-                    <div>
-                        <p class="text-sm uppercase tracking-widest text-rosegold">
-                            Email
-                        </p>
-
-                        <a href="#" class="text-xl hover:opacity-80 transition">
-                            lyseria.co@gmail.com
-                        </a>
-                    </div>
+                    <a class="uppercase tracking-[.2em] text-xs">
+                        Try the Style Studio →
+                    </a>
 
                 </div>
 
             </div>
 
             <!-- Right -->
-            <div class="bg-pearl rounded-3xl p-8 text-black">
+            <div class="flex justify-center">
 
-                <h3 class="font-display text-3xl mb-8">
-                    Send a Message
-                </h3>
+                <!-- <div class="w-64 h-80 sm:w-80 sm:h-[420px] lg:w-[420px] lg:h-[560px] rounded-[50px] lg:rounded-[80px] bg-navylight shadow-2xl overflow-hidden"> -->
 
-                <form id="contact-form" class="space-y-5">
-
-                    <input
-                        id="name"
-                        type="text"
-                        placeholder="Full Name"
-                        class="input input-bordered w-full"
-                        required>
-
-                    <input
-                        id="email"
-                        type="email"
-                        placeholder="Email Address"
-                        class="input input-bordered w-full"
-                        required>
-
-                    <textarea
-                        id="message"
-                        placeholder="Your Message"
-                        class="textarea textarea-bordered w-full h-40"
-                        required></textarea>
-
-                    <button
-                        class="btn bg-white w-full"
-                        type="submit">
-
-                        Send Message
-
-                    </button>
-
-                </form>
+                <img src="./assets/images/logo.png" alt="Lyséria Logo"
+                    class="w-full h-full object-contain p-8 sm:p-10 lg:p-12">
 
             </div>
 
         </div>
 
-    </div>
+        </div>
 
-</section>
+    </section>
 
-<!-- Footer -->
-<footer class="bg-navy text-white border-t border-white/10">
 
-    <div class="max-w-7xl mx-auto px-8 py-8">
+    <section id="about" class="bg-pearl py-24">
 
-        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center px-8">
 
+            <!-- Image Carousel -->
+            <div class="relative w-full aspect-4/5 rounded-3xl overflow-hidden group shadow-lg">
+                <div id="about-carousel" class="relative w-full h-full bg-sand">
+                    <!-- Images will be injected here via home.js -->
+                    <div class="w-full h-full flex items-center justify-center">
+                        <p class="text-espresso/50">Loading images...</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Buttons -->
+                <button id="about-btn-prev" class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 hover:bg-white backdrop-blur text-navy flex items-center justify-center transition-all duration-300 shadow-md z-20">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                </button>
+                <button id="about-btn-next" class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/70 hover:bg-white backdrop-blur text-navy flex items-center justify-center transition-all duration-300 shadow-md z-20">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                </button>
+
+                <!-- Dots Indicator -->
+                <div id="about-carousel-dots" class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20 drop-shadow-md">
+                    <!-- Dots will be injected here -->
+                </div>
+            </div>
+
+            <!-- Content -->
             <div>
+                <p class="uppercase tracking-[.3em] text-xs text-rosegold mb-4">
+                    About Lyséria
+                </p>
 
-                <h3 class="font-display text-2xl">
-                    LYSÉRIA
-                </h3>
+                <h2 class="font-display text-5xl text-navy leading-tight">
+                    Every pattern begins with a imagination, every bloom begins with new hope.
+                </h2>
 
-                <p class="text-sm text-white/60 mt-1">
-                    Timeless modest fashion crafted with elegance.
+                <p class="mt-6 leading-8 text-espresso/80 text-lg text-justify">
+                    Every design in this collection is an original creation, thoughtfully crafted and inspired by the
+                    effortless rhythm of natural botanical growth. Nature is embraced as a symbol of renewal, organic
+                    beauty, and graceful evolution, while abstract art becomes a canvas of expression a gentle reminder
+                    that everyone has their own season to blossom.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+    <!-- <section id="studio" class="min-h-screen flex items-center justify-center bg-navylight"><h2 class="font-display text-6xl">Style Studio</h2></section> -->
+    <section id="catalog" class="bg-white py-24">
+
+        <div class="max-w-7xl mx-auto px-8">
+
+            <div class="text-center mb-16">
+
+                <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                    Our Collection
+                </p>
+
+                <h2 class="font-display text-5xl text-navy mt-4">
+                    Timeless Pieces
+                </h2>
+
+                <p class="mt-6 text-espresso/70 max-w-xl mx-auto">
+                    Discover our signature pieces designed to accompany every moment with elegance and comfort.
                 </p>
 
             </div>
 
-            <div class="flex gap-8 text-sm text-white/70">
+            <!-- Semua card akan dibuat oleh JavaScript -->
+            <div id="product-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+            </div>
 
-                <a href="#about" class="hover:text-white transition">
-                    About
+            <div class="text-center mt-12">
+                <a href="catalog.html" class=" bg-navy text-pearl rounded-full px-8 py-4 uppercase text-xs">
+                    View All Collection
                 </a>
+            </div>
 
-                <a href="#catalog" class="hover:text-white transition">
-                    Catalog
-                </a>
+        </div>
 
-                <a href="#contact" class="hover:text-white transition">
-                    Contact
-                </a>
-                <a href="/admin/login.html" class="hover:text-white transition" target="_blank">
-                    Dashboard
-                </a>
+    </section>
+    <!-- Closing Statement -->
+    <section class="bg-pearl py-28">
+
+        <div class="max-w-4xl mx-auto px-8 text-center">
+
+            <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                A Final Thought
+            </p>
+
+            <h2 class="font-display text-5xl text-navy mt-6 leading-tight">
+                Where nature blooms into wearable art.
+            </h2>
+
+            <p class="mt-8 text-espresso/70 leading-8 max-w-2xl mx-auto">
+                LYSÉRIA believes that art and nature are two complementary elements. Drawing inspiration from blooming
+                flowers, the vast sea, and tranquil breezes elevated by an artistic touch each scarf becomes a wearable
+                canvas that tells a story, made not just to be worn, but to be felt.
+            </p>
+
+        </div>
+
+    </section>
+    <!-- Contact -->
+    <section id="contact" class="bg-navy text-white py-24">
+
+        <div class="max-w-7xl mx-auto px-8">
+
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+                <!-- Left -->
+                <div>
+
+                    <p class="uppercase tracking-[.3em] text-xs text-rosegold">
+                        Contact
+                    </p>
+
+                    <h2 class="font-display text-5xl mt-4">
+                        Let's Talk
+                    </h2>
+
+                    <p class="mt-6 text-pearl leading-8 max-w-lg">
+                        Whether you have questions about our collections or want to collaborate,
+                        we'd love to hear from you.
+                    </p>
+
+                    <div class="mt-10 space-y-6">
+
+                        <div>
+                            <p class="text-sm uppercase tracking-widest text-rosegold">
+                                Instagram
+                            </p>
+
+                            <a href="https://ig.me/m/lyseria.co" target="_blank"
+                                class="text-xl hover:opacity-80 transition">
+                                @lyseria.co
+                            </a>
+                        </div>
+
+                        <div>
+                            <p class="text-sm uppercase tracking-widest text-rosegold">
+                                Email
+                            </p>
+
+                            <a href="#" class="text-xl hover:opacity-80 transition">
+                                lyseria.co@gmail.com
+                            </a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Right -->
+                <div class="bg-pearl rounded-3xl p-8 text-black">
+
+                    <h3 class="font-display text-3xl mb-8">
+                        Send a Message
+                    </h3>
+
+                    <form id="contact-form" class="space-y-5">
+
+                        <input id="name" type="text" placeholder="Full Name" class="input input-bordered w-full"
+                            required>
+
+                        <input id="email" type="email" placeholder="Email Address" class="input input-bordered w-full"
+                            required>
+
+                        <textarea id="message" placeholder="Your Message" class="textarea textarea-bordered w-full h-40"
+                            required></textarea>
+
+                        <button class="btn bg-white w-full" type="submit">
+
+                            Send Message
+
+                        </button>
+
+                    </form>
+
+                </div>
 
             </div>
 
         </div>
 
-        <div class="border-t border-white/10 mt-8 pt-6 text-center text-sm text-white/50">
+    </section>
 
-            © 2026 Lyséria. All rights reserved.
+    <!-- Footer -->
+    <footer class="bg-navy text-white border-t border-white/10">
+
+        <div class="max-w-7xl mx-auto px-8 py-8">
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+
+                <div>
+
+                    <h3 class="font-display text-2xl">
+                        LYSÉRIA
+                    </h3>
+
+                    <p class="text-sm text-white/60 mt-1">
+                        Timeless modest fashion crafted with elegance.
+                    </p>
+
+                </div>
+
+                <div class="flex gap-8 text-sm text-white/70">
+
+                    <a href="#about" class="hover:text-white transition">
+                        About
+                    </a>
+
+                    <a href="#catalog" class="hover:text-white transition">
+                        Catalog
+                    </a>
+
+                    <a href="#contact" class="hover:text-white transition">
+                        Contact
+                    </a>
+                    <a href="/admin/login.html" class="hover:text-white transition" target="_blank">
+                        Dashboard
+                    </a>
+
+                </div>
+
+            </div>
+
+            <div class="border-t border-white/10 mt-8 pt-6 text-center text-sm text-white/50">
+
+                © 2026 Lyséria. All rights reserved.
+
+            </div>
 
         </div>
 
-    </div>
-
-</footer>
-<script src="./src/js/cart.js"></script>
-<script src="./src/js/countdown.js"></script>
-<script src="./src/js/home.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script src="./src/js/contact.js"></script>
+    </footer>
+    <script src="./src/js/cart.js"></script>
+    <script src="./src/js/countdown.js"></script>
+    <script src="./src/js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script src="./src/js/contact.js"></script>
 
 </body>
+
 </html>
