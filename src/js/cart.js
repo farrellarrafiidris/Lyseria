@@ -87,7 +87,7 @@ const CartManager = {
         return {
             name: v('co-name'), phone: v('co-phone'), email: v('co-email'),
             address: v('co-address'), 
-            city: selText('co-city'), // Now we use the dropdown text for the order
+            city: selText('co-shipping'), // The province selection text is sent as city/location
             district: v('co-district'),
             postal: v('co-postal'),
             shipping: v('co-shipping')
@@ -340,89 +340,7 @@ const QrisPayment = {
     }
 };
 
-// ─── Shipping UI ───────────────────────────────────────────────
-const ShippingUI = {
-    async loadProvinces() {
-        const el = document.getElementById('co-province');
-        if (!el || el.options.length > 1) return;
-        try {
-            const res = await fetch('/api/shipping/provinces');
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error);
-            el.innerHTML = '<option value="" disabled selected>Pilih Provinsi</option>' + 
-                data.map(p => `<option value="${p.province_id}">${p.province}</option>`).join('');
-        } catch (e) {
-            el.innerHTML = '<option value="" disabled selected>Gagal memuat provinsi</option>';
-            console.error(e);
-        }
-    },
-
-    async loadCities() {
-        const provId = document.getElementById('co-province').value;
-        const el = document.getElementById('co-city');
-        const ship = document.getElementById('co-shipping');
-        if (!provId || !el) return;
-        
-        el.disabled = true;
-        el.innerHTML = '<option value="" disabled selected>Memuat kota...</option>';
-        ship.disabled = true;
-        ship.innerHTML = '<option value="" disabled selected>Pilih kota tujuan dulu</option>';
-        CartUI.updateCheckoutTotal();
-
-        try {
-            const res = await fetch(`/api/shipping/cities?province=${provId}`);
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error);
-            el.innerHTML = '<option value="" disabled selected>Pilih Kota / Kabupaten</option>' + 
-                data.map(c => `<option value="${c.city_id}" data-postal="${c.postal_code}">${c.type} ${c.city_name}</option>`).join('');
-            el.disabled = false;
-        } catch (e) {
-            el.innerHTML = '<option value="" disabled selected>Gagal memuat kota</option>';
-        }
-    },
-
-    async loadCosts() {
-        const citySel = document.getElementById('co-city');
-        const cityId = citySel.value;
-        const postal = citySel.options[citySel.selectedIndex]?.dataset?.postal;
-        const el = document.getElementById('co-shipping');
-        const postalEl = document.getElementById('co-postal');
-        
-        if (!cityId || !el) return;
-        if (postalEl && postal) postalEl.value = postal;
-        
-        el.disabled = true;
-        el.innerHTML = '<option value="" disabled selected>Menghitung ongkir...</option>';
-        CartUI.updateCheckoutTotal();
-
-        // Asumsi berat: 500 gram x qty
-        const weight = Math.max(500, CartManager.getCount() * 500); 
-
-        try {
-            const res = await fetch('/api/shipping/cost', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ destination: cityId, weight, courier: 'jne' })
-            });
-            const data = await res.json();
-            if (!res.ok) throw new Error(data.error);
-
-            if (!data.costs || data.costs.length === 0) {
-                el.innerHTML = '<option value="" disabled selected>Kurir tidak tersedia</option>';
-                return;
-            }
-
-            el.innerHTML = '<option value="" disabled selected>Pilih Layanan JNE</option>' + 
-                data.costs.map(c => {
-                    const cost = c.cost[0];
-                    return `<option value="${cost.value}">JNE ${c.service} (Rp ${Number(cost.value).toLocaleString('id-ID')}) - ${cost.etd} hari</option>`;
-                }).join('');
-            el.disabled = false;
-        } catch (e) {
-            el.innerHTML = '<option value="" disabled selected>Gagal menghitung ongkir</option>';
-        }
-    }
-};
+// ─── Shipping UI dihapus (menggunakan static tarif) ──────────────
 
 // ─── Toast Notification ───────────────────────────────────────
 function showToast(msg, type = 'success') {
@@ -572,21 +490,43 @@ const CartUI = {
                             <input type="email" id="co-email" style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" placeholder="e.g. jane@email.com">
                         </div>
                         <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Provinsi <span style="color:#ef4444">*</span></label>
-                            <select id="co-province" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" onchange="ShippingUI.loadCities()">
-                                <option value="" disabled selected>Memuat provinsi...</option>
-                            </select>
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Kota / Kabupaten <span style="color:#ef4444">*</span></label>
-                            <select id="co-city" required disabled style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" onchange="ShippingUI.loadCosts()">
-                                <option value="" disabled selected>Pilih Provinsi dulu</option>
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Provinsi Pengiriman (Tarif Flat) <span style="color:#ef4444">*</span></label>
+                            <select id="co-shipping" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" onchange="CartUI.updateCheckoutTotal()">
+                                <option value="" disabled selected>Pilih Provinsi Tujuan</option>
+                                <optgroup label="Jawa & Bali (Rp 10rb - 25rb)">
+                                    <option value="10000">DKI Jakarta, Jawa Barat, Banten (Rp 10.000)</option>
+                                    <option value="20000">Jawa Tengah & DIY (Rp 20.000)</option>
+                                    <option value="20000">Jawa Timur (Rp 20.000)</option>
+                                    <option value="25000">Bali (Rp 25.000)</option>
+                                </optgroup>
+                                <optgroup label="Sumatera (Rp 35rb)">
+                                    <option value="35000">Nanggroe Aceh Darussalam (Rp 35.000)</option>
+                                    <option value="35000">Sumatera Utara (Rp 35.000)</option>
+                                    <option value="35000">Sumatera Barat (Rp 35.000)</option>
+                                    <option value="35000">Riau & Kepulauan Riau (Rp 35.000)</option>
+                                    <option value="35000">Jambi (Rp 35.000)</option>
+                                    <option value="35000">Sumatera Selatan & Bangka Belitung (Rp 35.000)</option>
+                                    <option value="35000">Bengkulu (Rp 35.000)</option>
+                                    <option value="35000">Lampung (Rp 35.000)</option>
+                                </optgroup>
+                                <optgroup label="Kalimantan & Nusa Tenggara (Rp 40rb - 45rb)">
+                                    <option value="40000">Kalimantan (Semua Provinsi) (Rp 40.000)</option>
+                                    <option value="45000">Nusa Tenggara Barat (NTB) (Rp 45.000)</option>
+                                    <option value="45000">Nusa Tenggara Timur (NTT) (Rp 45.000)</option>
+                                </optgroup>
+                                <optgroup label="Sulawesi (Rp 45rb)">
+                                    <option value="45000">Sulawesi (Semua Provinsi) (Rp 45.000)</option>
+                                </optgroup>
+                                <optgroup label="Maluku & Papua (Rp 60rb)">
+                                    <option value="60000">Maluku & Maluku Utara (Rp 60.000)</option>
+                                    <option value="60000">Papua (Semua Wilayah) (Rp 60.000)</option>
+                                </optgroup>
                             </select>
                         </div>
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
                             <div>
-                                <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Kecamatan</label>
-                                <input type="text" id="co-district" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" placeholder="Kecamatan">
+                                <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Kota/Kab/Kecamatan</label>
+                                <input type="text" id="co-district" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" placeholder="Misal: Depok">
                             </div>
                             <div>
                                 <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Kode Pos <span style="color:#ef4444">*</span></label>
@@ -595,13 +535,7 @@ const CartUI = {
                         </div>
                         <div style="margin-bottom:16px;">
                             <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Alamat Lengkap <span style="color:#ef4444">*</span></label>
-                            <textarea id="co-address" required rows="2" style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;resize:vertical;" placeholder="Nama jalan, gedung, no. rumah..."></textarea>
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Kurir & Ongkir <span style="color:#ef4444">*</span></label>
-                            <select id="co-shipping" required disabled style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" onchange="CartUI.updateCheckoutTotal()">
-                                <option value="" disabled selected>Pilih kota tujuan dulu</option>
-                            </select>
+                            <textarea id="co-address" required rows="2" style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;resize:vertical;" placeholder="Nama jalan, RT/RW, no. rumah..."></textarea>
                         </div>
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-bottom:18px;background:#F3EEE8;border-radius:14px;">
                             <span style="font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:#9A8880;font-weight:600;">Total</span>
@@ -743,7 +677,6 @@ const CartUI = {
         const modal = document.getElementById('ly-checkout-modal');
         if (modal) {
             this.updateCheckoutTotal();
-            ShippingUI.loadProvinces();
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
