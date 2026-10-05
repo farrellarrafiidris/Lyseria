@@ -141,6 +141,11 @@
                 } else {
                     errorText.textContent = data.error || 'Incorrect username or password. Please try again.';
                     errorBox.classList.remove('hidden');
+                    
+                    // Shake animation
+                    const card = document.querySelector('.login-card');
+                    card.classList.add('shake');
+                    setTimeout(() => card.classList.remove('shake'), 500);
                 }
             } catch (err) {
                 errorText.textContent = 'Server error. Please try again.';
@@ -149,12 +154,6 @@
                 btnText.classList.remove('hidden');
                 spinner.classList.add('hidden');
                 btn.disabled = false;
-            }
-
-                // Shake animation
-                const card = document.querySelector('.login-card');
-                card.classList.add('shake');
-                setTimeout(() => card.classList.remove('shake'), 500);
             }
         });
     </script>
