@@ -25,3 +25,6 @@ npm-debug.log*
 .env
 .env.local
 .env.production
+
+# Data order pelanggan (berisi data pribadi)
+data/orders.json

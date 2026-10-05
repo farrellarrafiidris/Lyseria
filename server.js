@@ -5,15 +5,20 @@
  * Endpoints:
  *   GET  /api/products          → baca products.json
  *   PUT  /api/products          → simpan seluruh array ke products.json
+ *   POST /api/checkout          → buat order + QRIS (Midtrans)
+ *   GET  /api/orders/:id        → cek status pembayaran order
+ *   POST /api/midtrans/notification → webhook dari Midtrans
  *
  * Jalankan: node server.js
  */
 
-const http = require('http');
-const fs   = require('fs');
-const path = require('path');
+const http     = require('http');
+const fs       = require('fs');
+const path     = require('path');
+const payment  = require('./lib/payment');
+const shipping = require('./lib/shipping');
 
-const PORT      = 3000;
+const PORT      = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
 // ── MIME types ──────────────────────────────────────────────────────
@@ -142,6 +147,85 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    // ── API: POST /api/checkout (buat order QRIS) ───────────────────
+    if (url === '/api/checkout' && method === 'POST') {
+        try {
+            const body  = JSON.parse(await readBody(req) || '{}');
+            const order = await payment.createQrisOrder(body);
+            sendJSON(res, 200, order);
+        } catch (e) {
+            console.error('[Checkout]', e.message || e);
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: GET /api/orders/:id (status pembayaran) ────────────────
+    const orderMatch = url.match(/^\/api\/orders\/([A-Za-z0-9\-]+)$/);
+    if (orderMatch && method === 'GET') {
+        try {
+            sendJSON(res, 200, await payment.refreshStatus(orderMatch[1]));
+        } catch (e) {
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: POST /api/midtrans/notification (webhook) ──────────────
+    if (url === '/api/midtrans/notification' && method === 'POST') {
+        try {
+            const body = JSON.parse(await readBody(req) || '{}');
+            sendJSON(res, 200, payment.handleNotification(body));
+        } catch (e) {
+            console.error('[Webhook]', e.message || e);
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: GET /api/shipping/provinces ────────────────────────────
+    if (url === '/api/shipping/provinces' && method === 'GET') {
+        try {
+            sendJSON(res, 200, await shipping.getProvinces());
+        } catch (e) {
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: GET /api/shipping/cities?province=ID ───────────────────
+    if (url.startsWith('/api/shipping/cities') && method === 'GET') {
+        try {
+            const qs = req.url.split('?')[1] || '';
+            const params = new URLSearchParams(qs);
+            sendJSON(res, 200, await shipping.getCities(params.get('province')));
+        } catch (e) {
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: POST /api/shipping/cost ────────────────────────────────
+    if (url === '/api/shipping/cost' && method === 'POST') {
+        try {
+            const body = JSON.parse(await readBody(req) || '{}');
+            sendJSON(res, 200, await shipping.getCost(body.destination, body.weight, body.courier));
+        } catch (e) {
+            sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── Blokir file sensitif (kredensial & data pelanggan) ──────────
+    const BLOCKED = [/^\/\.env/, /^\/\.git/, /^\/lib\//, /^\/data\/orders\.json/, /^\/server\.js/, /^\/node_modules\//];
+    let normUrl;
+    try { normUrl = path.posix.normalize(decodeURIComponent(url)); } catch { normUrl = url; }
+    if (BLOCKED.some(rx => rx.test(normUrl))) {
+        res.writeHead(403, { 'Content-Type': 'text/plain' });
+        res.end('403 Forbidden');
+        return;
+    }
+
     // ── Static files ───────────────────────────────────────────────
     let filePath = path.join(__dirname, url === '/' ? 'index.html' : url);
 
@@ -173,5 +257,17 @@ server.listen(PORT, () => {
     console.log('  API Endpoints:');
     console.log(`  GET  http://localhost:${PORT}/api/products`);
     console.log(`  PUT  http://localhost:${PORT}/api/products`);
+    console.log(`  POST http://localhost:${PORT}/api/checkout`);
+    console.log(`  GET  http://localhost:${PORT}/api/orders/:id`);
+    console.log(`  POST http://localhost:${PORT}/api/midtrans/notification`);
+    console.log(`  GET  http://localhost:${PORT}/api/shipping/provinces`);
+    console.log(`  POST http://localhost:${PORT}/api/shipping/cost`);
+    console.log('');
+    console.log(payment.isConfigured()
+        ? `  💳  Midtrans aktif (${payment.IS_PRODUCTION ? 'PRODUCTION' : 'SANDBOX'})`
+        : '  ⚠️   Midtrans belum dikonfigurasi — isi MIDTRANS_SERVER_KEY di .env');
+    console.log(shipping.isConfigured()
+        ? `  📦  RajaOngkir aktif`
+        : '  ⚠️   RajaOngkir belum dikonfigurasi — isi RAJAONGKIR_API_KEY di .env');
     console.log('');
 });
