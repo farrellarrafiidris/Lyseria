@@ -94,7 +94,7 @@
     <script>
         // Redirect if already logged in
         if (sessionStorage.getItem('lyseria_admin')) {
-            window.location.href = '/studio/dashboard';
+            window.location.href = '/admin/dashboard.html';
         }
 
         const form = document.getElementById('login-form');
@@ -125,22 +125,31 @@
             spinner.classList.remove('hidden');
             btn.disabled = true;
 
-            // Simulate short delay for UX
-            await new Promise(r => setTimeout(r, 600));
-
-            // Credentials check
-            const ADMIN_USER = 'admin';
-            const ADMIN_PASS = 'lyseria2026';
-
-            if (username === ADMIN_USER && password === ADMIN_PASS) {
-                sessionStorage.setItem('lyseria_admin', JSON.stringify({ user: username, loginAt: Date.now() }));
-                window.location.href = '/studio/dashboard';
-            } else {
-                errorText.textContent = 'Incorrect username or password. Please try again.';
+            // Credentials check via backend
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await res.json();
+                
+                if (res.ok && data.success) {
+                    sessionStorage.setItem('lyseria_admin', JSON.stringify({ user: username, token: data.token, loginAt: Date.now() }));
+                    window.location.href = '/admin/dashboard.html';
+                } else {
+                    errorText.textContent = data.error || 'Incorrect username or password. Please try again.';
+                    errorBox.classList.remove('hidden');
+                }
+            } catch (err) {
+                errorText.textContent = 'Server error. Please try again.';
                 errorBox.classList.remove('hidden');
+            } finally {
                 btnText.classList.remove('hidden');
                 spinner.classList.add('hidden');
                 btn.disabled = false;
+            }
 
                 // Shake animation
                 const card = document.querySelector('.login-card');

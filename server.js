@@ -216,6 +216,24 @@ const server = http.createServer(async (req, res) => {
         return;
     }
 
+    // ── API: POST /api/admin/login ────────────────────────────────
+    if (url === '/api/admin/login' && method === 'POST') {
+        try {
+            const body = JSON.parse(await readBody(req) || '{}');
+            const adminUser = process.env.ADMIN_USER || 'admin';
+            const adminPass = process.env.ADMIN_PASS || 'lyseria2026';
+            
+            if (body.username === adminUser && body.password === adminPass) {
+                sendJSON(res, 200, { success: true, token: 'lyseria_admin_token_2026' });
+            } else {
+                sendJSON(res, 401, { error: 'Incorrect username or password' });
+            }
+        } catch (e) {
+            sendJSON(res, 500, { error: 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
     // ── Blokir file sensitif (kredensial & data pelanggan) ──────────
     const BLOCKED = [/^\/\.env/, /^\/\.git/, /^\/lib\//, /^\/data\/orders\.json/, /^\/server\.js/, /^\/node_modules\//];
     let normUrl;
