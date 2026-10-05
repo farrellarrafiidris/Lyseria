@@ -545,9 +545,6 @@ const CartUI = {
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
                             Bayar dengan QRIS
                         </button>
-                        <button type="button" id="ly-order-wa-btn" class="ly-btn-ghost ly-btn-wa" onclick="CartManager.orderViaWhatsApp()">
-                            Atau pesan via WhatsApp
-                        </button>
                         <p style="margin:14px 0 0;font-size:0.66rem;color:#9A8880;text-align:center;">🔒 Pembayaran aman diproses oleh Midtrans</p>
                     </form>
                 </div>
