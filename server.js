@@ -21,6 +21,19 @@ const shipping = require('./lib/shipping');
 const PORT      = process.env.PORT || 3000;
 const DATA_FILE = path.join(__dirname, 'data', 'products.json');
 
+// ── Load .env if exists (untuk testing lokal) ─────────────────────────
+try {
+    const envFile = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+    envFile.split('\n').forEach(line => {
+        const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+        if (match && !process.env[match[1]]) {
+            process.env[match[1]] = match[2].replace(/^['"]|['"]$/g, '').trim();
+        }
+    });
+} catch (e) {
+    // Abaikan kalau file .env tidak ada
+}
+
 // ── MIME types ──────────────────────────────────────────────────────
 const MIME = {
     '.html': 'text/html',
