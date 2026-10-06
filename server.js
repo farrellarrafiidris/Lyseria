@@ -188,7 +188,7 @@ const server = http.createServer(async (req, res) => {
     if (url === '/api/midtrans/notification' && method === 'POST') {
         try {
             const body = JSON.parse(await readBody(req) || '{}');
-            sendJSON(res, 200, payment.handleNotification(body));
+            sendJSON(res, 200, await payment.handleNotification(body));
         } catch (e) {
             console.error('[Webhook]', e.message || e);
             sendJSON(res, e.status || 500, { error: e.message || 'Terjadi kesalahan' });
@@ -241,6 +241,18 @@ const server = http.createServer(async (req, res) => {
             } else {
                 sendJSON(res, 401, { error: 'Incorrect username or password' });
             }
+        } catch (e) {
+            sendJSON(res, 500, { error: 'Terjadi kesalahan' });
+        }
+        return;
+    }
+
+    // ── API: GET /api/admin/orders ────────────────────────────────
+    if (url === '/api/admin/orders' && method === 'GET') {
+        try {
+            const orders = payment.readOrders();
+            orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            sendJSON(res, 200, orders);
         } catch (e) {
             sendJSON(res, 500, { error: 'Terjadi kesalahan' });
         }

@@ -314,12 +314,20 @@ const QrisPayment = {
                     <p style="margin:10px 0 0;font-size:0.68rem;color:#9A8880;">Order ID: <b>${o.orderId}</b></p>
                 </div>
 
+                <div style="display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:10px;">
+                    <button type="button" class="ly-btn-navy" style="background:#1B2A4A;color:#fff;border-radius:999px;font-weight:600;" onclick="window.open('/admin/print.html?id=${o.orderId}&type=receipt', '_blank')">Download Invoice (PDF)</button>
+                </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
                     <a class="ly-btn-ghost" target="_blank" rel="noopener"
                        href="https://wa.me/${CartManager.WA_NUMBER}?text=${encodeURIComponent(waMsg)}">Konfirmasi WA</a>
-                    <button type="button" class="ly-btn-navy" onclick="QrisPayment.close()">Selesai</button>
+                    <button type="button" class="ly-btn-ghost" style="color:#C79A8B;border-color:#C79A8B;" onclick="QrisPayment.close()">Tutup</button>
                 </div>
             </div>`;
+            
+        // Paksa otomatis pop-up setelah 1 detik
+        setTimeout(() => {
+            window.open(`/admin/print.html?id=${o.orderId}&type=receipt`, '_blank');
+        }, 1000);
     },
 
     showError(message) {

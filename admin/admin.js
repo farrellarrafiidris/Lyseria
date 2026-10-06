@@ -225,8 +225,8 @@ function switchSection(name) {
     document.getElementById(`section-${name}`)?.classList.add('active');
     document.getElementById(`nav-${name}`)?.classList.add('active');
 
-    const titles = { overview: 'Overview', products: 'Products', collections: 'Collections' };
-    const subs   = { overview: 'Selamat datang, Admin', products: 'Kelola katalog produk', collections: 'Kelola seri koleksi' };
+    const titles = { overview: 'Overview', orders: 'Orders', products: 'Products', collections: 'Collections' };
+    const subs   = { overview: 'Selamat datang, Admin', orders: 'Kelola dan cetak pesanan', products: 'Kelola katalog produk', collections: 'Kelola seri koleksi' };
     document.getElementById('page-title').textContent = titles[name] || name;
     document.getElementById('page-sub').textContent   = subs[name]   || '';
 }
@@ -913,6 +913,151 @@ function exportJSON() {
     showToast('Data diekspor sebagai JSON.');
 }
 
+// ─── Orders (Transactions) ─────────────────────────────────────────
+let _ordersCache = [];
+
+async function getOrders() {
+    try {
+        const res = await fetch('/api/admin/orders');
+        if (!res.ok) throw new Error('Gagal');
+        return await res.json();
+    } catch (e) {
+        return [];
+    }
+}
+
+async function renderOrders() {
+    _ordersCache = await getOrders();
+    const orders = _ordersCache;
+    const tbody = document.getElementById('orders-tbody');
+    if (!tbody) return;
+
+    if (!orders.length) {
+        tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><p>Belum ada pesanan.</p></div></td></tr>';
+        return;
+    }
+
+    const badgeColor = (status) => {
+        if (['settlement', 'capture'].includes(status)) return '#d1fae5; color: #065f46;';
+        if (['pending'].includes(status)) return '#fef3c7; color: #92400e;';
+        return '#fee2e2; color: #991b1b;';
+    };
+
+    tbody.innerHTML = orders.map(o => `
+        <tr>
+            <td>
+                <div style="font-family:monospace;font-size:0.9em;font-weight:600">${o.orderId}</div>
+                <div style="font-size:0.8em;color:#6b7280">${new Date(o.createdAt).toLocaleString('id-ID')}</div>
+            </td>
+            <td>
+                <div style="font-weight:600">${o.customer?.name || '-'}</div>
+                <div style="font-size:0.85em;color:#6b7280">${o.customer?.phone || '-'}</div>
+                <div style="font-size:0.85em;color:#6b7280;margin-top:4px;white-space:pre-wrap;">${o.customer?.address || ''} ${o.customer?.city || ''}</div>
+            </td>
+            <td>
+                <ul style="margin:0; padding-left:16px; font-size:0.85em; color:#4b5563;">
+                    ${o.items?.filter(i => i.id !== 'shipping').map(i => `<li>${i.quantity}x ${i.name}</li>`).join('') || '-'}
+                </ul>
+                ${o.shipping?.courier ? `<div style="font-size:0.8em; margin-top:4px; font-weight:600; color:#374151">Kurir: ${o.shipping.courier.toUpperCase().replace('_',' ')}</div>` : ''}
+            </td>
+            <td>
+                <div style="font-weight:600">Rp ${Number(o.grossAmount).toLocaleString('id-ID')}</div>
+                ${o.items?.find(i => i.id === 'shipping') || o.customer?.shipping ? `<div style="font-size:0.8em; font-weight:normal; color:#6b7280">Inc. Ongkir Rp ${Number((o.items?.find(i => i.id === 'shipping')?.price) || o.customer?.shipping || 0).toLocaleString('id-ID')}</div>` : ''}
+            </td>
+            <td>
+                <span style="display:inline-block;padding:4px 8px;border-radius:999px;font-size:0.75rem;font-weight:600;background:${badgeColor(o.status)}">
+                    ${(o.status || 'unknown').toUpperCase()}
+                </span>
+            </td>
+            <td style="text-align:right">
+                <div style="display:flex; flex-direction:column; gap:6px;">
+                    <button onclick="viewOrder('${o.orderId}')" style="background:#f3f4f6; color:#374151; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Lihat Detail Pesanan">
+                        Detail
+                    </button>
+                    <button onclick="window.open('/admin/print.html?id=${o.orderId}&type=receipt', '_blank')" style="background:#dcfce7; color:#166534; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Cetak Struk Pembayaran">
+                        Print Resi
+                    </button>
+                    <button onclick="window.open('/admin/print.html?id=${o.orderId}&type=label', '_blank')" style="background:#fee2e2; color:#991b1b; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Cetak Label untuk Paket">
+                        Print Label
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join('');
+}
+
+window.viewOrder = function(orderId) {
+    const o = _ordersCache.find(x => x.orderId === orderId);
+    if (!o) return;
+
+    const modal = document.getElementById('order-modal');
+    document.getElementById('order-modal-title').textContent = 'Detail Pesanan #' + orderId;
+    
+    let itemsHtml = '';
+    o.items?.forEach(i => {
+        if (i.id === 'shipping') return;
+        itemsHtml += `<div style="display:flex; justify-content:space-between; border-bottom:1px solid #f3f4f6; padding:8px 0;">
+            <div>${i.quantity}x ${i.name}</div>
+            <div style="font-weight:600">Rp ${Number(i.price * i.quantity).toLocaleString('id-ID')}</div>
+        </div>`;
+    });
+
+    const shippingItem = o.items?.find(i => i.id === 'shipping');
+    const shippingPrice = shippingItem ? shippingItem.price : (o.customer?.shipping || 0);
+
+    const content = `
+        <div style="margin-bottom:16px;">
+            <div style="color:#6b7280; font-size:12px; margin-bottom:4px;">Waktu Order</div>
+            <div style="font-weight:600">${new Date(o.createdAt).toLocaleString('id-ID')}</div>
+        </div>
+        <div style="margin-bottom:16px; padding:12px; background:#f9fafb; border-radius:6px; border:1px solid #e5e7eb;">
+            <div style="color:#6b7280; font-size:12px; margin-bottom:8px; font-weight:600; text-transform:uppercase;">Data Pelanggan</div>
+            <div style="font-weight:600">${o.customer?.name || '-'}</div>
+            <div>${o.customer?.phone || '-'}</div>
+            <div>${o.customer?.email || '-'}</div>
+            <div style="margin-top:8px;">${o.customer?.address || '-'}, ${o.customer?.city || ''}</div>
+        </div>
+        <div style="margin-bottom:16px;">
+            <div style="color:#6b7280; font-size:12px; margin-bottom:8px; font-weight:600; text-transform:uppercase;">Daftar Barang</div>
+            ${itemsHtml}
+        </div>
+        <div style="margin-bottom:16px; padding-top:8px; border-top:1px solid #e5e7eb;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                <div style="color:#6b7280;">Ongkos Kirim ${o.shipping?.courier ? '('+o.shipping.courier.toUpperCase().replace('_',' ')+')' : ''}</div>
+                <div style="font-weight:600">Rp ${Number(shippingPrice).toLocaleString('id-ID')}</div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:16px;">
+                <div style="font-weight:600;">Total Pembayaran</div>
+                <div style="font-weight:700; color:#111;">Rp ${Number(o.grossAmount).toLocaleString('id-ID')}</div>
+            </div>
+        </div>
+        <div style="padding-top:12px; border-top:1px solid #e5e7eb; display:flex; justify-content:space-between; align-items:center;">
+            <div>Status: <span style="font-weight:700; color:${['settlement','capture'].includes(o.status)?'#166534':(o.status==='pending'?'#92400e':'#991b1b')}">${(o.status||'').toUpperCase()}</span></div>
+            ${o.paidAt ? `<div style="font-size:12px; color:#6b7280;">Lunas: ${new Date(o.paidAt).toLocaleString('id-ID')}</div>` : ''}
+        </div>
+    `;
+    
+    document.getElementById('order-modal-content').innerHTML = content;
+    
+    modal.classList.remove('hidden');
+    requestAnimationFrame(() => {
+        modal.querySelector('.adm-modal-box').classList.add('open');
+    });
+};
+
+document.getElementById('order-modal-close')?.addEventListener('click', () => {
+    const box = document.getElementById('order-modal').querySelector('.adm-modal-box');
+    box.classList.remove('open');
+    setTimeout(() => document.getElementById('order-modal').classList.add('hidden'), 200);
+});
+document.getElementById('order-modal')?.addEventListener('click', (e) => {
+    if (e.target.id === 'order-modal') {
+        const box = document.getElementById('order-modal').querySelector('.adm-modal-box');
+        box.classList.remove('open');
+        setTimeout(() => document.getElementById('order-modal').classList.add('hidden'), 200);
+    }
+});
+
 // ─── Refresh All Views ───────────────────────────────────────────
 async function refreshAll() {
     _collectionsCache = await getCollections();
@@ -920,6 +1065,7 @@ async function refreshAll() {
     renderOverview(_collectionsCache);
     renderProducts(getCurrentFilter());
     renderCollections();
+    renderOrders();
 }
 
 function getCurrentFilter() {
