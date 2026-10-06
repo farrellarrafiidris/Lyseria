@@ -998,7 +998,7 @@ function populateFilters() {
 }
 
 // ─── Export JSON ─────────────────────────────────────────────────
-function exportJSON() {
+function exportProductsJSON() {
     const data = JSON.stringify(_collectionsCache, null, 2);
     const blob = new Blob([data], { type: 'application/json' });
     const url  = URL.createObjectURL(blob);
@@ -1007,7 +1007,19 @@ function exportJSON() {
     a.download = `lyseria-products-${new Date().toISOString().slice(0,10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
-    showToast('Data diekspor sebagai JSON.');
+    showToast('Data produk diekspor sebagai JSON.');
+}
+
+function exportOrdersJSON() {
+    const data = JSON.stringify(_ordersCache, null, 2);
+    const blob = new Blob([data], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `lyseria-orders-${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Data pesanan diekspor sebagai JSON.');
 }
 
 // ─── Orders (Transactions) ─────────────────────────────────────────
@@ -1209,7 +1221,8 @@ async function initDashboard() {
     });
 
     // Export
-    document.getElementById('export-btn')?.addEventListener('click', exportJSON);
+    document.getElementById('export-products-btn')?.addEventListener('click', exportProductsJSON);
+    document.getElementById('export-orders-btn')?.addEventListener('click', exportOrdersJSON);
 
     // ── Product CRUD Events ──
     document.getElementById('add-product-btn')?.addEventListener('click', (e) => {

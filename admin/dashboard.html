@@ -196,6 +196,7 @@
                     <h2 class="section-title">Orders</h2>
                     <p class="section-sub">Manage and print customer orders</p>
                 </div>
+                <button id="export-orders-btn" class="btn-secondary" style="border-radius:999px;">Export JSON</button>
             </div>
 
             <div class="admin-card mt-6">
@@ -226,12 +227,15 @@
                     <h2 class="section-title">Products</h2>
                     <p class="section-sub">Manage all scarf products across collections</p>
                 </div>
-                <button id="add-product-btn" class="btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
-                    </svg>
-                    Add Product
-                </button>
+                <div style="display:flex; gap:12px;">
+                    <button id="export-products-btn" class="btn-secondary" style="border-radius:999px;">Export JSON</button>
+                    <button id="add-product-btn" class="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                        </svg>
+                        Add Product
+                    </button>
+                </div>
             </div>
 
             <!-- Search & Filter -->
