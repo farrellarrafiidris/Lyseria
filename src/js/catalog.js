@@ -118,8 +118,8 @@ function renderCatalog() {
                                 ${product.discount 
                                     ? `<span class="font-sans text-[0.9rem] line-through text-gray-400">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
                                        <span class="font-sans text-[0.7rem] font-bold bg-red-100 text-red-600 px-1.5 py-0.5 rounded ml-1 mr-1">-${Math.round(((product.price - product.discount) / product.price) * 100)}%</span>
-                                       <span class="font-serif italic text-lg text-red-600">Rp</span> 
-                                       <span class="font-sans font-medium text-[1.1rem] tracking-wide text-red-600">${Number(product.discount).toLocaleString("id-ID")}</span>`
+                                       <span class="font-serif italic text-lg text-navy">Rp</span> 
+                                       <span class="font-sans font-medium text-[1.1rem] tracking-wide text-navy">${Number(product.discount).toLocaleString("id-ID")}</span>`
                                     : `<span class="font-serif italic text-lg text-navy">Rp</span> 
                                        <span class="font-sans font-medium text-[1.1rem] tracking-wide text-navy">${Number(product.price).toLocaleString("id-ID")}</span>`
                                 }

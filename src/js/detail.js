@@ -172,9 +172,10 @@ async function loadProduct() {
                             gap-1.5
                         ">
                             ${item.discount ? `
-                                <span class="font-sans text-[0.85rem] line-through text-gray-400 mr-1">Rp ${Number(item.price).toLocaleString("id-ID")}</span>
-                                <span class="font-serif italic text-md text-red-600">Rp</span>
-                                <span class="font-sans font-medium text-base tracking-wide text-red-600">
+                                <span class="font-sans text-[0.85rem] line-through text-gray-400">Rp ${Number(item.price).toLocaleString("id-ID")}</span>
+                                <span class="font-sans text-[0.65rem] font-bold bg-red-100 text-navy px-1 py-0.5 rounded ml-1 mr-1">-${Math.round(((item.price - item.discount) / item.price) * 100)}%</span>
+                                <span class="font-serif italic text-md text-navy">Rp</span>
+                                <span class="font-sans font-medium text-base tracking-wide text-navy">
                                     ${Number(item.discount).toLocaleString("id-ID")}
                                 </span>
                             ` : `
@@ -431,13 +432,13 @@ async function loadProduct() {
                         mt-4
                         text-navy
                         flex
-                        items-baseline
+                        items-center
                         gap-2
                     ">
-                    ">
                         ${product.discount ? `
-                            <span class="font-sans text-lg line-through text-gray-400 mr-2 self-end mb-1">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
-                            <span class="font-serif italic text-xl lg:text-2xl text-red-600">Rp</span>
+                            <span class="font-sans text-lg line-through text-gray-400">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
+                            <span class="font-sans text-xs font-bold bg-red-100 text-red-600 px-2 py-1 rounded ml-1 mr-2 self-center">-${Math.round(((product.price - product.discount) / product.price) * 100)}%</span>
+                            <span class="font-serif italic text-xl lg:text-2xl text-red-600 self-end mb-[3px]">Rp</span>
                             <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide text-red-600">
                                 ${Number(product.discount).toLocaleString("id-ID")}
                             </span>
