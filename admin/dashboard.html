@@ -355,10 +355,14 @@
                 </div>
             </div>
 
-            <div class="form-grid-2">
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:16px;">
                 <div class="form-field">
                     <label class="form-label" for="pf-price">Price (Rp) <span class="required">*</span></label>
                     <input id="pf-price" type="number" class="form-input" placeholder="e.g. 219533" min="0" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-label" for="pf-discount">Discount Price</label>
+                    <input id="pf-discount" type="number" class="form-input" placeholder="Optional" min="0">
                 </div>
                 <div class="form-field">
                     <label class="form-label" for="pf-status">Status <span class="required">*</span></label>

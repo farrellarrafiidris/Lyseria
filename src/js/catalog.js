@@ -114,7 +114,15 @@ function renderCatalog() {
 
                         ${isComingSoon
                             ? `<p class="mt-3 font-serif text-xl text-rosegold uppercase tracking-widest">Coming Soon</p>`
-                            : `<div class="mt-3 text-navy flex items-baseline gap-1.5"><span class="font-serif italic text-lg">Rp</span> <span class="font-sans font-medium text-[1.1rem] tracking-wide">${Number(product.price).toLocaleString('id-ID')}</span></div>`
+                            : `<div class="mt-3 flex items-baseline gap-1.5">
+                                ${product.discount 
+                                    ? `<span class="font-sans text-[0.9rem] line-through text-gray-400 mr-2">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
+                                       <span class="font-serif italic text-lg text-red-600">Rp</span> 
+                                       <span class="font-sans font-medium text-[1.1rem] tracking-wide text-red-600">${Number(product.discount).toLocaleString("id-ID")}</span>`
+                                    : `<span class="font-serif italic text-lg text-navy">Rp</span> 
+                                       <span class="font-sans font-medium text-[1.1rem] tracking-wide text-navy">${Number(product.price).toLocaleString("id-ID")}</span>`
+                                }
+                               </div>`
                         }
 
                         ${isComingSoon

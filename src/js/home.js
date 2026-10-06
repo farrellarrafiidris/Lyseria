@@ -149,9 +149,15 @@ async function loadProducts() {
                             ${product.name}
                         </h3>
 
-                        <div class="mt-2 text-navy flex items-baseline gap-1.5">
-                            <span class="font-serif italic text-lg">Rp</span> 
-                            <span class="font-sans font-medium text-[1.1rem] tracking-wide">${Number(product.price).toLocaleString("id-ID")}</span>
+                        <div class="mt-2 flex items-baseline gap-1.5">
+                            ${product.discount ? `
+                                <span class="font-sans text-[0.9rem] line-through text-gray-400 mr-2">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
+                                <span class="font-serif italic text-lg text-red-600">Rp</span> 
+                                <span class="font-sans font-medium text-[1.1rem] tracking-wide text-red-600">${Number(product.discount).toLocaleString("id-ID")}</span>
+                            ` : `
+                                <span class="font-serif italic text-lg text-navy">Rp</span> 
+                                <span class="font-sans font-medium text-[1.1rem] tracking-wide text-navy">${Number(product.price).toLocaleString("id-ID")}</span>
+                            `}
                         </div>
 
                         <div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;">

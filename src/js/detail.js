@@ -171,10 +171,18 @@ async function loadProduct() {
                             items-baseline
                             gap-1.5
                         ">
-                            <span class="font-serif italic text-md">Rp</span>
-                            <span class="font-sans font-medium text-base tracking-wide">
-                                ${Number(item.price).toLocaleString("id-ID")}
-                            </span>
+                            ${item.discount ? `
+                                <span class="font-sans text-[0.85rem] line-through text-gray-400 mr-1">Rp ${Number(item.price).toLocaleString("id-ID")}</span>
+                                <span class="font-serif italic text-md text-red-600">Rp</span>
+                                <span class="font-sans font-medium text-base tracking-wide text-red-600">
+                                    ${Number(item.discount).toLocaleString("id-ID")}
+                                </span>
+                            ` : `
+                                <span class="font-serif italic text-md">Rp</span>
+                                <span class="font-sans font-medium text-base tracking-wide">
+                                    ${Number(item.price).toLocaleString("id-ID")}
+                                </span>
+                            `}
                         </p>
 
                         ${isItemComingSoon ? `
@@ -426,10 +434,19 @@ async function loadProduct() {
                         items-baseline
                         gap-2
                     ">
-                        <span class="font-serif italic text-xl lg:text-2xl">Rp</span>
-                        <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide">
-                            ${Number(product.price).toLocaleString("id-ID")}
-                        </span>
+                    ">
+                        ${product.discount ? `
+                            <span class="font-sans text-lg line-through text-gray-400 mr-2 self-end mb-1">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
+                            <span class="font-serif italic text-xl lg:text-2xl text-red-600">Rp</span>
+                            <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide text-red-600">
+                                ${Number(product.discount).toLocaleString("id-ID")}
+                            </span>
+                        ` : `
+                            <span class="font-serif italic text-xl lg:text-2xl">Rp</span>
+                            <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide">
+                                ${Number(product.price).toLocaleString("id-ID")}
+                            </span>
+                        `}
                     </p>
 
 

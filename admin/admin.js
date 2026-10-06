@@ -367,7 +367,10 @@ function renderProducts(filter = {}) {
             </td>
             <td>${p._collectionName}</td>
             <td>${p.category || '—'}</td>
-            <td>Rp ${formatPrice(p.price)}</td>
+            <td>
+                ${p.discount ? `<span style="text-decoration:line-through;color:#9ca3af;font-size:0.8em;margin-right:4px;">Rp ${formatPrice(p.price)}</span>` : ''}
+                <span style="${p.discount ? 'color:#ef4444;font-weight:600;' : ''}">Rp ${formatPrice(p.discount || p.price)}</span>
+            </td>
             <td>${statusBadge(p.status)}</td>
             <td>
                 <div class="action-btns">
@@ -488,6 +491,7 @@ function openProductModal(collectionId = null, productId = null) {
         document.getElementById('pf-name').value          = product.name || '';
         document.getElementById('pf-slug').value          = product.slug || '';
         document.getElementById('pf-price').value         = product.price || '';
+        document.getElementById('pf-discount').value      = product.discount || '';
         document.getElementById('pf-status').value        = product.status || 'released';
         document.getElementById('pf-category').value      = product.category || '';
         document.getElementById('pf-material').value      = product.material || '';
@@ -582,6 +586,7 @@ async function handleProductSave(e) {
     const name        = document.getElementById('pf-name').value.trim();
     const slug        = document.getElementById('pf-slug').value.trim();
     const price       = document.getElementById('pf-price').value.trim();
+    const discount    = document.getElementById('pf-discount').value.trim();
     const status      = document.getElementById('pf-status').value;
     const category    = document.getElementById('pf-category').value.trim();
     const material    = document.getElementById('pf-material').value.trim();
@@ -608,7 +613,7 @@ async function handleProductSave(e) {
     }
 
     const productData = {
-        name, slug, price, status, category, material, size,
+        name, slug, price: Number(price), discount: discount ? Number(discount) : null, status, category, material, size,
         images: [imageModel, imageFull].filter(Boolean),
         description: { label: descLabel, quote: descQuote, content: descContent }
     };

@@ -7,6 +7,7 @@
     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-600: oklch(57.7% 0.245 27.325);
     --color-gray-300: oklch(87.2% 0.01 258.338);
     --color-gray-400: oklch(70.7% 0.022 261.325);
     --color-gray-500: oklch(55.1% 0.027 264.364);
@@ -1596,6 +1597,12 @@
   .mt-36 {
     margin-top: calc(var(--spacing) * 36);
   }
+  .mr-1 {
+    margin-right: var(--spacing);
+  }
+  .mr-2 {
+    margin-right: calc(var(--spacing) * 2);
+  }
   .mb-1 {
     margin-bottom: var(--spacing);
   }
@@ -2069,6 +2076,9 @@
     margin-block-start: calc(calc(var(--spacing) * 6) * var(--tw-space-y-reverse));
     margin-block-end: calc(calc(var(--spacing) * 6) * calc(1 - var(--tw-space-y-reverse)));
   }
+  .self-end {
+    align-self: flex-end;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -2522,6 +2532,12 @@
   .text-\[\.65rem\] {
     font-size: .65rem;
   }
+  .text-\[0\.9rem\] {
+    font-size: 0.9rem;
+  }
+  .text-\[0\.85rem\] {
+    font-size: 0.85rem;
+  }
   .text-\[1\.1rem\] {
     font-size: 1.1rem;
   }
@@ -2689,6 +2705,9 @@
       color: color-mix(in oklab, var(--color-pearl) 75%, transparent);
     }
   }
+  .text-red-600 {
+    color: var(--color-red-600);
+  }
   .text-rosegold {
     color: var(--color-rosegold);
   }
@@ -2718,6 +2737,9 @@
   }
   .italic {
     font-style: italic;
+  }
+  .line-through {
+    text-decoration-line: line-through;
   }
   .antialiased {
     -webkit-font-smoothing: antialiased;

@@ -40,7 +40,7 @@ const CartManager = {
                 id:    product.id,
                 slug:  product.slug,
                 name:  product.name,
-                price: Number(product.price),
+                price: Number(product.discount || product.price),
                 image: product.images[0],
                 qty:   1
             });
