@@ -1068,7 +1068,7 @@ async function renderOrders() {
             </td>
             <td style="text-align:right">
                 <div style="display:flex; flex-direction:column; gap:6px;">
-                    <button onclick="viewOrder('${o.orderId}')" style="background:#f3f4f6; color:#374151; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Lihat Detail Pesanan">
+                    <button onclick="viewOrder('${o.orderId}')" style="background:#9AD1F6; color:#374151; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Lihat Detail Pesanan">
                         Detail
                     </button>
                     <button onclick="window.open('/admin/print.html?id=${o.orderId}&type=receipt', '_blank')" style="background:#dcfce7; color:#166534; border:none; padding:6px; border-radius:4px; cursor:pointer; font-weight:600; font-size:11px;" title="Cetak Struk Pembayaran">
