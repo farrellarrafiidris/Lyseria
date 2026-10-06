@@ -8,6 +8,7 @@ async function loadProduct() {
 
         let product = null;
         let currentCollection = null;
+        const allProducts = collections.flatMap(c => c.products);
 
         collections.forEach(collection => {
             const found = collection.products.find(
@@ -450,6 +451,27 @@ async function loadProduct() {
                         `}
                     </p>
 
+                    ${product.isBundle && product.bundleItems && product.bundleItems.length > 0 ? `
+                        <div class="mt-6 p-4 border border-navy/10 bg-navy/5 rounded-lg">
+                            <h4 class="font-sans font-semibold text-sm uppercase tracking-widest text-navy mb-3">Bundle Ini Berisi:</h4>
+                            <div class="flex flex-col gap-3">
+                                ${product.bundleItems.map(itemSlug => {
+                                    const bItem = allProducts.find(p => p.slug === itemSlug);
+                                    if(!bItem) return '';
+                                    return `
+                                    <a href="detail.html?slug=${bItem.slug}" class="flex items-center gap-3 hover:bg-navy/5 p-2 -mx-2 rounded transition-colors group">
+                                        <div class="w-12 h-12 bg-gray-200 rounded overflow-hidden flex-shrink-0">
+                                            <img src="${bItem.images[0]}" alt="${bItem.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                        </div>
+                                        <div class="flex-1">
+                                            <div class="font-sans font-medium text-navy text-sm uppercase group-hover:text-rosegold transition-colors">${bItem.name}</div>
+                                            <div class="font-sans text-xs text-gray-500">${bItem.category || ''}</div>
+                                        </div>
+                                    </a>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    ` : ''}
 
                     <!-- DESCRIPTION -->
                     <div class="mt-8">
@@ -631,31 +653,32 @@ async function loadProduct() {
                 </div>
 
 
-                <!-- FULL PRODUCT IMAGE -->
-                <div class="
-                    relative
-                    w-full
-                    overflow-hidden
-                    bg-pearl
-                    shadow-[0_20px_60px_rgba(0,0,0,0.12)]
-                ">
-
-                    <img
-                        src="${product.images[1] || product.images[0]}"
-                        alt="Full view of ${product.name}"
-
-                        class="
-                            block
+                <!-- FULL PRODUCT IMAGE(S) -->
+                <div class="flex flex-col gap-8">
+                    ${(product.images.slice(1).length > 0 ? product.images.slice(1) : [product.images[0]]).map((imgSrc, idx) => `
+                        <div class="
+                            relative
                             w-full
-                            h-auto
-                            object-contain
-                            transition-transform
-                            duration-700
-                            ease-out
-                            hover:scale-[1.02]
-                        "
-                    >
-
+                            overflow-hidden
+                            bg-pearl
+                            shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                        ">
+                            <img
+                                src="${imgSrc}"
+                                alt="Full view of ${product.name} - Part ${idx + 1}"
+                                class="
+                                    block
+                                    w-full
+                                    h-auto
+                                    object-contain
+                                    transition-transform
+                                    duration-700
+                                    ease-out
+                                    hover:scale-[1.02]
+                                "
+                            >
+                        </div>
+                    `).join('')}
                 </div>
 
             </section>

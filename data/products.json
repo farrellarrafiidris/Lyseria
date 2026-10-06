@@ -44,7 +44,7 @@
         "id": 2,
         "slug": "seve",
         "name": "SÉVE",
-        "price": "208500",
+        "price": 232250,
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
@@ -73,13 +73,16 @@
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790396301/Seve_Model_PNG.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605720/3.png"
         ],
-        "status": "released"
+        "status": "released",
+        "discount": 197413,
+        "isBundle": false,
+        "bundleItems": []
       },
       {
         "id": 3,
         "slug": "miel",
         "name": "MIEL",
-        "price": "208500",
+        "price": 232250,
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
@@ -108,7 +111,50 @@
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605299/Miel_Model_PNG_1.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605717/2.png"
         ],
-        "status": "released"
+        "status": "released",
+        "discount": 197413,
+        "isBundle": false,
+        "bundleItems": []
+      },
+      {
+        "id": 8,
+        "name": "JOLIE & SÉVE Special Bundling",
+        "slug": "jolie-sve-special-bundling",
+        "price": 394826,
+        "discount": 355500,
+        "status": "released",
+        "category": "Pashmina",
+        "material": "Natural Fabric Viscose Eucalyptus Wood",
+        "size": "175x70cm",
+        "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1791254795/bundle.png",
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605711/1.png",
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605720/3.png"
+        ],
+        "description": {
+          "label": "AA",
+          "quote": "B",
+          "content": "A"
+        },
+        "isBundle": true,
+        "bundleItems": [
+          "jolie",
+          "seve"
+        ],
+        "colorGuide": {
+          "palette": [
+            "A"
+          ],
+          "paletteHex": [
+            "A"
+          ],
+          "undertoneRating": {
+            "warm": 1,
+            "cool": 1,
+            "neutral": 1
+          },
+          "tip": "V"
+        }
       }
     ]
   },
@@ -122,7 +168,7 @@
         "id": 6,
         "name": "GALEVE",
         "slug": "galeve",
-        "price": "208500",
+        "price": 208500,
         "status": "released",
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
@@ -151,13 +197,16 @@
             "neutral": 5
           },
           "tip": "Versatile for all undertones. Looks stunning paired with cream, light brown, or off-white tones effortlessly balanced and serene."
-        }
+        },
+        "discount": 198000,
+        "isBundle": false,
+        "bundleItems": []
       },
       {
         "id": 7,
         "name": "NOCTURNE",
         "slug": "nocturne",
-        "price": "208500",
+        "price": 208500,
         "status": "released",
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
@@ -186,7 +235,10 @@
             "neutral": 4
           },
           "tip": "Most radiant on medium to deep skin tones. Pair with nude or black outfits for a strong, effortlessly sophisticated look."
-        }
+        },
+        "discount": 198000,
+        "isBundle": false,
+        "bundleItems": []
       }
     ]
   },
@@ -200,7 +252,7 @@
         "id": 4,
         "slug": "jade-coming-soon",
         "name": "Jade",
-        "price": "000000",
+        "price": 246250,
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
@@ -228,15 +280,19 @@
           "tip": "These jewel tones are captivating on all skin tones. Stand out best when paired with neutral or deep brown outfits for a refined, editorial look."
         },
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/oud.png"
         ],
-        "status": "coming_soon"
+        "status": "coming_soon",
+        "discount": 200000,
+        "isBundle": false,
+        "bundleItems": []
       },
       {
         "id": 5,
         "slug": "oad-coming-soon",
         "name": "Oud",
-        "price": "000000",
+        "price": 246250,
         "category": "Pashmina",
         "material": "Viscose",
         "size": "175x70cm",
@@ -262,9 +318,13 @@
           "tip": "Especially flattering on medium to deep skin tones. The luxurious warmth of this palette is perfect for both formal and casual occasions."
         },
         "images": [
+          "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1789095289/JADE.png"
         ],
-        "status": "coming_soon"
+        "status": "coming_soon",
+        "discount": 200000,
+        "isBundle": false,
+        "bundleItems": []
       }
     ]
   }

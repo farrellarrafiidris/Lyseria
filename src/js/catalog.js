@@ -129,7 +129,9 @@ function renderCatalog() {
                         ${isComingSoon
                             ? `<span class="inline-block border border-gray-300 text-gray-400 rounded-full px-6 py-2.5 mt-5 text-sm cursor-not-allowed">Coming Soon</span>`
                             : `<div style="display:flex;gap:10px;align-items:center;margin-top:20px;flex-wrap:wrap;">
-                                    <a href="detail.html?slug=${product.slug}" class="btn btn-outline rounded-full" style="flex:1;min-width:110px;text-align:center;">View Detail</a>
+                                    <a href="detail.html?slug=${product.slug}" class="btn btn-outline rounded-full" style="flex:1;min-width:110px;text-align:center;">
+                                        ${product.isBundle && product.bundleItems ? `View ${product.bundleItems.length} Items` : 'View Detail'}
+                                    </a>
                                     <button
                                         onclick="addToCartBySlug('${product.slug}')"
                                         title="Add to Cart"

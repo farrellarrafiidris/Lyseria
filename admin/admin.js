@@ -473,6 +473,30 @@ function openProductModal(collectionId = null, productId = null) {
     document.getElementById('pf-id').value            = '';
     document.getElementById('pf-collection-id').value = '';
 
+    const isBundleCb = document.getElementById('pf-is-bundle');
+    const bundleWrap = document.getElementById('pf-bundle-items-wrap');
+    const bundleContainer = document.getElementById('pf-bundle-items');
+    
+    // Default Bundle off
+    if (isBundleCb) {
+        isBundleCb.checked = false;
+        bundleWrap.classList.add('hidden');
+    }
+    
+    // Populate all other products for bundle items
+    let checkboxes = '';
+    _collectionsCache.forEach(c => {
+        c.products.forEach(p => {
+            if (p.id !== productId) {
+                checkboxes += `<label style="display:flex;align-items:center;gap:8px;font-size:14px;"><input type="checkbox" name="bundle_item" value="${p.slug}"> ${p.name}</label>`;
+            }
+        });
+    });
+    if (bundleContainer) {
+        bundleContainer.innerHTML = checkboxes;
+        bundleContainer.addEventListener('change', () => updateDynamicImages([]));
+    }
+
     // Isi dropdown koleksi
     const colSel = document.getElementById('pf-collection');
     colSel.innerHTML = _collectionsCache.map(c =>
@@ -493,6 +517,16 @@ function openProductModal(collectionId = null, productId = null) {
         document.getElementById('pf-price').value         = product.price || '';
         document.getElementById('pf-discount').value      = product.discount || '';
         document.getElementById('pf-status').value        = product.status || 'released';
+        
+        if (isBundleCb) {
+            isBundleCb.checked = product.isBundle || false;
+            bundleWrap.classList.toggle('hidden', !isBundleCb.checked);
+            if (product.isBundle && product.bundleItems) {
+                Array.from(bundleContainer.querySelectorAll('input[type="checkbox"]')).forEach(cb => {
+                    cb.checked = product.bundleItems.includes(cb.value);
+                });
+            }
+        }
         document.getElementById('pf-category').value      = product.category || '';
         document.getElementById('pf-material').value      = product.material || '';
         document.getElementById('pf-size').value          = product.size || '';
@@ -516,13 +550,13 @@ function openProductModal(collectionId = null, productId = null) {
             document.getElementById('pf-image-model-preview').src = product.images[0];
             document.getElementById('pf-image-model-preview-wrap').classList.remove('hidden');
         }
-        if (product.images?.[1] || product.images?.[0]) {
-            document.getElementById('pf-image-full-preview').src = product.images?.[1] || product.images?.[0];
-            document.getElementById('pf-image-full-preview-wrap').classList.remove('hidden');
-        }
+        
+        // Pass images slice [1..] as existing images
+        updateDynamicImages(product.images ? product.images.slice(1) : []);
     } else {
         title.textContent = 'Tambah Produk';
         if (collectionId) colSel.value = collectionId;
+        updateDynamicImages([]);
     }
 
     modal.classList.remove('hidden');
@@ -548,6 +582,54 @@ function initImagePreview() {
                 wrap.classList.remove('hidden');
                 preview.onerror = () => wrap.classList.add('hidden');
                 preview.onload  = () => wrap.classList.remove('hidden');
+            } else {
+                wrap.classList.add('hidden');
+            }
+        });
+    });
+}
+
+function updateDynamicImages(existingImages = []) {
+    const isBundleCb = document.getElementById('pf-is-bundle');
+    const checkedCount = isBundleCb && isBundleCb.checked ? document.querySelectorAll('#pf-bundle-items input:checked').length : 0;
+    const col = document.getElementById('pf-image-full-col');
+    if (!col) return;
+    
+    const numInputs = Math.max(1, checkedCount);
+    
+    // Attempt to grab current inputs if existingImages isn't explicitly passed
+    let currentValues = existingImages;
+    if (currentValues.length === 0) {
+        currentValues = Array.from(col.querySelectorAll('.pf-dynamic-img')).map(el => el.value);
+    }
+    
+    let html = '';
+    for(let i=0; i<numInputs; i++) {
+        // Offset by 1 to skip imageModel if we are passing product.images
+        const val = currentValues[i] || '';
+        const label = i === 0 ? (checkedCount > 1 ? 'Full Design (Detail 1)' : 'Full Design (Detail 2)') : `Full Design (Detail ${i+1})`;
+        html += `
+            <div style="margin-bottom:12px;">
+                <label class="form-label">${label} ${i === 0 ? '<span class="required">*</span>' : ''}</label>
+                <input type="url" class="form-input pf-dynamic-img" value="${val}" placeholder="https://…" ${i===0 ? 'required' : ''}>
+                <div class="image-preview-wrap ${val ? '' : 'hidden'} mt-2">
+                    <img src="${val}" class="image-preview" style="max-height:100px; border-radius:8px;">
+                </div>
+            </div>
+        `;
+    }
+    col.innerHTML = html;
+    
+    col.querySelectorAll('.pf-dynamic-img').forEach(input => {
+        input.addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            const wrap = e.target.nextElementSibling;
+            const img = wrap.querySelector('img');
+            if (url) {
+                img.src = url;
+                wrap.classList.remove('hidden');
+                img.onerror = () => wrap.classList.add('hidden');
+                img.onload = () => wrap.classList.remove('hidden');
             } else {
                 wrap.classList.add('hidden');
             }
@@ -593,7 +675,7 @@ async function handleProductSave(e) {
     const size        = document.getElementById('pf-size').value.trim();
     const colId       = parseInt(document.getElementById('pf-collection').value);
     const imageModel  = document.getElementById('pf-image-model').value.trim();
-    const imageFull   = document.getElementById('pf-image-full').value.trim();
+    const dynamicImages = Array.from(document.querySelectorAll('.pf-dynamic-img')).map(el => el.value.trim()).filter(Boolean);
     const descLabel   = document.getElementById('pf-desc-label').value.trim();
     const descQuote   = document.getElementById('pf-desc-quote').value.trim();
     const descContent = document.getElementById('pf-desc-content').value.trim();
@@ -614,9 +696,19 @@ async function handleProductSave(e) {
 
     const productData = {
         name, slug, price: Number(price), discount: discount ? Number(discount) : null, status, category, material, size,
-        images: [imageModel, imageFull].filter(Boolean),
+        images: [imageModel, ...dynamicImages].filter(Boolean),
         description: { label: descLabel, quote: descQuote, content: descContent }
     };
+
+    const isBundleCb = document.getElementById('pf-is-bundle');
+    if (isBundleCb && isBundleCb.checked) {
+        productData.isBundle = true;
+        const checkedItems = Array.from(document.querySelectorAll('#pf-bundle-items input:checked')).map(cb => cb.value);
+        productData.bundleItems = checkedItems;
+    } else {
+        productData.isBundle = false;
+        productData.bundleItems = [];
+    }
 
     if (cgPalette || cgHex || cgTip) {
         productData.colorGuide = {
@@ -1130,6 +1222,11 @@ async function initDashboard() {
     document.getElementById('product-modal')?.addEventListener('click', e => {
         if (_modalJustOpened) return;                          // guard: ignore same-tick click
         if (e.target === e.currentTarget) closeProductModal(); // only close when clicking backdrop
+    });
+    
+    document.getElementById('pf-is-bundle')?.addEventListener('change', e => {
+        document.getElementById('pf-bundle-items-wrap')?.classList.toggle('hidden', !e.target.checked);
+        updateDynamicImages([]);
     });
 
     // ── Collection CRUD Events ──

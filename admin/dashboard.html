@@ -373,6 +373,19 @@
                 </div>
             </div>
 
+            <div style="margin-bottom:16px; padding:12px; border:1px solid #e5e7eb; border-radius:6px; background:#f9fafb;">
+                <label style="display:flex; align-items:center; gap:8px; font-weight:600; cursor:pointer; font-size:14px; margin-bottom:8px;">
+                    <input type="checkbox" id="pf-is-bundle" style="width:16px;height:16px;">
+                    Jadikan Bundle?
+                </label>
+                <div id="pf-bundle-items-wrap" class="hidden">
+                    <label class="form-label">Bundle Items (Pilih produk di dalam bundle ini)</label>
+                    <div id="pf-bundle-items" style="display:flex;flex-direction:column;gap:8px;max-height:200px;overflow-y:auto;border:1px solid #d1d5db;padding:8px;border-radius:4px;background:#fff;">
+                        <!-- Checkboxes populated by JS -->
+                    </div>
+                </div>
+            </div>
+
             <div class="form-grid-2">
                 <div class="form-field">
                     <label class="form-label" for="pf-category">Category <span class="required">*</span></label>
@@ -403,9 +416,9 @@
                         <img id="pf-image-model-preview" src="" alt="Preview Model" class="image-preview" style="max-height:100px; border-radius:8px;">
                     </div>
                 </div>
-                <div class="form-field">
+                <div class="form-field" id="pf-image-full-col">
                     <label class="form-label" for="pf-image-full">Full Design (Detail 2) <span class="required">*</span></label>
-                    <input id="pf-image-full" type="url" class="form-input" placeholder="https://…" required>
+                    <input id="pf-image-full" type="url" class="form-input pf-dynamic-img" placeholder="https://…" required>
                     <div id="pf-image-full-preview-wrap" class="image-preview-wrap hidden mt-2">
                         <img id="pf-image-full-preview" src="" alt="Preview Full Design" class="image-preview" style="max-height:100px; border-radius:8px;">
                     </div>

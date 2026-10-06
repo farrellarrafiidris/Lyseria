@@ -166,7 +166,7 @@ async function loadProducts() {
                                 href="detail.html?slug=${product.slug}"
                                 class="btn btn-outline rounded-full"
                                 style="flex:1;min-width:130px;text-align:center;">
-                                View Detail
+                                ${product.isBundle && product.bundleItems ? `View ${product.bundleItems.length} Items` : 'View Detail'}
                             </a>
                             <button
                                 onclick="addToCartBySlug('${product.slug}')"
