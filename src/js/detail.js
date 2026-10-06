@@ -438,8 +438,8 @@ async function loadProduct() {
                         ${product.discount ? `
                             <span class="font-sans text-lg line-through text-gray-400">Rp ${Number(product.price).toLocaleString("id-ID")}</span>
                             <span class="font-sans text-xs font-bold bg-red-100 text-red-600 px-2 py-1 rounded ml-1 mr-2 self-center">-${Math.round(((product.price - product.discount) / product.price) * 100)}%</span>
-                            <span class="font-serif italic text-xl lg:text-2xl text-red-600 self-end mb-[3px]">Rp</span>
-                            <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide text-red-600">
+                            <span class="font-serif italic text-xl lg:text-2xl text-navy self-end mb-[3px]">Rp</span>
+                            <span class="font-sans font-medium text-2xl lg:text-3xl tracking-wide text-navy">
                                 ${Number(product.discount).toLocaleString("id-ID")}
                             </span>
                         ` : `
