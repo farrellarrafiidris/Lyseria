@@ -94,13 +94,19 @@ const CartManager = {
         };
     },
 
-    /** Checkout utama: buat order di server lalu tampilkan QRIS. */
+    /** Checkout utama: buat order di server lalu tampilkan pembayaran. */
     async payWithQris() {
         const form = document.getElementById('ly-checkout-form');
         if (form && !form.reportValidity()) return;
 
         const cart = this.getCart();
         if (!cart.length) { showToast('Cart kosong!', 'info'); return; }
+
+        const selectedMethod = document.querySelector('input[name="co-payment-method"]:checked')?.value || 'gopay';
+        if (selectedMethod === 'qris') {
+            showToast('Metode QRIS sedang dalam proses aktivasi oleh Midtrans & Bank Indonesia.', 'info');
+            return;
+        }
 
         const customer = this._getCustomer();
         CartUI.closeCheckoutModal();
@@ -113,6 +119,7 @@ const CartManager = {
                 body: JSON.stringify({
                     items: cart.map(i => ({ slug: i.slug, qty: i.qty })),
                     customer,
+                    paymentType: selectedMethod,
                 }),
             });
             const data = await res.json();
@@ -206,47 +213,75 @@ const QrisPayment = {
         this.order = order;
         const expiry = this._expiryDate(order.expiryTime);
 
-        this._el().innerHTML = `
-            <p style="margin:0;font-size:0.62rem;letter-spacing:0.38em;text-transform:uppercase;color:#C79A8B;font-weight:700;text-align:center;">Scan to Pay</p>
-            <h3 style="margin:6px 0 4px;font-family:'Cormorant Garamond',serif;font-size:2rem;color:#1B2A4A;font-weight:600;text-align:center;line-height:1;">QRIS Payment</h3>
-            <p style="margin:0 0 20px;font-size:0.72rem;color:#9A8880;text-align:center;">Order <b style="color:#3B312E;">${order.orderId}</b></p>
+        if (order.snapRedirectUrl) {
+            this._el().innerHTML = `
+                <p style="margin:0;font-size:0.62rem;letter-spacing:0.38em;text-transform:uppercase;color:#C79A8B;font-weight:700;text-align:center;">Midtrans Payment</p>
+                <h3 style="margin:6px 0 4px;font-family:'Cormorant Garamond',serif;font-size:2rem;color:#1B2A4A;font-weight:600;text-align:center;line-height:1;">GoPay Payment</h3>
+                <p style="margin:0 0 20px;font-size:0.72rem;color:#9A8880;text-align:center;">Order <b style="color:#3B312E;">${order.orderId}</b></p>
 
-            <div style="background:#fff;border-radius:20px;padding:18px;margin:0 auto;width:fit-content;box-shadow:0 10px 40px rgba(27,42,74,0.12);border:1px solid #EDE8E3;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;">
-                    <span style="font-weight:800;font-size:0.95rem;letter-spacing:0.04em;color:#1B2A4A;">QRIS</span>
-                    <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#9A8880;">LYSÉRIA</span>
+                <div style="background:#fff;border-radius:20px;padding:26px 20px;margin:0 auto 20px;text-align:center;box-shadow:0 10px 40px rgba(27,42,74,0.12);border:1px solid #EDE8E3;">
+                    <div style="width:54px;height:54px;border-radius:50%;background:#E1F7FC;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="#00AED6"><circle cx="12" cy="12" r="10" fill="#00AED6"/><circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/></svg>
+                    </div>
+                    <div style="display:flex;justify-content:center;align-items:baseline;gap:6px;color:#1B2A4A;margin:10px 0 8px;">
+                        <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;">Rp</span>
+                        <span style="font-size:1.8rem;font-weight:700;letter-spacing:0.02em;">${this._rp(order.grossAmount)}</span>
+                    </div>
+                    <p style="margin:0;font-size:0.76rem;color:#6B5E58;line-height:1.5;">Klik tombol di bawah untuk menyelesaikan pembayaran via aplikasi GoPay atau QR resmi Midtrans.</p>
                 </div>
-                <img id="ly-qris-img" src="${order.qrUrl}" alt="QRIS ${order.orderId}" style="display:block;width:240px;height:240px;max-width:60vw;max-height:60vw;object-fit:contain;">
-            </div>
 
-            <div style="display:flex;justify-content:center;align-items:baseline;gap:6px;color:#1B2A4A;margin:22px 0 4px;">
-                <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;">Rp</span>
-                <span style="font-size:1.8rem;font-weight:600;letter-spacing:0.02em;">${this._rp(order.grossAmount)}</span>
-            </div>
+                <div style="display:flex;flex-direction:column;gap:10px;">
+                    <a href="${order.snapRedirectUrl}" target="_blank" rel="noopener" class="ly-btn-qris" style="display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;">
+                        <span>Lanjut Bayar di GoPay</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                    </a>
+                    <button type="button" id="ly-qris-check" class="ly-btn-navy" style="width:100%;padding:14px;" onclick="QrisPayment.check(true)">Cek Status Pembayaran</button>
+                </div>
+            `;
+            try { window.open(order.snapRedirectUrl, '_blank'); } catch(e) {}
+        } else {
+            this._el().innerHTML = `
+                <p style="margin:0;font-size:0.62rem;letter-spacing:0.38em;text-transform:uppercase;color:#C79A8B;font-weight:700;text-align:center;">Scan to Pay</p>
+                <h3 style="margin:6px 0 4px;font-family:'Cormorant Garamond',serif;font-size:2rem;color:#1B2A4A;font-weight:600;text-align:center;line-height:1;">${order.paymentType === 'gopay' ? 'GoPay Payment' : 'QRIS Payment'}</h3>
+                <p style="margin:0 0 20px;font-size:0.72rem;color:#9A8880;text-align:center;">Order <b style="color:#3B312E;">${order.orderId}</b></p>
 
-            <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;">
-                <span class="ly-pulse" style="width:8px;height:8px;border-radius:50%;background:#F59E0B;"></span>
-                <span style="font-size:0.75rem;color:#6B5E58;">Menunggu pembayaran · <b id="ly-qris-timer" style="color:#1B2A4A;font-variant-numeric:tabular-nums;">--:--</b></span>
-            </div>
+                <div style="background:#fff;border-radius:20px;padding:18px;margin:0 auto;width:fit-content;box-shadow:0 10px 40px rgba(27,42,74,0.12);border:1px solid #EDE8E3;">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px;">
+                        <span style="font-weight:800;font-size:0.95rem;letter-spacing:0.04em;color:#1B2A4A;">${order.paymentType === 'gopay' ? 'GOPAY' : 'QRIS'}</span>
+                        <span style="font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:#9A8880;">LYSÉRIA</span>
+                    </div>
+                    <img id="ly-qris-img" src="${order.qrUrl}" alt="${order.paymentType === 'gopay' ? 'GoPay QR' : 'QRIS'} ${order.orderId}" style="display:block;width:240px;height:240px;max-width:60vw;max-height:60vw;object-fit:contain;">
+                </div>
 
-            <ol style="margin:0 0 20px;padding:14px 18px 14px 34px;background:#F3EEE8;border-radius:14px;font-size:0.74rem;color:#5A4D48;line-height:1.7;">
-                <li>Buka GoPay, OVO, DANA, ShopeePay, atau m-banking</li>
-                <li>Pilih <b>Scan / Bayar</b> lalu arahkan ke kode QR</li>
-                <li>Konfirmasi pembayaran — halaman ini update otomatis</li>
-            </ol>
+                <div style="display:flex;justify-content:center;align-items:baseline;gap:6px;color:#1B2A4A;margin:22px 0 4px;">
+                    <span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.4rem;">Rp</span>
+                    <span style="font-size:1.8rem;font-weight:600;letter-spacing:0.02em;">${this._rp(order.grossAmount)}</span>
+                </div>
 
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <a href="${order.qrUrl}" target="_blank" rel="noopener" id="ly-qris-open" class="ly-btn-ghost">Buka QR</a>
-                <button type="button" id="ly-qris-check" class="ly-btn-navy" onclick="QrisPayment.check(true)">Cek Status</button>
-            </div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:18px;">
+                    <span class="ly-pulse" style="width:8px;height:8px;border-radius:50%;background:#F59E0B;"></span>
+                    <span style="font-size:0.75rem;color:#6B5E58;">Menunggu pembayaran · <b id="ly-qris-timer" style="color:#1B2A4A;font-variant-numeric:tabular-nums;">--:--</b></span>
+                </div>
 
-            ${order.isSandbox ? `
-            <p style="margin:16px 0 0;font-size:0.68rem;color:#9A8880;text-align:center;line-height:1.6;">
-                🧪 Mode Sandbox — tes bayar via
-                <a href="https://simulator.sandbox.midtrans.com/v2/qris/index" target="_blank" rel="noopener" style="color:#C79A8B;font-weight:600;">QRIS Simulator</a>
-                (paste URL dari tombol "Buka QR").
-            </p>` : ''}
-        `;
+                <ol style="margin:0 0 20px;padding:14px 18px 14px 34px;background:#F3EEE8;border-radius:14px;font-size:0.74rem;color:#5A4D48;line-height:1.7;">
+                    <li>Buka aplikasi <b>GoPay</b> atau <b>Gojek</b></li>
+                    <li>Pilih <b>Scan / Bayar</b> lalu arahkan ke kode QR di atas</li>
+                    <li>Konfirmasi pembayaran — halaman ini update otomatis</li>
+                </ol>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                    ${order.deeplinkUrl ? `<a href="${order.deeplinkUrl}" target="_blank" rel="noopener" class="ly-btn-ghost" style="text-align:center;">Buka GoPay App</a>` : `<a href="${order.qrUrl}" target="_blank" rel="noopener" id="ly-qris-open" class="ly-btn-ghost" style="text-align:center;">Buka QR</a>`}
+                    <button type="button" id="ly-qris-check" class="ly-btn-navy" onclick="QrisPayment.check(true)">Cek Status</button>
+                </div>
+
+                ${order.isSandbox ? `
+                <p style="margin:16px 0 0;font-size:0.68rem;color:#9A8880;text-align:center;line-height:1.6;">
+                    🧪 Mode Sandbox — tes bayar via
+                    <a href="https://simulator.sandbox.midtrans.com/v2/qris/index" target="_blank" rel="noopener" style="color:#C79A8B;font-weight:600;">QRIS Simulator</a>
+                    (paste URL dari tombol "Buka QR").
+                </p>` : ''}
+            `;
+        }
 
         // Countdown
         const timerEl = document.getElementById('ly-qris-timer');
@@ -545,14 +580,53 @@ const CartUI = {
                             <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Alamat Lengkap <span style="color:#ef4444">*</span></label>
                             <textarea id="co-address" required rows="2" style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;resize:vertical;" placeholder="Nama jalan, RT/RW, no. rumah..."></textarea>
                         </div>
+
+                        <!-- Payment Method Selection -->
+                        <div style="margin-bottom:20px;">
+                            <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:10px;">Metode Pembayaran <span style="color:#ef4444">*</span></label>
+                            <div style="display:flex;flex-direction:column;gap:10px;">
+                                <!-- GoPay Option (Active) -->
+                                <label style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:2px solid #1B2A4A;background:#FFFFFF;border-radius:12px;cursor:pointer;transition:all 0.2s;" id="label-pm-gopay">
+                                    <div style="display:flex;align-items:center;gap:12px;">
+                                        <input type="radio" name="co-payment-method" id="pm-gopay" value="gopay" checked style="accent-color:#1B2A4A;width:18px;height:18px;">
+                                        <div>
+                                            <div style="display:flex;align-items:center;gap:8px;">
+                                                <span style="font-weight:700;font-size:0.88rem;color:#1B2A4A;">GoPay</span>
+                                                <span style="font-size:0.6rem;background:#E1F7FC;color:#008DAE;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:0.04em;">TERSEDIA</span>
+                                            </div>
+                                            <p style="margin:2px 0 0;font-size:0.7rem;color:#7A6E68;">Bayar via aplikasi GoPay atau scan QR GoPay</p>
+                                        </div>
+                                    </div>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#00AED6"><circle cx="12" cy="12" r="10" fill="#00AED6"/><circle cx="12" cy="12" r="4.5" fill="#FFFFFF"/></svg>
+                                </label>
+
+                                <!-- QRIS Option (Disabled) -->
+                                <label style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px dashed #D5CDC5;background:#F6F3EE;border-radius:12px;cursor:not-allowed;opacity:0.65;" title="QRIS sedang dalam proses verifikasi aktivasi oleh Bank Indonesia & Midtrans">
+                                    <div style="display:flex;align-items:center;gap:12px;">
+                                        <input type="radio" name="co-payment-method" id="pm-qris" value="qris" disabled style="width:18px;height:18px;cursor:not-allowed;">
+                                        <div>
+                                            <div style="display:flex;align-items:center;gap:8px;">
+                                                <span style="font-weight:700;font-size:0.88rem;color:#8E7970;">QRIS (Semua E-Wallet)</span>
+                                                <span style="font-size:0.6rem;background:#EDE4DC;color:#9E8276;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:0.04em;">PROSES AKTIVASI</span>
+                                            </div>
+                                            <p style="margin:2px 0 0;font-size:0.7rem;color:#A3958D;">BCA, Mandiri, OVO, ShopeePay (Segera hadir)</p>
+                                        </div>
+                                    </div>
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#9E8276" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
+                                </label>
+                            </div>
+                        </div>
+
                         <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;margin-bottom:18px;background:#F3EEE8;border-radius:14px;">
                             <span style="font-size:0.68rem;letter-spacing:0.24em;text-transform:uppercase;color:#9A8880;font-weight:600;">Total</span>
                             <span id="ly-co-total" style="font-size:1.15rem;font-weight:700;color:#1B2A4A;">Rp 0</span>
                         </div>
-                        <button type="submit" id="ly-pay-qris-btn" class="ly-btn-qris">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M17 20h4v-3"/></svg>
-                            Bayar dengan QRIS
+
+                        <button type="submit" id="ly-pay-qris-btn" class="ly-btn-qris" style="display:flex;align-items:center;justify-content:center;gap:8px;">
+                            <span>Bayar Sekarang (GoPay)</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                         </button>
+
                         <p style="margin:14px 0 0;font-size:0.66rem;color:#9A8880;text-align:center;">🔒 Pembayaran aman diproses oleh Midtrans</p>
                     </form>
                 </div>

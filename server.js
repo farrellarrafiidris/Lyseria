@@ -307,7 +307,7 @@ server.listen(PORT, () => {
     console.log(`  POST http://localhost:${PORT}/api/shipping/cost`);
     console.log('');
     console.log(payment.isConfigured()
-        ? `  💳  Midtrans aktif (${payment.IS_PRODUCTION ? 'PRODUCTION' : 'SANDBOX'})`
+        ? `  💳  Midtrans aktif (${payment.IS_PRODUCTION ? 'PRODUCTION' : 'SANDBOX'} · ${payment.PAYMENT_TYPE.toUpperCase()})`
         : '  ⚠️   Midtrans belum dikonfigurasi — isi MIDTRANS_SERVER_KEY di .env');
     console.log(shipping.isConfigured()
         ? `  📦  RajaOngkir aktif`
