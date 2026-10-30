@@ -83,6 +83,9 @@ function renderCatalog() {
             window._lyseriaProductsMap[product.slug] = product;
 
             const isComingSoon = product.status === 'coming_soon';
+            const isPreOrder   = Boolean(product.isPreOrder);
+            const isOutOfStock = !isPreOrder && (product.stock !== undefined && product.stock <= 0);
+
             cards += `
                 <div class="${cardClass} group">
                     <div class="relative overflow-hidden rounded-2xl">
@@ -97,6 +100,16 @@ function renderCatalog() {
                             LYSÉRIA
                         </span>
 
+                        ${isPreOrder ? `
+                            <span style="position:absolute;top:16px;left:14px;z-index:3;color:#fff;background:rgba(157,23,77,0.9);backdrop-filter:blur(6px);padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;box-shadow:0 2px 8px rgba(157,23,77,0.3);">
+                                Pre-Order
+                            </span>
+                        ` : (isOutOfStock && !isComingSoon ? `
+                            <span style="position:absolute;top:16px;left:14px;z-index:3;color:#fff;background:rgba(31,41,55,0.88);backdrop-filter:blur(6px);padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
+                                Stok Habis
+                            </span>
+                        ` : '')}
+
                         ${isComingSoon ? `
                             <div class="absolute inset-0 flex items-center justify-center backdrop-blur-[2px]">
                                 <span class="text-white text-xs tracking-widest uppercase px-4 py-2 rounded-full shadow-md font-medium">Coming Soon</span>
@@ -107,7 +120,16 @@ function renderCatalog() {
                     <div class="mt-5">
                         ${isComingSoon
                             ? `<p class="uppercase tracking-[.25em] text-xs text-rosegold">Coming Soon</p>`
-                            : `<p class="uppercase tracking-[.25em] text-xs text-rosegold">${product.category}</p>`
+                            : `<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                                    <p class="uppercase tracking-[.25em] text-xs text-rosegold">${product.category}</p>
+                                    ${isPreOrder ? `
+                                        <span style="font-size:10px;font-weight:700;letter-spacing:0.08em;color:#9d174d;background:#fdf2f8;border:1px solid #fbcfe8;padding:2px 8px;border-radius:999px;text-transform:uppercase;">Pre-Order</span>
+                                    ` : (product.stock !== undefined ? (
+                                        product.stock <= 0 ? `<span style="font-size:10.5px;font-weight:600;color:#dc2626;">Stok Habis</span>` :
+                                        product.stock <= 5 ? `<span style="font-size:10.5px;font-weight:600;color:#d97706;">Sisa ${product.stock} pcs!</span>` :
+                                        `<span style="font-size:10.5px;font-weight:500;color:#16a34a;">Stok: ${product.stock}</span>`
+                                    ) : '')}
+                               </div>`
                         }
 
                         <h3 class="font-display text-3xl mt-3 text-navy uppercase">${product.name}</h3>
@@ -132,15 +154,35 @@ function renderCatalog() {
                                     <a href="detail.html?slug=${product.slug}" class="btn btn-outline rounded-full" style="flex:1;min-width:110px;text-align:center;">
                                         ${product.isBundle && product.bundleItems ? `View ${product.bundleItems.length} Items` : 'View Detail'}
                                     </a>
-                                    <button
-                                        onclick="addToCartBySlug('${product.slug}')"
-                                        title="Add to Cart"
-                                        aria-label="Add ${product.name} to cart"
-                                        style="width:44px;height:44px;border-radius:50%;border:1.5px solid #1B2A4A;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1B2A4A;transition:all 0.25s;flex-shrink:0;"
-                                        onmouseenter="this.style.background='#1B2A4A';this.style.color='#FAF7F2'"
-                                        onmouseleave="this.style.background='transparent';this.style.color='#1B2A4A'">
-                                        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                                    </button>
+                                    ${isOutOfStock ? `
+                                        <button
+                                            disabled
+                                            title="Stok sedang habis"
+                                            aria-label="${product.name} stok habis"
+                                            style="width:44px;height:44px;border-radius:50%;border:1.5px solid #E5E7EB;background:#F3F4F6;cursor:not-allowed;display:flex;align-items:center;justify-content:center;color:#9CA3AF;flex-shrink:0;">
+                                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/></svg>
+                                        </button>
+                                    ` : (isPreOrder ? `
+                                        <button
+                                            onclick="addToCartBySlug('${product.slug}')"
+                                            title="Pre-Order ${product.name}"
+                                            aria-label="Pre-Order ${product.name}"
+                                            style="width:44px;height:44px;border-radius:50%;border:1.5px solid #be185d;background:#fdf2f8;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#9d174d;transition:all 0.25s;flex-shrink:0;"
+                                            onmouseenter="this.style.background='#9d174d';this.style.color='#FAF7F2'"
+                                            onmouseleave="this.style.background='#fdf2f8';this.style.color='#9d174d'">
+                                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                        </button>
+                                    ` : `
+                                        <button
+                                            onclick="addToCartBySlug('${product.slug}')"
+                                            title="Add to Cart"
+                                            aria-label="Add ${product.name} to cart"
+                                            style="width:44px;height:44px;border-radius:50%;border:1.5px solid #1B2A4A;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1B2A4A;transition:all 0.25s;flex-shrink:0;"
+                                            onmouseenter="this.style.background='#1B2A4A';this.style.color='#FAF7F2'"
+                                            onmouseleave="this.style.background='transparent';this.style.color='#1B2A4A'">
+                                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                        </button>
+                                    `)}
                                </div>`
                         }
                     </div>

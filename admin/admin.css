@@ -623,6 +623,10 @@ body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
 }
 .badge-released  { background: #ecfdf5; color: #059669; }
 .badge-coming    { background: #f8f8fb; color: var(--taupe); border: 1px solid #e0e0e6; }
+.badge-preorder  { background: #fdf2f8; color: #be185d; border: 1px solid #fbcfe8; }
+.badge-stock     { background: #f0fdf4; color: #166534; font-weight: 600; }
+.badge-low-stock { background: #fffbeb; color: #b45309; font-weight: 600; border: 1px solid #fde68a; }
+.badge-out-of-stock { background: #fef2f2; color: #b91c1c; font-weight: 600; border: 1px solid #fecaca; }
 
 /* ── Action Buttons ── */
 .action-btns { display: flex; gap: 6px; }

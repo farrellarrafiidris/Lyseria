@@ -31,22 +31,39 @@ const CartManager = {
     },
 
     addItem(product) {
+        const isPreOrder = Boolean(product.isPreOrder);
+        const stock = product.stock !== undefined ? Number(product.stock) : Infinity;
+
+        // Check if out of stock (for regular items)
+        if (!isPreOrder && stock <= 0) {
+            showToast(`Maaf, stok ${product.name} sedang habis`, 'error');
+            return;
+        }
+
         const cart = this.getCart();
         const existing = cart.find(i => i.slug === product.slug);
         if (existing) {
+            if (!isPreOrder && (existing.qty + 1) > stock) {
+                showToast(`Maksimal pemesanan ${product.name} adalah ${stock} pcs (stok terbatas)`, 'info');
+                return;
+            }
             existing.qty += 1;
+            existing.stock = stock;
+            existing.isPreOrder = isPreOrder;
         } else {
             cart.push({
-                id:    product.id,
-                slug:  product.slug,
-                name:  product.name,
-                price: Number(product.discount || product.price),
-                image: product.images[0],
-                qty:   1
+                id:         product.id,
+                slug:       product.slug,
+                name:       product.name,
+                price:      Number(product.discount || product.price),
+                image:      product.images[0],
+                qty:        1,
+                stock:      stock,
+                isPreOrder: isPreOrder
             });
         }
         this._save(cart);
-        showToast(`${product.name} added to cart`);
+        showToast(isPreOrder ? `${product.name} (Pre-Order) ditambahkan ke keranjang` : `${product.name} added to cart`);
         CartUI.openDrawer();
     },
 
@@ -58,7 +75,13 @@ const CartManager = {
         if (qty < 1) { this.removeItem(slug); return; }
         const cart = this.getCart();
         const item  = cart.find(i => i.slug === slug);
-        if (item) item.qty = qty;
+        if (item) {
+            if (!item.isPreOrder && item.stock !== undefined && qty > item.stock) {
+                showToast(`Stok ${item.name} hanya tersisa ${item.stock} pcs`, 'info');
+                return;
+            }
+            item.qty = qty;
+        }
         this._save(cart);
     },
 
@@ -520,6 +543,9 @@ const CartUI = {
                         <button type="button" onclick="CartUI.closeCheckoutModal()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:#9A8880;">✕</button>
                     </div>
                     <form id="ly-checkout-form" onsubmit="event.preventDefault(); CartManager.payWithQris()">
+                        <div id="co-preorder-notice" style="display:none;margin-bottom:16px;padding:10px 14px;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:10px;font-size:0.76rem;color:#9d174d;line-height:1.4;">
+                            🛍️ Keranjang Anda berisi item <strong>Pre-Order</strong>. Pengiriman akan diproses setelah batch produksi siap.
+                        </div>
                         <div style="margin-bottom:16px;">
                             <label style="display:block;font-size:0.75rem;font-weight:600;color:#3B312E;margin-bottom:6px;">Full Name <span style="color:#ef4444">*</span></label>
                             <input type="text" id="co-name" required style="width:100%;padding:10px 14px;border:1px solid #EDE8E3;border-radius:8px;font-family:inherit;font-size:0.9rem;color:#1B2A4A;background:#FFFFFF;" placeholder="e.g. Jane Doe">
@@ -756,6 +782,11 @@ const CartUI = {
         const modal = document.getElementById('ly-checkout-modal');
         if (modal) {
             this.updateCheckoutTotal();
+            const poNotice = document.getElementById('co-preorder-notice');
+            if (poNotice) {
+                const hasPO = CartManager.getCart().some(i => i.isPreOrder);
+                poNotice.style.display = hasPO ? 'block' : 'none';
+            }
             modal.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
@@ -808,11 +839,15 @@ const CartUI = {
 
                 <!-- Info -->
                 <div style="flex:1;min-width:0;">
-                    <p style="margin:0;font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;color:#C79A8B;font-weight:700;">LYSÉRIA</p>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                        <p style="margin:0;font-size:0.6rem;letter-spacing:0.32em;text-transform:uppercase;color:#C79A8B;font-weight:700;">LYSÉRIA</p>
+                        ${item.isPreOrder ? `<span style="font-size:0.58rem;font-weight:700;color:#9d174d;background:#fdf2f8;border:1px solid #fbcfe8;padding:1px 6px;border-radius:4px;letter-spacing:0.04em;text-transform:uppercase;">Pre-Order</span>` : ''}
+                    </div>
                     <p style="margin:3px 0 4px;font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:#1B2A4A;font-weight:600;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${item.name}</p>
                     <div style="margin:0 0 10px; display:flex; align-items:baseline; gap:4px; color:#9A8880;">
                         <span style="font-family:'Cormorant Garamond',serif; font-style:italic; font-size:0.8rem;">Rp</span>
                         <span style="font-family:'Inter',sans-serif; font-size:0.75rem; font-weight:500; letter-spacing:0.02em;">${item.price.toLocaleString('id-ID')}</span>
+                        ${!item.isPreOrder && item.stock !== undefined && item.stock <= 5 ? `<span style="font-size:0.65rem;color:#d97706;margin-left:4px;">(Stok: ${item.stock})</span>` : ''}
                     </div>
 
                     <!-- Qty Controls -->

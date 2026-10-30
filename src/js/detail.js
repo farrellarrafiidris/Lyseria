@@ -59,8 +59,9 @@ async function loadProduct() {
         let relatedCards = "";
 
         relatedProducts.forEach(item => {
-            const isItemComingSoon =
-                item.status === "coming_soon";
+            const isItemComingSoon = item.status === "coming_soon";
+            const isItemPreOrder   = Boolean(item.isPreOrder);
+            const isItemOutOfStock = !isItemPreOrder && (item.stock !== undefined && item.stock <= 0);
 
             relatedCards += `
                 <div class="${cardClass} group">
@@ -115,6 +116,16 @@ async function loadProduct() {
                             LYSÉRIA
                         </span>
 
+                        ${isItemPreOrder ? `
+                            <span style="position:absolute;top:16px;left:14px;z-index:3;color:#fff;background:rgba(157,23,77,0.9);backdrop-filter:blur(6px);padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
+                                Pre-Order
+                            </span>
+                        ` : (isItemOutOfStock && !isItemComingSoon ? `
+                            <span style="position:absolute;top:16px;left:14px;z-index:3;color:#fff;background:rgba(31,41,55,0.88);backdrop-filter:blur(6px);padding:4px 10px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">
+                                Stok Habis
+                            </span>
+                        ` : '')}
+
                         ${isItemComingSoon ? `
                             <div class="
                                 absolute
@@ -146,14 +157,18 @@ async function loadProduct() {
                     <!-- RELATED PRODUCT INFO -->
                     <div class="mt-5 ">
 
-                        <p class="
-                            uppercase
-                            tracking-[.25em]
-                            text-xs
-                            text-rosegold
-                        ">
-                            ${item.description.label}
-                        </p>
+                        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
+                            <p class="uppercase tracking-[.25em] text-xs text-rosegold">
+                                ${item.description?.label || item.category || ''}
+                            </p>
+                            ${isItemPreOrder ? `
+                                <span style="font-size:10px;font-weight:700;color:#9d174d;background:#fdf2f8;border:1px solid #fbcfe8;padding:2px 8px;border-radius:999px;text-transform:uppercase;">PO</span>
+                            ` : (item.stock !== undefined ? (
+                                item.stock <= 0 ? `<span style="font-size:10.5px;font-weight:600;color:#dc2626;">Stok Habis</span>` :
+                                item.stock <= 5 ? `<span style="font-size:10.5px;font-weight:600;color:#d97706;">Sisa ${item.stock}</span>` :
+                                `<span style="font-size:10.5px;font-weight:500;color:#16a34a;">Stok: ${item.stock}</span>`
+                            ) : '')}
+                        </div>
 
                         <h3 class="
                             font-display
@@ -408,14 +423,22 @@ async function loadProduct() {
 
                 <div>
 
-                    <p class="
-                        uppercase
-                        tracking-[.3em]
-                        text-xs
-                        text-rosegold
-                    ">
-                        ${product.category}
-                    </p>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                        <p class="
+                            uppercase
+                            tracking-[.3em]
+                            text-xs
+                            text-rosegold
+                        ">
+                            ${product.category}
+                        </p>
+                        ${product.isPreOrder ? `
+                            <span style="display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;letter-spacing:0.12em;color:#9d174d;background:#fdf2f8;border:1px solid #fbcfe8;padding:3px 12px;border-radius:999px;text-transform:uppercase;">
+                                <span style="width:6px;height:6px;border-radius:50%;background:#db2777;display:inline-block;"></span>
+                                Pre-Order
+                            </span>
+                        ` : ''}
+                    </div>
 
 
                     <h1 class="
@@ -450,6 +473,44 @@ async function loadProduct() {
                             </span>
                         `}
                     </p>
+
+                    <!-- STOCK & PRE-ORDER STATUS -->
+                    <div style="margin-top:16px;">
+                        ${product.isPreOrder ? `
+                            <div style="padding:12px 16px;background:#fdf2f8;border:1px solid #fbcfe8;border-radius:12px;display:flex;flex-direction:column;gap:6px;">
+                                <div style="display:flex;align-items:center;gap:8px;color:#9d174d;font-size:13px;font-weight:600;">
+                                    <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    <span>Produk Sistem Pre-Order</span>
+                                </div>
+                                <p style="margin:0;font-size:12px;color:#be185d;line-height:1.4;">
+                                    Item ini dibuat/disediakan berdasarkan pesanan khusus. ${product.stock !== undefined && product.stock > 0 ? `Sisa kuota batch ini: <strong>${product.stock} pcs</strong>.` : 'Segera pesan untuk mengamankan slot Anda.'}
+                                </p>
+                            </div>
+                        ` : (product.status !== 'coming_soon' ? `
+                            <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;${
+                                (product.stock !== undefined && product.stock <= 0)
+                                    ? 'background:#fef2f2;border:1px solid #fecaca;color:#b91c1c;'
+                                    : (product.stock !== undefined && product.stock <= 5)
+                                    ? 'background:#fffbeb;border:1px solid #fde68a;color:#b45309;'
+                                    : 'background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;'
+                            }">
+                                <span style="width:7px;height:7px;border-radius:50%;background:${
+                                    (product.stock !== undefined && product.stock <= 0)
+                                        ? '#ef4444'
+                                        : (product.stock !== undefined && product.stock <= 5)
+                                        ? '#f59e0b'
+                                        : '#22c55e'
+                                };"></span>
+                                <span>${
+                                    (product.stock !== undefined && product.stock <= 0)
+                                        ? 'Stok Habis (Out of Stock)'
+                                        : (product.stock !== undefined && product.stock <= 5)
+                                        ? `Sisa Sedikit: Hanya <strong>${product.stock} pcs</strong> tersisa!`
+                                        : `Stok Tersedia: <strong>${product.stock !== undefined ? product.stock : 0} pcs</strong>`
+                                }</span>
+                            </div>
+                        ` : '')}
+                    </div>
 
                     ${product.isBundle && product.bundleItems && product.bundleItems.length > 0 ? `
                         <div class="mt-6 p-4 border border-navy/10 bg-navy/5 rounded-lg">
@@ -534,8 +595,6 @@ async function loadProduct() {
                         </p>
 
                     </div>
-
-
                     <!-- BUTTON AREA -->
                     ${isMainComingSoon ? `
 
@@ -556,33 +615,74 @@ async function loadProduct() {
 
                     ` : `
 
-                        <div style="display:flex;gap:12px;align-items:center;margin-top:40px;flex-wrap:wrap;">
+                        ${product.isPreOrder ? `
+                            <div style="display:flex;gap:12px;align-items:center;margin-top:40px;flex-wrap:wrap;">
+                                <!-- Pre-Order CTA -->
+                                <button
+                                    onclick="addToCartBySlug('${product.slug}')"
+                                    id="detail-add-cart-btn"
+                                    style="flex:1;min-width:180px;padding:16px 24px;background:#9d174d;color:#FAF7F2;border:none;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.2s,transform 0.18s;box-shadow:0 8px 28px rgba(157,23,77,0.22);"
+                                    onmouseenter="this.style.background='#831843';this.style.transform='translateY(-2px)'"
+                                    onmouseleave="this.style.background='#9d174d';this.style.transform='translateY(0)'"
+                                >
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                    Pre-Order Now
+                                </button>
 
-                            <!-- Add to Cart -->
-                            <button
-                                onclick="addToCartBySlug('${product.slug}')"
-                                id="detail-add-cart-btn"
-                                style="flex:1;min-width:180px;padding:16px 24px;background:#1B2A4A;color:#FAF7F2;border:none;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.2s,transform 0.18s;box-shadow:0 8px 28px rgba(27,42,74,0.18);"
-                                onmouseenter="this.style.background='#C79A8B';this.style.transform='translateY(-2px)'"
-                                onmouseleave="this.style.background='#1B2A4A';this.style.transform='translateY(0)'"
-                            >
-                                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-                                Add to Cart
-                            </button>
+                                <!-- WhatsApp Contact Icon -->
+                                <a
+                                    href="https://wa.me/6285181764377?text=Hello%20LYS%C3%89RIA%2C%20saya%20tertarik%20untuk%20Pre-Order%20${encodeURIComponent(product.name)}."
+                                    target="_blank"
+                                    style="width:52px;height:52px;flex-shrink:0;border-radius:50%;border:1.5px solid #EDE8E3;background:#fff;display:flex;align-items:center;justify-content:center;color:#25D366;transition:all 0.22s;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.06);"
+                                    title="Chat via WhatsApp untuk Pre-Order" aria-label="Contact us on WhatsApp"
+                                    onmouseenter="this.style.background='#25D366';this.style.color='#fff';this.style.borderColor='#25D366'"
+                                    onmouseleave="this.style.background='#fff';this.style.color='#25D366';this.style.borderColor='#EDE8E3'"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </a>
+                            </div>
+                        ` : (product.stock !== undefined && product.stock <= 0 ? `
+                            <div style="display:flex;gap:12px;align-items:center;margin-top:40px;flex-wrap:wrap;">
+                                <button
+                                    disabled
+                                    style="flex:1;min-width:180px;padding:16px 24px;background:#e5e7eb;color:#9ca3af;border:none;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;cursor:not-allowed;display:flex;align-items:center;justify-content:center;gap:10px;"
+                                >
+                                    Stok Habis
+                                </button>
 
-                            <!-- WhatsApp Contact Icon -->
-                            <a
-                                href="https://wa.me/6285181764377?text=Hello%20LYS%C3%89RIA%2C%20I'm%20interested%20in%20${encodeURIComponent(product.name)}."
-                                target="_blank"
-                                style="width:52px;height:52px;flex-shrink:0;border-radius:50%;border:1.5px solid #EDE8E3;background:#fff;display:flex;align-items:center;justify-content:center;color:#25D366;transition:all 0.22s;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.06);"
-                                title="Chat via WhatsApp" aria-label="Contact us on WhatsApp"
-                                onmouseenter="this.style.background='#25D366';this.style.color='#fff';this.style.borderColor='#25D366'"
-                                onmouseleave="this.style.background='#fff';this.style.color='#25D366';this.style.borderColor='#EDE8E3'"
-                            >
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            </a>
-
-                        </div>
+                                <a
+                                    href="https://wa.me/6285181764377?text=Hello%20LYS%C3%89RIA%2C%20kapan%20stok%20${encodeURIComponent(product.name)}%20tersedia%20kembali%3F"
+                                    target="_blank"
+                                    style="width:52px;height:52px;flex-shrink:0;border-radius:50%;border:1.5px solid #EDE8E3;background:#fff;display:flex;align-items:center;justify-content:center;color:#25D366;transition:all 0.22s;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.06);"
+                                    title="Tanya ketersediaan stok via WhatsApp"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </a>
+                            </div>
+                        ` : `
+                            <div style="display:flex;gap:12px;align-items:center;margin-top:40px;flex-wrap:wrap;">
+                                <button
+                                    onclick="addToCartBySlug('${product.slug}')"
+                                    id="detail-add-cart-btn"
+                                    style="flex:1;min-width:180px;padding:16px 24px;background:#1B2A4A;color:#FAF7F2;border:none;border-radius:999px;font-family:'Inter',sans-serif;font-size:0.72rem;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;transition:background 0.2s,transform 0.18s;box-shadow:0 8px 28px rgba(27,42,74,0.18);"
+                                    onmouseenter="this.style.background='#C79A8B';this.style.transform='translateY(-2px)'"
+                                    onmouseleave="this.style.background='#1B2A4A';this.style.transform='translateY(0)'"
+                                >
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                                    Add to Cart
+                                </button>
+                                <a
+                                    href="https://wa.me/6285181764377?text=Hello%20LYS%C3%89RIA%2C%20I'm%20interested%20in%20${encodeURIComponent(product.name)}."
+                                    target="_blank"
+                                    style="width:52px;height:52px;flex-shrink:0;border-radius:50%;border:1.5px solid #EDE8E3;background:#fff;display:flex;align-items:center;justify-content:center;color:#25D366;transition:all 0.22s;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.06);"
+                                    title="Chat via WhatsApp" aria-label="Contact us on WhatsApp"
+                                    onmouseenter="this.style.background='#25D366';this.style.color='#fff';this.style.borderColor='#25D366'"
+                                    onmouseleave="this.style.background='#fff';this.style.color='#25D366';this.style.borderColor='#EDE8E3'"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                </a>
+                            </div>
+                        `)}
 
                         <!-- Share Row -->
                         <div style="display:flex;align-items:center;gap:14px;margin-top:20px;">

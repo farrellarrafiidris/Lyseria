@@ -179,6 +179,7 @@
                                 <th>Collection</th>
                                 <th>Category</th>
                                 <th>Price</th>
+                                <th>Stock</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -245,6 +246,8 @@
                     <option value="">All Statuses</option>
                     <option value="released">Released</option>
                     <option value="coming_soon">Coming Soon</option>
+                    <option value="preorder">Pre-Order</option>
+                    <option value="out_of_stock">Out of Stock</option>
                 </select>
                 <select id="product-filter-collection" class="table-filter">
                     <option value="">All Collections</option>
@@ -262,6 +265,7 @@
                                 <th>Collection</th>
                                 <th>Category</th>
                                 <th>Price</th>
+                                <th>Stock</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -374,6 +378,24 @@
                         <option value="released">Released</option>
                         <option value="coming_soon">Coming Soon</option>
                     </select>
+                </div>
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom:16px; align-items:flex-start;">
+                <div class="form-field">
+                    <label class="form-label" for="pf-stock">Stock / Jumlah Stok <span class="required">*</span></label>
+                    <input id="pf-stock" type="number" class="form-input" placeholder="e.g. 25" min="0" value="0" required>
+                    <p style="font-size:11px;color:#6b7280;margin:4px 0 0;">Jumlah stok fisik / kuota yang siap dijual.</p>
+                </div>
+                <div class="form-field">
+                    <label class="form-label">Sistem Pre-Order</label>
+                    <div style="padding:10px 14px; border:1px solid #fbcfe8; border-radius:8px; background:#fdf2f8;">
+                        <label style="display:flex; align-items:center; gap:10px; font-weight:600; cursor:pointer; font-size:13.5px; color:#9d174d; margin:0;">
+                            <input type="checkbox" id="pf-is-preorder" style="width:17px;height:17px;accent-color:#db2777;cursor:pointer;">
+                            <span>🛍️ Tandai Produk Pre-Order (PO)</span>
+                        </label>
+                        <p style="font-size:11px; color:#be185d; margin:4px 0 0 27px;">Customer akan melihat label "Pre-Order" pada produk ini.</p>
+                    </div>
                 </div>
             </div>
 

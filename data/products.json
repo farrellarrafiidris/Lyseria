@@ -9,7 +9,7 @@
         "id": 1,
         "slug": "jolie",
         "name": "JOLIE",
-        "price": "100",
+        "price": 232250,
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
         "size": "175x70cm",
@@ -38,7 +38,12 @@
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790396285/Jolie_Model_PNG.png",
           "https://res.cloudinary.com/uglfwdvy/image/upload/v1790605711/1.png"
         ],
-        "status": "released"
+        "status": "released",
+        "discount": 197413,
+        "stock": 25,
+        "isPreOrder": false,
+        "isBundle": false,
+        "bundleItems": []
       },
       {
         "id": 2,
@@ -75,6 +80,8 @@
         ],
         "status": "released",
         "discount": 197413,
+        "stock": 18,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       },
@@ -113,6 +120,8 @@
         ],
         "status": "released",
         "discount": 197413,
+        "stock": 15,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       },
@@ -122,6 +131,8 @@
         "slug": "jolie-sve",
         "price": 394826,
         "discount": 355500,
+        "stock": 8,
+        "isPreOrder": false,
         "status": "released",
         "category": "Pashmina",
         "material": "Natural Fabric Viscose Eucalyptus Wood",
@@ -199,6 +210,8 @@
           "tip": "Versatile for all undertones. Looks stunning paired with cream, light brown, or off-white tones effortlessly balanced and serene."
         },
         "discount": 198000,
+        "stock": 12,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       },
@@ -237,6 +250,8 @@
           "tip": "Most radiant on medium to deep skin tones. Pair with nude or black outfits for a strong, effortlessly sophisticated look."
         },
         "discount": 198000,
+        "stock": 20,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       }
@@ -285,6 +300,8 @@
         ],
         "status": "coming_soon",
         "discount": 200000,
+        "stock": 0,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       },
@@ -323,6 +340,8 @@
         ],
         "status": "coming_soon",
         "discount": 200000,
+        "stock": 0,
+        "isPreOrder": false,
         "isBundle": false,
         "bundleItems": []
       }

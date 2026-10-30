@@ -162,9 +162,28 @@ async function saveCollectionOrder(fromIdx, toIdx) {
     }
 }
 
-function statusBadge(status) {
-    if (status === 'released') return `<span class="badge badge-released">Released</span>`;
-    return `<span class="badge badge-coming">Coming Soon</span>`;
+function statusBadge(status, isPreOrder) {
+    const baseBadge = status === 'released'
+        ? `<span class="badge badge-released">Released</span>`
+        : `<span class="badge badge-coming">Coming Soon</span>`;
+    const poBadge = isPreOrder
+        ? `<span class="badge badge-preorder" style="margin-left:4px;">Pre-Order</span>`
+        : '';
+    return baseBadge + poBadge;
+}
+
+function stockBadge(stock, isPreOrder) {
+    const s = stock !== undefined ? Number(stock) : 0;
+    if (isPreOrder) {
+        return `<span class="badge badge-preorder" title="Produk Pre-Order">${s > 0 ? s + ' PO Quota' : 'Pre-Order'}</span>`;
+    }
+    if (s <= 0) {
+        return `<span class="badge badge-out-of-stock">Habis (0)</span>`;
+    }
+    if (s <= 5) {
+        return `<span class="badge badge-low-stock">Sisa ${s} pcs</span>`;
+    }
+    return `<span class="badge badge-stock">${s} pcs</span>`;
 }
 
 // ─── Toast ───────────────────────────────────────────────────────
@@ -243,7 +262,7 @@ function renderOverview(collections) {
     const recent = all.slice(-5).reverse();
 
     if (!recent.length) {
-        tbody.innerHTML = `<tr><td colspan="5"><div class="empty-state"><p>Belum ada produk.</p></div></td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><p>Belum ada produk.</p></div></td></tr>`;
         return;
     }
 
@@ -254,13 +273,17 @@ function renderOverview(collections) {
                     ${p.images?.[0]
                         ? `<img src="${p.images[0]}" class="table-product-img" alt="${p.name}" onerror="this.style.display='none'">`
                         : `<div class="table-product-img-placeholder">No img</div>`}
-                    <strong>${p.name}</strong>
+                    <div>
+                        <strong>${p.name}</strong>
+                        ${p.isPreOrder ? `<span class="badge badge-preorder" style="font-size:0.6rem;padding:1px 6px;margin-left:4px;">PO</span>` : ''}
+                    </div>
                 </div>
             </td>
             <td>${p._collectionName}</td>
             <td>${p.category || '—'}</td>
             <td>Rp ${formatPrice(p.price)}</td>
-            <td>${statusBadge(p.status)}</td>
+            <td>${stockBadge(p.stock, p.isPreOrder)}</td>
+            <td>${statusBadge(p.status, p.isPreOrder)}</td>
         </tr>
     `).join('');
 }
@@ -308,11 +331,17 @@ function renderProducts(filter = {}) {
             (p.slug || '').toLowerCase().includes(q)
         );
     }
-    if (filter.status)     products = products.filter(p => p.status === filter.status);
+    if (filter.status === 'preorder') {
+        products = products.filter(p => p.isPreOrder);
+    } else if (filter.status === 'out_of_stock') {
+        products = products.filter(p => !p.isPreOrder && (p.stock === undefined || p.stock <= 0));
+    } else if (filter.status) {
+        products = products.filter(p => p.status === filter.status);
+    }
     if (filter.collection) products = products.filter(p => String(p._collectionId) === filter.collection);
 
     if (!products.length) {
-        tbody.innerHTML = `<tr><td colspan="8">
+        tbody.innerHTML = `<tr><td colspan="9">
             <div class="empty-state">
                 <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
@@ -362,7 +391,10 @@ function renderProducts(filter = {}) {
                     : `<div class="table-product-img-placeholder">No img</div>`}
             </td>
             <td>
-                <strong>${p.name}</strong><br>
+                <div style="display:flex;align-items:center;gap:6px;">
+                    <strong>${p.name}</strong>
+                    ${p.isPreOrder ? `<span class="badge badge-preorder" style="font-size:0.6rem;padding:1px 6px;">PO</span>` : ''}
+                </div>
                 <span style="color:#9ca3af;font-size:.72rem;">${p.slug || ''}</span>
             </td>
             <td>${p._collectionName}</td>
@@ -371,7 +403,8 @@ function renderProducts(filter = {}) {
                 ${p.discount ? `<span style="text-decoration:line-through;color:#9ca3af;font-size:0.8em;margin-right:4px;">Rp ${formatPrice(p.price)}</span>` : ''}
                 <span style="${p.discount ? 'color:#ef4444;font-weight:600;' : ''}">Rp ${formatPrice(p.discount || p.price)}</span>
             </td>
-            <td>${statusBadge(p.status)}</td>
+            <td>${stockBadge(p.stock, p.isPreOrder)}</td>
+            <td>${statusBadge(p.status, p.isPreOrder)}</td>
             <td>
                 <div class="action-btns">
                     ${p.slug ? `
@@ -472,6 +505,10 @@ function openProductModal(collectionId = null, productId = null) {
     document.getElementById('pf-image-full-preview-wrap').classList.add('hidden');
     document.getElementById('pf-id').value            = '';
     document.getElementById('pf-collection-id').value = '';
+    const stockInput = document.getElementById('pf-stock');
+    if (stockInput) stockInput.value = '10';
+    const isPreOrderCb = document.getElementById('pf-is-preorder');
+    if (isPreOrderCb) isPreOrderCb.checked = false;
 
     const isBundleCb = document.getElementById('pf-is-bundle');
     const bundleWrap = document.getElementById('pf-bundle-items-wrap');
@@ -517,6 +554,8 @@ function openProductModal(collectionId = null, productId = null) {
         document.getElementById('pf-price').value         = product.price || '';
         document.getElementById('pf-discount').value      = product.discount || '';
         document.getElementById('pf-status').value        = product.status || 'released';
+        if (stockInput) stockInput.value                  = product.stock !== undefined ? product.stock : 0;
+        if (isPreOrderCb) isPreOrderCb.checked            = Boolean(product.isPreOrder);
         
         if (isBundleCb) {
             isBundleCb.checked = product.isBundle || false;
@@ -670,6 +709,9 @@ async function handleProductSave(e) {
     const price       = document.getElementById('pf-price').value.trim();
     const discount    = document.getElementById('pf-discount').value.trim();
     const status      = document.getElementById('pf-status').value;
+    const stockVal    = document.getElementById('pf-stock') ? document.getElementById('pf-stock').value.trim() : '0';
+    const stock       = stockVal === '' ? 0 : parseInt(stockVal, 10);
+    const isPreOrder  = document.getElementById('pf-is-preorder') ? document.getElementById('pf-is-preorder').checked : false;
     const category    = document.getElementById('pf-category').value.trim();
     const material    = document.getElementById('pf-material').value.trim();
     const size        = document.getElementById('pf-size').value.trim();
@@ -695,7 +737,10 @@ async function handleProductSave(e) {
     }
 
     const productData = {
-        name, slug, price: Number(price), discount: discount ? Number(discount) : null, status, category, material, size,
+        name, slug, price: Number(price), discount: discount ? Number(discount) : null,
+        stock: isNaN(stock) ? 0 : Math.max(0, stock),
+        isPreOrder: Boolean(isPreOrder),
+        status, category, material, size,
         images: [imageModel, ...dynamicImages].filter(Boolean),
         description: { label: descLabel, quote: descQuote, content: descContent }
     };
